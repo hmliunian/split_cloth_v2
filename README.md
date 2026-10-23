@@ -36,9 +36,19 @@ uv pip install --python .venv/bin/python -e '.[test]'
 
 ## 当前实验记录
 
-正式冻结运行：`runs/p1_reverse_node_prompt_v3_20261023/`，prompt 版本 `node_shape_prompt_v3`。实际请求、响应、trace、候选标签、视频及汇总均在该目录；真实模型结论以运行完成后的 `reports/phase1_report.md` 为准。
+正式冻结运行：`runs/p1_reverse_node_prompt_v3_20261023/`，代码 `c154ca8`，prompt 版本 `node_shape_prompt_v3`。已交付 **10 个完整 MP4**，全部重新解码验证通过，共 6568 帧，相对 PTS 最大误差为 0。请求、响应、trace、候选标签、视频及汇总均在该目录。
 
-首次连通性运行 `runs/p1_reverse_node_v1_20261023/` 因缺少 SOCKS 依赖在 HTTP 请求前失败，实际 HTTP 次数为 0；记录保留。修复后新建正式运行，没有用重复语义采样替换结果。
+正式运行 83 次逻辑请求 / 83 次 HTTP 请求，输入 61,676 tokens、输出 6,128 tokens，记录的 provider 耗时约 257.239 秒，无传输重试。7 条程序 `complete`、3 条 `needs_review`，0 条执行错误；全部人工状态仍为 `unreviewed`。
+
+**模型质量尚有问题：000543 实际为 399 / 485 / 562，参考为 400 / 485 / 562，精确回归未通过。** 另有准备动作误选、短包误判为长条、搬运节点误选和缺阶段问题，不能把程序 complete 计作正确率。逐条 agent 视觉复核已保存，不充当人工真值。
+
+- [P1 十条实验报告](runs/p1_reverse_node_prompt_v3_20261023/reports/phase1_report.md)
+- [结构化汇总](runs/p1_reverse_node_prompt_v3_20261023/reports/summary.json)
+- [视频逐帧验证](runs/p1_reverse_node_prompt_v3_20261023/reports/video_verification.json)
+- [真实控制流与源保护检查](runs/p1_reverse_node_prompt_v3_20261023/reports/execution_audit.json)
+- [逐条 agent 视觉复核](runs/p1_reverse_node_prompt_v3_20261023/reports/visual_review_summary.json)
+
+首次连通性运行 `runs/p1_reverse_node_v1_20261023/` 因缺少 SOCKS 依赖在 HTTP 请求前失败，实际 HTTP 次数为 0；记录保留。各次修复后使用新运行，没有用重复语义采样替换 skip/uncertain 结果。
 
 随后 `runs/p1_reverse_node_v1_final_20261023/` 的000543首次目标请求返回HTTP400。只读模型列表检查确认模型存在，独立无目标图像的文本诊断定位到 JSON mode 要求消息正文包含 `json`。v2 补明 JSON 返回格式后新建运行；失败请求没有形成可用语义判断，原记录保留。
 

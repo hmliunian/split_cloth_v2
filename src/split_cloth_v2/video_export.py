@@ -314,10 +314,24 @@ def export_episode(episode_dir: Path, video_dir: Path, config: dict) -> dict:
         raise
 
 
-def export_run(run_dir: Path, config: dict) -> dict:
-    """Export every frozen episode and write complete success/failure indexes."""
-    run_dir = Path(run_dir)
-    indexes = [run_dir / "videos" / "exports.json", run_dir / "reports" / "video_verification.json"]
+def export_run(run_dir: Path, config: dict, *, export_dir: Path | None = None) -> dict:
+    """Export saved inputs into the run or a new, confined export version.
+
+    A retry uses ``run_dir/exports/<safe_name>`` and never overwrites an older
+    video's success, failure, partial file, or index. Inputs always come from
+    ``run_dir``; export versions contain presentation artifacts only.
+    """
+    run_dir = Path(run_dir).resolve()
+    output = run_dir
+    if export_dir is not None:
+        output = Path(export_dir).resolve()
+        versions = run_dir / "exports"
+        if (versions.resolve() != versions or output.parent != versions
+                or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", output.name)):
+            raise ValueError("export_dir_must_be_run_exports_safe_name")
+    if any((output / name).resolve().parent != output for name in ("videos", "reports")):
+        raise ValueError("export_output_directories_must_not_escape_export_dir")
+    indexes = [output / "videos" / "exports.json", output / "reports" / "video_verification.json"]
     if any(path.exists() for path in indexes):
         raise FileExistsError("Refusing to overwrite an existing export index; use a new export directory")
     manifest = [json.loads(line) for line in (run_dir / "manifest.jsonl").read_text().splitlines() if line.strip()]
@@ -326,16 +340,19 @@ def export_run(run_dir: Path, config: dict) -> dict:
         key = entry["key"]
         episode_dir = run_dir / "episodes" / key
         try:
-            record = export_episode(episode_dir, run_dir / "videos", config)
+            record = export_episode(episode_dir, output / "videos", config)
         except Exception as error:
             record = {"key": key, "export_status": "failed", "error": f"{type(error).__name__}: {error}"}
         records.append(record)
     successes = [row for row in records if row.get("export_status") == "success"]
+    ten_complete = len(manifest) == 10 and len({row["key"] for row in successes}) == 10
     summary = {"videos": records, "count": len(records), "successful_count": len(successes),
                "failed_count": len(records) - len(successes),
-               "phase1_complete": len(manifest) == 10 and len({row['key'] for row in successes}) == 10}
-    write_json(run_dir / "videos" / "exports.json", summary)
-    write_json(run_dir / "reports" / "video_verification.json", {
+               "export_dir": str(output), "ten_video_exports_complete": ten_complete,
+               # Only the CLI report checks the complete P1 experiment contract.
+               "phase1_complete": False}
+    write_json(output / "videos" / "exports.json", summary)
+    write_json(output / "reports" / "video_verification.json", {
         "videos": [{"key": row["key"], "verification": row.get("verification"),
                     "export_status": row["export_status"], "error": row.get("error")} for row in records],
         "total_verified_frames": sum(row["frame_count"] for row in successes),

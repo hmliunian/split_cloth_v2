@@ -211,3 +211,85 @@ def test_repeat_run_refuses_to_replace_historical_indexes(tmp_path):
     with pytest.raises(FileExistsError, match="export index"):
         export_run(run, {})
     assert before == {str(path): digest(path) for path in paths}
+
+
+def test_named_export_versions_are_independent_and_keep_original_files(tmp_path):
+    directory, _, _ = setup_episode(tmp_path)
+    run = directory.parent.parent
+    (run / "manifest.jsonl").write_text(json.dumps({"key": directory.name}) + "\n")
+    first_root, second_root = run / "exports" / "v1", run / "exports" / "v2"
+    first = export_run(run, {}, export_dir=first_root)
+    first_files = [path for path in first_root.rglob("*") if path.is_file()]
+    before = {str(path): digest(path) for path in first_files}
+    second = export_run(run, {}, export_dir=second_root)
+    assert first["successful_count"] == second["successful_count"] == 1
+    assert Path(first["videos"][0]["video_path"]).parent == first_root / "videos"
+    assert Path(second["videos"][0]["video_path"]).parent == second_root / "videos"
+    assert before == {str(path): digest(path) for path in first_files}
+    assert (second_root / "reports" / "video_verification.json").is_file()
+    with pytest.raises(FileExistsError, match="export index"):
+        export_run(run, {}, export_dir=first_root)
+
+
+def test_failed_export_can_be_completed_in_new_version_without_overwriting_partial(tmp_path):
+    directory, _, _ = setup_episode(tmp_path)
+    run = directory.parent.parent
+    (run / "manifest.jsonl").write_text(json.dumps({"key": directory.name}) + "\n")
+    axis_path = directory / "video_axis.json"
+    axis = json.loads(axis_path.read_text())
+    axis["timestamps_s"][3] += .001
+    write_json(axis_path, axis)
+    failed = export_run(run, {})
+    assert failed["failed_count"] == 1
+    protected = [path for parent in (run / "videos", run / "reports") for path in parent.rglob("*") if path.is_file()]
+    assert any(path.name.endswith(".part.mp4") for path in protected)
+    before = {str(path): digest(path) for path in protected}
+    axis["timestamps_s"][3] = .15
+    write_json(axis_path, axis)
+    repaired = export_run(run, {}, export_dir=run / "exports" / "repaired_1")
+    assert repaired["successful_count"] == 1 and repaired["failed_count"] == 0
+    assert before == {str(path): digest(path) for path in protected}
+
+
+@pytest.mark.parametrize("path", ["outside", "run", "run/exports", "run/exports/.hidden", "run/exports/a/nested", "run/exports/../escape"])
+def test_named_export_directory_cannot_escape_safe_version_location(tmp_path, path):
+    directory, _, _ = setup_episode(tmp_path)
+    run = directory.parent.parent
+    with pytest.raises(ValueError, match="export_dir_must"):
+        export_run(run, {}, export_dir=tmp_path / path)
+    assert not (run / "exports").exists()
+
+
+def test_export_directory_symlinks_cannot_redirect_outputs_outside_run(tmp_path):
+    directory, _, _ = setup_episode(tmp_path)
+    run = directory.parent.parent
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (run / "exports").symlink_to(outside, target_is_directory=True)
+    with pytest.raises(ValueError, match="export_dir_must"):
+        export_run(run, {}, export_dir=run / "exports" / "v1")
+    assert not list(outside.iterdir())
+
+
+def test_export_video_subdirectory_cannot_redirect_to_source_storage(tmp_path):
+    directory, _, _ = setup_episode(tmp_path)
+    run = directory.parent.parent
+    version = run / "exports" / "v1"
+    version.mkdir(parents=True)
+    (version / "videos").symlink_to(tmp_path, target_is_directory=True)
+    with pytest.raises(ValueError, match="must_not_escape"):
+        export_run(run, {}, export_dir=version)
+
+
+def test_ten_mock_video_exports_never_claim_phase1_experiment_completion(tmp_path, monkeypatch):
+    run = tmp_path / "run"
+    run.mkdir()
+    manifest = [{"key": f"fold_cloth_v3__episode_{i:06d}"} for i in range(10)]
+    (run / "manifest.jsonl").write_text("\n".join(json.dumps(row) for row in manifest))
+    def fake_export(directory, destination, config):
+        return {"key": directory.name, "export_status": "success", "frame_count": 12,
+                "verification": {"passed": True}}
+    monkeypatch.setattr("split_cloth_v2.video_export.export_episode", fake_export)
+    summary = export_run(run, {"execution_mode": "mock"})
+    assert summary["ten_video_exports_complete"] is True
+    assert summary["phase1_complete"] is False

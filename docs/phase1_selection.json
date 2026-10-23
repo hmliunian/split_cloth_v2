@@ -1,0 +1,110 @@
+{
+  "schema_version": "phase1_selection_v1",
+  "created_date": "2026-10-23",
+  "purpose": "first_stage_10_fold_cloth_review_mp4",
+  "task_family": "fold_cloth",
+  "expected_episode_count": 10,
+  "expected_mp4_count": 10,
+  "expected_total_frames": 6568,
+  "selection_rule": "Retain the four existing diagnostic episodes; from the registered development manifest, independently sort each of fold_cloth_v3 and fold_cloth_v4 by episode_index ascending and append the first three not already selected. Do not inspect model outcomes to choose episodes.",
+  "legacy_diagnostic_manifest_sha256": "94cb0582c7689e5ca2d7b24e3b6dab96909d77fe7f4eacecdbc177e6a9c55e5f",
+  "development_source_path": "/tmp/split-cloth-stage-text-implementation/experiments/stage_text_protocol_v1_20261023/splits/development_manifest.jsonl",
+  "development_source_sha256": "d4362ffcc4f0c7425a78d05dba03b1705bcd6b053dc03e9028adff88a94724b1",
+  "phase1_manifest_sha256": "c524b0c83cbff48f2b5cafeba2ef6a0c5a985357d65f277d7e7a64148e27b2ae",
+  "roles": {
+    "fold_cloth_v3__episode_000543": "existing_diagnostic",
+    "fold_cloth_v3__episode_006453": "existing_diagnostic",
+    "fold_cloth_v4__episode_002768": "existing_diagnostic",
+    "fold_cloth_v4__episode_004150": "existing_diagnostic",
+    "fold_cloth_v3__episode_001776": "additional_development",
+    "fold_cloth_v3__episode_002962": "additional_development",
+    "fold_cloth_v3__episode_003546": "additional_development",
+    "fold_cloth_v4__episode_001061": "additional_development",
+    "fold_cloth_v4__episode_001372": "additional_development",
+    "fold_cloth_v4__episode_001395": "additional_development"
+  },
+  "reference_overlap": false,
+  "heldout_overlap": false,
+  "overlap_checked_on": [
+    "key",
+    "source_video_sha256"
+  ],
+  "source_validation": [
+    {
+      "key": "fold_cloth_v3__episode_000543",
+      "frame_count": 681,
+      "parquet_rows": 681,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v3__episode_006453",
+      "frame_count": 573,
+      "parquet_rows": 573,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v4__episode_002768",
+      "frame_count": 595,
+      "parquet_rows": 595,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v4__episode_004150",
+      "frame_count": 483,
+      "parquet_rows": 483,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v3__episode_001776",
+      "frame_count": 786,
+      "parquet_rows": 786,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v3__episode_002962",
+      "frame_count": 544,
+      "parquet_rows": 544,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v3__episode_003546",
+      "frame_count": 620,
+      "parquet_rows": 620,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v4__episode_001061",
+      "frame_count": 540,
+      "parquet_rows": 540,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v4__episode_001372",
+      "frame_count": 781,
+      "parquet_rows": 781,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    },
+    {
+      "key": "fold_cloth_v4__episode_001395",
+      "frame_count": 965,
+      "parquet_rows": 965,
+      "state_dimension": 14,
+      "source_hashes_match": true
+    }
+  ],
+  "full_video_pts_alignment_checked": false,
+  "new_algorithm_run": false,
+  "vlm_called": false,
+  "new_mp4_exported": false,
+  "independent_heldout": false,
+  "additional_episode_visual_content_reviewed": false
+}

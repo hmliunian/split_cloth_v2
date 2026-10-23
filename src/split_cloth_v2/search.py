@@ -82,7 +82,7 @@ def _recover_response(raw: Any) -> dict:
         return raw["decision"]
     try:
         choice = raw["choices"][0]
-        if choice.get("finish_reason") not in (None, "stop"):
+        if choice.get("finish_reason") != "stop":
             raise ValueError("saved API response was not completed normally")
         content = choice["message"]["content"]
         if isinstance(content, list):
@@ -114,13 +114,24 @@ def _attempt_totals(episode_dir: Path, visited_ids: list[str]) -> dict:
             output_tokens += int(usage.get("completion_tokens", usage.get("output_tokens", 0)) or 0)
             elapsed_s += float(data.get("elapsed_s", 0) or 0)
         attempts_count += len(attempts)
-        for attempt in attempts:
-            usage = attempt.get("usage", {})
+        for index, attempt in enumerate(attempts, 1):
+            attempt_number = attempt.get("attempt", index)
+            raw_path = call_dir / f"response_attempt_{attempt_number:02d}.json"
+            if not raw_path.exists() and index == len(attempts):
+                raw_path = call_dir / "response.json"
+            raw = read_json(raw_path) if raw_path.exists() else {}
+            if not isinstance(raw, dict):
+                raw = {}
+            # A crash can happen after saving the raw response but before the
+            # in-flight attempt record receives the returned usage and model.
+            usage = attempt.get("usage") or raw.get("usage", {})
             input_tokens += int(usage.get("prompt_tokens", usage.get("input_tokens", 0)) or 0)
             output_tokens += int(usage.get("completion_tokens", usage.get("output_tokens", 0)) or 0)
             elapsed_s += float(attempt.get("elapsed_s", 0) or 0)
             if attempt.get("model"):
                 returned_models.add(attempt["model"])
+            elif raw.get("model"):
+                returned_models.add(raw["model"])
         response_path = call_dir / "response.json"
         if response_path.exists():
             raw = read_json(response_path)

@@ -15,10 +15,10 @@ from pathlib import Path
 import re
 
 import av
-import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from .io_utils import read_json, sha256_file, write_json
+from .results import stage_labels
 
 
 EXPORTER_VERSION = "review_video_v1"
@@ -56,14 +56,12 @@ def candidate_layout(result: dict, frame_count: int):
             invalid = True
             continue
         slots[stage - 1] = value
+    invalid |= bool(set(stored) - {"stage1", "stage2", "stage3"})
     known = [value for value in slots if value is not None]
     invalid |= any(right <= left for left, right in zip(known, known[1:]))
-    labels = np.full(frame_count, -1, dtype=np.int8)
-    if not invalid and all(value is not None for value in slots):
-        starts = [0, *(value + 1 for value in slots)]
-        ends = [*slots, frame_count - 1]
-        for stage, (start, end) in enumerate(zip(starts, ends), start=1):
-            labels[start:end + 1] = stage
+    labels = stage_labels(frame_count, stored)
+    if invalid:
+        labels[:] = -1
     segments, cursor = [], 0
     for stage, frames in groupby(labels.tolist()):
         length = sum(1 for _ in frames)

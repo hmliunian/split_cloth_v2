@@ -36,11 +36,13 @@ uv pip install --python .venv/bin/python -e '.[test]'
 
 ## 当前实验记录
 
-正式冻结运行：`runs/p1_reverse_node_prompt_v2_20261023/`，prompt 版本 `node_shape_prompt_v2`。实际请求、响应、trace、候选标签、视频及汇总均在该目录；真实模型结论以运行完成后的 `reports/phase1_report.md` 为准。
+正式冻结运行：`runs/p1_reverse_node_prompt_v3_20261023/`，prompt 版本 `node_shape_prompt_v3`。实际请求、响应、trace、候选标签、视频及汇总均在该目录；真实模型结论以运行完成后的 `reports/phase1_report.md` 为准。
 
 首次连通性运行 `runs/p1_reverse_node_v1_20261023/` 因缺少 SOCKS 依赖在 HTTP 请求前失败，实际 HTTP 次数为 0；记录保留。修复后新建正式运行，没有用重复语义采样替换结果。
 
 随后 `runs/p1_reverse_node_v1_final_20261023/` 的000543首次目标请求返回HTTP400。只读模型列表检查确认模型存在，独立无目标图像的文本诊断定位到 JSON mode 要求消息正文包含 `json`。v2 补明 JSON 返回格式后新建运行；失败请求没有形成可用语义判断，原记录保留。
+
+`runs/p1_reverse_node_prompt_v2_20261023/` 首个响应HTTP200，但 `target_stage` 返回字符串 `stage3`，被严格类型校验拒绝；1次请求、755 tokens，原始响应保留。v3 将整数类型及四字段约束直接写入实际prompt，不转换旧回答、不改变阶段形态。
 
 ## 阅读顺序
 

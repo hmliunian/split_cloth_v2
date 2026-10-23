@@ -12,5 +12,6 @@ stage3：长条再次折起，形成小方块状衣物包。
 后续画面只能帮助识别动作，不能用之后才形成的形态证明候选帧已完成。
 符合当前目标填match，明确不符合填skip，遮挡或证据不足填uncertain。
 只返回一个JSON对象，包含当前node_id、target_stage、decision和一句可见依据evidence。
+只允许这四个字段。node_id为当前候选ID字符串；target_stage必须是整数1、2或3，不能是"stage3"这样的字符串；decision为match、skip或uncertain字符串；evidence为非空字符串。
 不要使用Markdown代码块或添加其他文字。
 不得选择其他节点、输出新帧号或一次填写多个阶段。

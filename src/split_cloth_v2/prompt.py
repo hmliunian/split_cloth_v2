@@ -6,7 +6,7 @@ from pathlib import Path
 
 from .io_utils import fingerprint, read_json, sha256_file
 
-PROMPT_VERSION = "node_shape_prompt_v2"
+PROMPT_VERSION = "node_shape_prompt_v3"
 
 
 def system_text() -> str:
@@ -37,7 +37,7 @@ def build_request(node: dict, target_stage: int, episode_dir: Path, config: dict
         "node_id": node["node_id"],
         "target_stage": target_stage,
         "system_text": config.get("prompt_text", system_text()),
-        "user_text": f"当前候选：{node['node_id']}\n当前目标：stage{target_stage}\n以下图片按时间正序排列；CANDIDATE是唯一待判断帧。",
+        "user_text": f"当前候选：{node['node_id']}\n当前目标：stage{target_stage}\n返回JSON中的target_stage字段必须是整数{target_stage}。\n以下图片按时间正序排列；CANDIDATE是唯一待判断帧。",
         "images": images,
         "provider": config["provider"],
         "spec_version": config["spec_version"],

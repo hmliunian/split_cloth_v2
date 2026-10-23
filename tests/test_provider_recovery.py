@@ -62,6 +62,13 @@ def transport_with_calls(calls, rate_limit_first=False):
 def test_json_mode_without_json_instruction_is_an_execution_error_once(tmp_path, monkeypatch):
     episode, config = episode_input(tmp_path)
     config["prompt_text"] = "Judge one fixed candidate and return its four fields."
+    original_builder = search.build_request
+    def request_without_json_word(*args, **kwargs):
+        request = original_builder(*args, **kwargs)
+        # v3 also states the JSON contract in the dynamic user message.
+        request["user_text"] = "\n".join(line for line in request["user_text"].splitlines() if "json" not in line.lower())
+        return request
+    monkeypatch.setattr(search, "build_request", request_without_json_word)
     monkeypatch.setenv("DASHSCOPE_API_KEY", "offline-test-key")
     calls = []
     provider = DashScopeProvider(transport=transport_with_calls(calls), sleep=lambda _: None)

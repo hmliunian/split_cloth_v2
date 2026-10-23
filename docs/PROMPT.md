@@ -1,6 +1,6 @@
 # 单候选 VLM 接口
 
-版本：`node_shape_prompt_v2`；对应 [边界契约](../boundary.md)。实际单一资产为 `src/split_cloth_v2/assets/node_shape_prompt_v2.txt`，每次运行冻结展开文本与摘要。v2 明确返回 JSON 对象，以满足服务 JSON mode 的消息约束；阶段语义保持 `reverse_node_v1`。模型效果以真实运行记录为准。
+版本：`node_shape_prompt_v3`；对应 [边界契约](../boundary.md)。实际单一资产为 `src/split_cloth_v2/assets/node_shape_prompt_v3.txt`，每次运行冻结展开文本与摘要。v2 明确返回 JSON 对象；v3 把严格字段类型写入实际请求，特别是整数 `target_stage`。阶段语义保持 `reverse_node_v1`。模型效果以真实运行记录为准。
 
 ## 1. 固定 system 文本
 
@@ -19,6 +19,7 @@ stage3：长条再次折起，形成小方块状衣物包。
 后续画面只能帮助识别动作，不能用之后才形成的形态证明候选帧已完成。
 符合当前目标填match，明确不符合填skip，遮挡或证据不足填uncertain。
 只返回一个JSON对象，包含当前node_id、target_stage、decision和一句可见依据evidence。
+只允许这四个字段。node_id为当前候选ID字符串；target_stage必须是整数1、2或3，不能是"stage3"这样的字符串；decision为match、skip或uncertain字符串；evidence为非空字符串。
 不要使用Markdown代码块或添加其他文字。
 不得选择其他节点、输出新帧号或一次填写多个阶段。
 ```
@@ -28,6 +29,7 @@ stage3：长条再次折起，形成小方块状衣物包。
 ```text
 当前候选：{node_id}
 当前目标：stage{target_stage}
+返回JSON中的target_stage字段必须是整数{target_stage}。
 以下图片按时间正序排列；CANDIDATE是唯一待判断帧。
 ```
 

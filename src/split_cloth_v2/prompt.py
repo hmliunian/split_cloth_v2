@@ -6,11 +6,11 @@ from pathlib import Path
 
 from .io_utils import fingerprint, read_json, sha256_file
 
-PROMPT_VERSION = "node_shape_prompt_v1"
+PROMPT_VERSION = "node_shape_prompt_v2"
 
 
 def system_text() -> str:
-    return files("split_cloth_v2").joinpath("assets/node_shape_prompt_v1.txt").read_text(encoding="utf-8").strip()
+    return files("split_cloth_v2").joinpath(f"assets/{PROMPT_VERSION}.txt").read_text(encoding="utf-8").strip()
 
 
 def build_request(node: dict, target_stage: int, episode_dir: Path, config: dict) -> dict:

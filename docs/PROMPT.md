@@ -1,6 +1,6 @@
 # 单候选 VLM 接口
 
-版本：`node_shape_prompt_v1`；对应 [边界契约](../boundary.md)。这是待实现的短 prompt 起点，尚未做新算法效果验证。
+版本：`node_shape_prompt_v2`；对应 [边界契约](../boundary.md)。实际单一资产为 `src/split_cloth_v2/assets/node_shape_prompt_v2.txt`，每次运行冻结展开文本与摘要。v2 明确返回 JSON 对象，以满足服务 JSON mode 的消息约束；阶段语义保持 `reverse_node_v1`。模型效果以真实运行记录为准。
 
 ## 1. 固定 system 文本
 
@@ -18,7 +18,8 @@ stage3：长条再次折起，形成小方块状衣物包。
 排除铺衣、拉伸，以及折好后搬运、放置和空手动作产生的张开节点。
 后续画面只能帮助识别动作，不能用之后才形成的形态证明候选帧已完成。
 符合当前目标填match，明确不符合填skip，遮挡或证据不足填uncertain。
-只返回当前node_id、target_stage、decision和一句可见依据evidence。
+只返回一个JSON对象，包含当前node_id、target_stage、decision和一句可见依据evidence。
+不要使用Markdown代码块或添加其他文字。
 不得选择其他节点、输出新帧号或一次填写多个阶段。
 ```
 

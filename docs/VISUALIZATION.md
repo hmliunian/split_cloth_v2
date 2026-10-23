@@ -1,6 +1,6 @@
 # MP4 可视化与导出
 
-日期：2026-10-23。用户已指定：新库可视化仿照现有带阶段划分的 MP4 导出方法。**开发第一阶段首次交付 10 条不同叠衣轨迹的完整复核 MP4**，每条对应 [phase1_manifest.jsonl](phase1_manifest.jsonl) 中一个 episode；节点图作为辅助。当前为开发规范，导出器尚未迁移实现。
+日期：2026-10-23。用户已指定：新库可视化仿照现有带阶段划分的 MP4 导出方法。**开发第一阶段首次交付 10 条不同叠衣轨迹的完整复核 MP4**，每条对应 [phase1_manifest.jsonl](phase1_manifest.jsonl) 中一个 episode；节点图作为辅助。导出器已独立实现于 `video_export.py`，实际检查见 README。
 
 ## 1. 参考实现与视频
 

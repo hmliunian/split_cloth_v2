@@ -6,7 +6,7 @@ from pathlib import Path
 
 import yaml
 
-from .prompt import system_text
+from .prompt import PROMPT_VERSION, system_text
 
 
 def load_config(path: str | Path) -> dict:
@@ -37,5 +37,5 @@ def load_config(path: str | Path) -> dict:
     if len(offsets) > provider.get("max_images", 5):
         raise ValueError("context_exceeds_image_budget")
     config["prompt_text"] = system_text()
-    config["prompt_version"] = "node_shape_prompt_v1"
+    config["prompt_version"] = PROMPT_VERSION
     return config

@@ -43,10 +43,35 @@ def transport_with_calls(calls, rate_limit_first=False):
         node_id = re.search(r"当前候选：(\w+)", user_text).group(1)
         stage = int(re.search(r"当前目标：stage(\d)", user_text).group(1))
         calls.append((node_id, stage))
+        message_text = []
+        for message in body["messages"]:
+            content = message["content"]
+            if isinstance(content, str):
+                message_text.append(content)
+            else:
+                message_text.extend(item["text"] for item in content if item.get("type") == "text")
+        if "json" not in "\n".join(message_text).casefold():
+            return httpx.Response(400, json={"error": {"code": "invalid_parameter_error",
+                "message": "JSON mode requires messages to include the word json."}})
         if rate_limit_first and len(calls) == 1:
             return httpx.Response(429, json={"error": "offline rate limit"})
         return httpx.Response(200, json=api_reply(node_id, stage))
     return httpx.MockTransport(handler)
+
+
+def test_json_mode_without_json_instruction_is_an_execution_error_once(tmp_path, monkeypatch):
+    episode, config = episode_input(tmp_path)
+    config["prompt_text"] = "Judge one fixed candidate and return its four fields."
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "offline-test-key")
+    calls = []
+    provider = DashScopeProvider(transport=transport_with_calls(calls), sleep=lambda _: None)
+    result = search.run_search(episode, provider, config, "run")
+    assert calls == [("n2", 3)]
+    assert result["status"] == "execution_error"
+    assert result["http_attempts"] == 1
+    assert result["logical_calls"] == 1
+    assert result["slots"] == {"stage1": None, "stage2": None, "stage3": None}
+    assert not (episode / "calls/n2/decision.json").exists()
 
 
 def test_completed_http_response_is_replayed_after_decision_save_crash(tmp_path, monkeypatch):

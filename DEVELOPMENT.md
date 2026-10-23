@@ -1,6 +1,6 @@
 # 开发计划
 
-状态：待实现；协议：`reverse_node_v1`。先遵守 [boundary.md](boundary.md)，再按本文建立最小可运行版本。
+状态：核心模块、CLI、离线验证与视频导出已实现；协议：`reverse_node_v1`。实际检查和实验记录见 [README.md](README.md)。下文保留职责、算法与交付契约，改动先遵守 [boundary.md](boundary.md)。
 
 ## 1. 第一阶段交付：10 条 MP4
 
@@ -69,7 +69,7 @@ finalize(slots, has_uncertainty)
 
 ## 4. 起始配置
 
-以下是待实现的配置接口，数值是可复现起点，不是已验证的新最优参数。检测参数来源见 [docs/DATA.md](docs/DATA.md)。
+配置已实现于 `configs/default.yaml`，数值是可复现起点，不是已验证的新最优参数。检测参数来源见 [docs/DATA.md](docs/DATA.md)。
 
 ```yaml
 spec_version: reverse_node_v1
@@ -88,7 +88,7 @@ provider:
   max_attempts: 3
 ```
 
-模型标识与地址来自旧运行记录；新库首次真实调用时需验证可用性并记录服务实际返回的模型名。当前文档工作未调用 API。上下文取样与输出上限是本版工程默认，效果未测；调整后使用新运行 ID。
+模型标识与地址来自旧运行记录，服务模型列表已确认该标识存在；实际推理返回的模型名写入每次调用记录。上下文取样与输出上限是本版工程默认，模型效果以正式运行记录为准；调整后使用新运行 ID。
 
 ## 5. 运行记录、缓存与恢复
 
@@ -139,9 +139,9 @@ runs/<run_id>/
 
 P1 先验证 000543，再在同一冻结配置下完成另外三条既有诊断和六条补充样本。若修改 prompt 或检测配置，新建运行；用于最终 10 条交付的运行必须使用同一版本，不能把不同配置的最好结果拼成一次成功实验。结果是 `needs_review` 也要交付带说明的视频，不能挑选成功案例替换原清单。
 
-## 7. 计划提供的 CLI
+## 7. 已实现的 CLI
 
-以下命令均尚未实现。实现后将真实用法、环境和检查结果更新到 README：
+以下命令已实现；用法、环境、模拟模式和命名导出版本见 README：
 
 ```text
 python -m split_cloth_v2.cli prepare --manifest docs/phase1_manifest.jsonl --config configs/default.yaml --run runs/<id>
@@ -150,7 +150,7 @@ python -m split_cloth_v2.cli report --run runs/<id>
 python -m split_cloth_v2.cli export-video --run runs/<id>
 ```
 
-`prepare` 应离线完成对齐、检测、上下文和请求预算估计；`annotate` 才访问真实 provider。默认测试入口计划为 `python -m pytest -q`，普通测试不访问网络。已有授权的真实实验按其范围完成；不要把在线调用混入安装、测试或文档检查。
+`prepare` 离线完成对齐、检测、上下文和请求预算估计；`annotate` 才访问真实 provider。`annotate --episode <key>` 支持先运行单条回归，随后全量 annotate 重放已有判断并继续。默认测试入口为 `.venv/bin/python -m pytest -q`，普通测试不访问网络。已有授权的真实实验按其范围完成；不要把在线调用混入安装、测试或文档检查。
 
 ## 8. 需如实保留的限制
 

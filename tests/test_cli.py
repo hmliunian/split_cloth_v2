@@ -175,3 +175,12 @@ def test_report_does_not_advertise_a_deleted_video(cli_project):
     summary = read_json(project["run"] / "reports/summary.json")
     assert summary["episodes"][0]["video_path"] is None
     assert summary["p1_delivery_complete"] is False
+
+
+def test_annotate_episode_selector_rejects_unregistered_key_before_call(cli_project):
+    assert _prepare(cli_project) == 0
+    assert cli.main(["annotate", "--run", str(cli_project["run"]), "--episode", "not_in_manifest"]) == 1
+    episode = cli_project["run"] / "episodes" / cli_project["entry"]["key"]
+    assert not (episode / "calls").exists()
+    assert cli.main(["annotate", "--run", str(cli_project["run"]), "--episode", cli_project["entry"]["key"]]) == 0
+    assert read_json(episode / "result.json")["status"] == "complete"

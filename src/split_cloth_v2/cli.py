@@ -25,7 +25,7 @@ def source_digest() -> str:
 
 
 def _environment() -> dict:
-    return {"python": sys.version.split()[0], "packages": {name: importlib.metadata.version(name) for name in ("numpy", "pyarrow", "av", "Pillow", "httpx", "PyYAML")}}
+    return {"python": sys.version.split()[0], "packages": {name: importlib.metadata.version(name) for name in ("numpy", "pyarrow", "av", "Pillow", "httpx", "socksio", "PyYAML")}}
 
 
 def _run_path(path: str | Path) -> Path:
@@ -98,6 +98,10 @@ def _load_run(path, *, check_source=False):
 def annotate(args) -> dict:
     run, record = _load_run(args.run, check_source=True)
     config = record["config"]
+    selected = getattr(args, "episode", None)
+    entries = [entry for entry in record["manifest"] if selected is None or entry["key"] == selected]
+    if not entries:
+        raise ValueError("episode_not_in_frozen_manifest")
     if config["execution_mode"] == "mock":
         provider = MockProvider(config.get("mock_decisions"))
     else:
@@ -106,7 +110,7 @@ def annotate(args) -> dict:
             raise ValueError("credential_file_must_be_outside_repository")
         provider = DashScopeProvider(credential_file=credential_file)
     errors = []
-    for entry in record["manifest"]:
+    for entry in entries:
         # Revalidate frozen inputs and preparation hashes before any paid call.
         prepare_episode(entry, run / "episodes" / entry["key"], config)
         result = run_search(run / "episodes" / entry["key"], provider, config, record["run_fingerprint"])
@@ -221,6 +225,7 @@ def main(argv=None) -> int:
             command.add_argument("--export-name", help="Write/read a separate named export version while preserving prior exports")
         if name == "annotate":
             command.add_argument("--credential-file", help="Explicit external credential file; never copied or logged")
+            command.add_argument("--episode", help="Process one frozen episode key, for the initial regression check")
     args = parser.parse_args(argv)
     try:
         if args.command == "prepare":

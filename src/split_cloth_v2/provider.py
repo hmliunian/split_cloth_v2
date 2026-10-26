@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import base64
+import hashlib
 import json
 import mimetypes
 import os
@@ -32,9 +33,18 @@ def parse_response(raw: dict) -> dict:
 def _messages(request: dict) -> list[dict]:
     content = [{"type": "text", "text": request["user_text"]}]
     for item in request["images"]:
-        content.append({"type": "text", "text": f"{item['role']} ({item['relative_time_s']:+.3f}s)"})
+        if item["role"] == "EXPERT_EXAMPLE":
+            if item.get("stage") != f"stage{request['target_stage']}" or any(name in item for name in ("source_frame_id", "timestamp_s", "relative_time_s", "node_id")):
+                raise ProviderError("invalid_expert_example_label")
+            label = f"EXPERT_EXAMPLE {item['stage']}"
+        else:
+            label = f"{item['role']} ({item['relative_time_s']:+.3f}s)"
+        content.append({"type": "text", "text": label})
         path = Path(item["path"])
-        encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+        image_bytes = path.read_bytes()
+        if item.get("sha256") and hashlib.sha256(image_bytes).hexdigest() != item["sha256"]:
+            raise ProviderError("request_image_hash_mismatch")
+        encoded = base64.b64encode(image_bytes).decode("ascii")
         mime = mimetypes.guess_type(path.name)[0] or "image/jpeg"
         content.append({"type": "image_url", "image_url": {"url": f"data:{mime};base64,{encoded}"}})
     return [{"role": "system", "content": request["system_text"]}, {"role": "user", "content": content}]

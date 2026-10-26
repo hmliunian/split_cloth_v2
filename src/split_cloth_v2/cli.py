@@ -10,6 +10,7 @@ from pathlib import Path
 
 from .config import load_config
 from .data import load_manifest, prepare_episode
+from .expert_examples import freeze_expert_examples, verify_expert_examples
 from .io_utils import fingerprint, now, read_json, sha256_file, write_json
 from .provider import DashScopeProvider, MockProvider
 from .search import run_search
@@ -56,11 +57,14 @@ def prepare(args) -> dict:
     if run.exists() and any(run.iterdir()):
         if not run_record.is_file() or read_json(run_record).get("run_fingerprint") != run_fingerprint:
             raise ValueError("existing_run_differs_use_a_new_run_id")
+        _load_run(run, check_source=True)
     else:
         run.mkdir(parents=True)
         write_json(run_record, {**identity, "run_fingerprint": run_fingerprint, "created_at": now(), "git_commit": _code_version(), "environment": _environment()})
         (run / "manifest.jsonl").write_text("".join(json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n" for entry in entries), encoding="utf-8")
-        (run / "prompt.txt").write_text(config["prompt_text"] + "\n", encoding="utf-8")
+        prompt_text = config["prompt_text"] if config["spec_version"] == "reverse_node_v2" else config["prompt_text"] + "\n"
+        (run / "prompt.txt").write_bytes(prompt_text.encode("utf-8"))
+        freeze_expert_examples(run, config)
     summary = {"run_fingerprint": run_fingerprint, "execution_mode": config["execution_mode"], "episodes": [], "errors": []}
     for entry in entries:
         try:
@@ -74,7 +78,8 @@ def prepare(args) -> dict:
     summary["episode_count"] = len(entries)
     summary["total_frames"] = sum(item["frame_count"] for item in summary["episodes"])
     summary["max_logical_requests"] = sum(item["max_logical_requests"] for item in summary["episodes"])
-    summary["max_images"] = summary["max_logical_requests"] * len(config["context_offsets_s"])
+    images_per_call = len(config["context_offsets_s"]) + (config["spec_version"] == "reverse_node_v2")
+    summary["max_images"] = summary["max_logical_requests"] * images_per_call
     summary["status"] = "prepared"
     write_json(run / "reports/prepare_summary.json", summary)
     return summary
@@ -90,8 +95,15 @@ def _load_run(path, *, check_source=False):
         raise ValueError("source_code_changed_use_a_new_run_id")
     if load_manifest(run / "manifest.jsonl") != record["manifest"]:
         raise ValueError("frozen_manifest_changed")
-    if (run / "prompt.txt").read_text(encoding="utf-8").strip() != record["config"]["prompt_text"]:
+    config = record["config"]
+    prompt_text = (run / "prompt.txt").read_bytes().decode("utf-8")
+    if config["spec_version"] == "reverse_node_v2":
+        prompt_matches = prompt_text == config["prompt_text"] and sha256_file(run / "prompt.txt") == config["prompt_sha256"]
+    else:
+        prompt_matches = prompt_text.strip() == config["prompt_text"]
+    if not prompt_matches:
         raise ValueError("frozen_prompt_changed")
+    verify_expert_examples(run, config)
     return run, record
 
 
@@ -106,8 +118,6 @@ def annotate(args) -> dict:
         provider = MockProvider(config.get("mock_decisions"))
     else:
         credential_file = getattr(args, "credential_file", None)
-        if credential_file and Path(credential_file).resolve().is_relative_to(PROJECT_ROOT):
-            raise ValueError("credential_file_must_be_outside_repository")
         provider = DashScopeProvider(credential_file=credential_file)
     errors = []
     for entry in entries:
@@ -135,6 +145,7 @@ def report(args) -> dict:
         if isinstance(items, list):
             video_records = {item["key"]: item for item in items if "key" in item}
     episodes = []
+    request_images = []
     for entry in record["manifest"]:
         result_path = run / "episodes" / entry["key"] / "result.json"
         result = read_json(result_path) if result_path.exists() else {}
@@ -154,6 +165,14 @@ def report(args) -> dict:
             and result_matches_run
         )
         slots = result.get("slots", {})
+        calls_root = run / "episodes" / entry["key"] / "calls"
+        for request_path in sorted(calls_root.glob("*/request.json")):
+            request = read_json(request_path)
+            request_images.append({"key": entry["key"], "node_id": request["node_id"],
+                                   "target_stage": request["target_stage"],
+                                   "request_path": str(request_path.relative_to(run)),
+                                   "request_fingerprint": request["request_fingerprint"],
+                                   "images": request["images"]})
         episodes.append({
             "key": entry["key"], "frame_count": entry["frame_count"],
             "boundaries": {stage: (slots.get(stage) or {}).get("end_frame") for stage in ("stage1", "stage2", "stage3")},
@@ -161,6 +180,7 @@ def report(args) -> dict:
             "review_status": result.get("review_status", "unreviewed"),
             "has_uncertainty": result.get("has_uncertainty", False),
             "reasons": result.get("reasons", []) + (["result_run_fingerprint_mismatch"] if result and not result_matches_run else []),
+            "search_status": result.get("search_status", {}),
             "execution_error": result.get("reasons") if result.get("status") == "execution_error" else None,
             "logical_calls": result.get("logical_calls", 0), "http_attempts": result.get("http_attempts", 0),
             "input_tokens": result.get("input_tokens", 0), "output_tokens": result.get("output_tokens", 0),
@@ -175,6 +195,7 @@ def report(args) -> dict:
     manifest_matches_p1 = {entry["key"]: entry for entry in record["manifest"]} == {entry["key"]: entry for entry in expected}
     real_mode = record["config"]["execution_mode"] == "dashscope"
     summary = {"run_fingerprint": record["run_fingerprint"], "execution_mode": record["config"]["execution_mode"],
+               "spec_version": record["config"]["spec_version"], "prompt_version": record["config"]["prompt_version"],
                "episode_count": len(episodes), "total_frames": sum(item["frame_count"] for item in episodes),
                "episodes": episodes, "model_accuracy": None,
                "p1_delivery_complete": real_mode and len(episodes) == 10
@@ -183,7 +204,9 @@ def report(args) -> dict:
     for field in ("logical_calls", "http_attempts", "input_tokens", "output_tokens", "elapsed_s", "provider_elapsed_s"):
         summary[field] = sum(item[field] for item in episodes)
     write_json(run / "reports/summary.json", summary)
+    write_json(run / "reports/request_images.json", {"run_fingerprint": record["run_fingerprint"], "requests": request_images})
     lines = ["# P1 experiment report", "", f"Execution mode: {summary['execution_mode']}",
+             f"Protocol: {summary['spec_version']}; prompt: {summary['prompt_version']}",
              f"Episodes: {len(episodes)}; frames: {summary['total_frames']}",
              f"Delivery complete: {summary['p1_delivery_complete']}",
              "", "Model results remain unreviewed unless a separate human review exists. No accuracy is inferred from program completion.",
@@ -193,7 +216,8 @@ def report(args) -> dict:
         lines.append(f"| {item['key']} | {boundaries} | {item['status']} | {item['review_status']} | {item['logical_calls']}/{item['http_attempts']} | {item['input_tokens']}/{item['output_tokens']} | {item['video_path'] or 'pending'} |")
     lines += ["", "## Per-episode review notes", ""]
     for item in episodes:
-        lines.append(f"- {item['key']}: visual review pending; reasons={item['reasons']}; execution_error={item['execution_error']}")
+        search = ", ".join(f"{stage}={state['status']}" for stage, state in item["search_status"].items())
+        lines.append(f"- {item['key']}: visual review pending; reasons={item['reasons']}; execution_error={item['execution_error']}; search: {search}")
     (run / "reports/phase1_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return summary
 
@@ -224,7 +248,7 @@ def main(argv=None) -> int:
         if name in ("report", "export-video"):
             command.add_argument("--export-name", help="Write/read a separate named export version while preserving prior exports")
         if name == "annotate":
-            command.add_argument("--credential-file", help="Explicit external credential file; never copied or logged")
+            command.add_argument("--credential-file", help="Explicit credential file, such as ignored .secrets/dashscope_api_key.txt; never logged")
             command.add_argument("--episode", help="Process one frozen episode key, for the initial regression check")
     args = parser.parse_args(argv)
     try:

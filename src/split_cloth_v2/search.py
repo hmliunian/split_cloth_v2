@@ -12,6 +12,7 @@ from typing import Any
 
 import numpy as np
 
+from .expert_examples import verify_expert_examples
 from .io_utils import fingerprint, read_json, sha256_file, write_json
 from .prompt import build_request
 from .results import STAGES, finalize_result, stage_labels, validate_decision
@@ -153,6 +154,10 @@ def run_search(episode_dir: Path, provider: Any, config: dict, run_fingerprint: 
     request fingerprint raises before overwriting historical search products.
     """
     episode_dir = Path(episode_dir)
+    try:
+        expert_examples = verify_expert_examples(episode_dir.parent.parent, config)
+    except (ValueError, OSError) as exc:
+        raise RunConflictError("frozen expert examples changed; use a new run") from exc
     input_info = read_json(episode_dir / "input.json")
     frame_count = input_info.get("frame_count")
     if type(frame_count) is not int or frame_count < 1:
@@ -160,7 +165,7 @@ def run_search(episode_dir: Path, provider: Any, config: dict, run_fingerprint: 
     candidate_document = read_json(episode_dir / "candidates.json")
     candidates = _validate_candidates(candidate_document.get("candidates"), frame_count)
     if config.get("search_order", [3, 2, 1]) != [3, 2, 1]:
-        raise ValueError("reverse_node_v1 requires search_order [3, 2, 1]")
+        raise ValueError("reverse-node search requires search_order [3, 2, 1]")
     evidence_document = read_json(episode_dir / "evidence" / "index.json")
     # Validate frozen image bytes before replaying or replacing any search files.
     resolved_episode = episode_dir.resolve()
@@ -178,6 +183,8 @@ def run_search(episode_dir: Path, provider: Any, config: dict, run_fingerprint: 
         "candidates": candidate_document,
         "evidence": evidence_document,
     }
+    if expert_examples is not None:
+        context["expert_examples"] = expert_examples
     context_fingerprint = fingerprint(context)
     context_path = episode_dir / "search_context.json"
     if context_path.exists():
@@ -273,7 +280,8 @@ def run_search(episode_dir: Path, provider: Any, config: dict, run_fingerprint: 
         if target_stage == 0:
             break
 
-    result = finalize_result(input_info, candidates, slots, has_uncertainty, run_fingerprint, trace, execution_error)
+    result = finalize_result(input_info, candidates, slots, has_uncertainty, run_fingerprint, trace, execution_error,
+                             spec_version=config.get("spec_version", "reverse_node_v1"))
     result["logical_calls"] = len(visited_ids)
     result["context_fingerprint"] = context_fingerprint
     result["candidate_fingerprint"] = fingerprint(candidate_document)

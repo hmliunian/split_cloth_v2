@@ -2,7 +2,9 @@
 
 新库用于实现：**夹爪 state 生成张开候选 → 程序倒序逐点调用 VLM → 找到小方块、双侧长条、单侧叠入三个结束点 → 导出四阶段划分。**
 
-已实现独立 Python 包、离线准备、逐候选倒序搜索、请求持久化与恢复、完整 MP4 导出及逐帧时间验证。日期：2026-10-23。程序验证与模型视觉质量分别记录。
+已实现独立 Python 包、离线准备、逐候选倒序搜索、请求持久化与恢复、完整 MP4 导出及逐帧时间验证。日期：2026-10-26。程序验证与模型视觉质量分别记录。
+
+已接入 `reverse_node_v2` 的[边界](boundary.md)、[架构](architecture.md)与[开发计划](DEVELOPMENT.md)：每次提供一个候选及原有局部上下文，附当前阶段的一张 expert example，判断是否“本次折叠刚完成、下一动作尚未开始”，程序倒序搜索 stage3→stage2→stage1。v2 使用 [configs/reverse_node_v2.yaml](configs/reverse_node_v2.yaml)，固定 prompt 唯一入口为 [configs/prompt.txt](configs/prompt.txt)。prepare 冻结原文、示例与摘要，annotate 核验后使用；原 v1 默认 YAML 和历史产物保留。
 
 **开发第一阶段（P1）的首次交付为 10 条不同叠衣轨迹的完整 MP4**，附边界结果、运行用量、导出验证和实验汇总。P1 是开发里程碑，与视频内的 stage1 不同。
 
@@ -16,25 +18,42 @@ uv pip install --python .venv/bin/python -e '.[test]'
 .venv/bin/python -m pytest -q
 ```
 
-本轮完整离线检查：**144 passed**。测试包括合成媒体、实际编码后重新解码、模拟 HTTP 与崩溃恢复，不访问真实 VLM。10 条真实输入的离线准备共核验 6568 帧，生成 148 个候选；000543 候选精确复现旧冻结结果，562 仅右爪张开。
+本轮完整离线检查：**197 passed**。测试包括合成媒体、实际编码后重新解码、模拟 HTTP、崩溃恢复、外置 prompt 原文与示例冻结、防篡改、六图标签、少量候选与缺槽状态，不访问真实 VLM。10 条真实输入的离线准备共核验 6568 帧，生成 148 个候选，检测器配置和结果与 v1 一致；000543 的 562 仍仅右爪张开。
 
 ## 运行
 
 ```bash
-.venv/bin/python -m split_cloth_v2.cli prepare --manifest docs/phase1_manifest.jsonl --config configs/default.yaml --run runs/<new_run_id>
-.venv/bin/python -m split_cloth_v2.cli annotate --run runs/<new_run_id> --episode fold_cloth_v3__episode_000543
-.venv/bin/python -m split_cloth_v2.cli annotate --run runs/<new_run_id>
+.venv/bin/python -m split_cloth_v2.cli prepare --manifest docs/phase1_manifest.jsonl --config configs/reverse_node_v2.yaml --run runs/<new_run_id>
+.venv/bin/python -m split_cloth_v2.cli annotate --run runs/<new_run_id> --episode fold_cloth_v3__episode_000543 --credential-file .secrets/dashscope_api_key.txt
+.venv/bin/python -m split_cloth_v2.cli annotate --run runs/<new_run_id> --credential-file .secrets/dashscope_api_key.txt
 .venv/bin/python -m split_cloth_v2.cli export-video --run runs/<new_run_id>
 .venv/bin/python -m split_cloth_v2.cli report --run runs/<new_run_id>
 ```
 
-`prepare` 完全离线。`annotate` 发送候选及上下文图像并计费，读取 `DASHSCOPE_API_KEY`，或使用 `--credential-file /absolute/external/file` 显式指定仓库外凭据。第二次 annotate 会核对指纹并重放已有判断；合法 skip/uncertain 不重问。模型、prompt、采样、检测、源码或环境变化需要新运行。
+`prepare` 完全离线。`annotate` 发送候选、上下文及当前阶段示例并计费，优先读取 `DASHSCOPE_API_KEY`，或使用显式 `--credential-file`。按用户要求，本地凭据保存在被 Git 忽略的 `.secrets/dashscope_api_key.txt`，目录权限 700、文件权限 600；内容不写入运行记录或日志。第二次 annotate 核对指纹并重放已有判断，合法 skip/uncertain 不重问。模型、prompt、示例、采样、检测、源码或环境变化需要新运行。
 
 需要完整离线模拟时，在 prepare 加 `--mock`；可加 `--mock-decisions <json>` 提供节点判断，否则返回模拟 uncertain。模拟模式明确记录，不能标记真实 P1 完成。
 
 默认输出在 `runs/<id>/videos/`。旧导出存在或导出失败时，使用 `export-video --run ... --export-name retry_01` 生成独立版本，配套 `report --run ... --export-name retry_01`；历史视频、索引和 `.part.mp4` 不覆盖。任意轨迹导出失败，命令返回非零。
 
-## 当前实验记录
+## v2 十条实际测试（2026-10-26）
+
+冻结运行：`runs/p1_reverse_node_v2_examples_20261026/`，协议 `reverse_node_v2`、prompt `node_completion_prompt_v1`。同一清单、检测器、局部取样、模型与推理参数，增加三个用户指定示例及完成时刻判据。**10 个完整 MP4 全部导出并重新解码通过，共 6568 帧，最大相对 PTS 误差 0。**
+
+真实执行 93 次逻辑请求 / 93 次 HTTP，无传输重试；输入 116,342、输出 8,434 tokens，记录的 provider 耗时 373.268 秒。程序 5 条 `complete`、5 条 `needs_review`、0 条 `execution_error`。请求图片索引、原始回答、源码副本和逐阶段搜索状态均保留，源文件摘要未变。全部新结果人工状态仍为 `unreviewed`，不从交付完成推断模型准确率。
+
+000543 为 **400 / 485 / 562**，精确参考回归通过。agent 定性复核支持 003546 的 stage1 从 406 改选 371 更接近完成动作；006453 避开旧整理节点，但新 stage1=351 仍有偏晚疑点。001776 晚选未修复，002768 / 001061 / 001372 三槽全空，004150 仅保留 stage3；002962 第三折发生在候选 367–515 的空档，state 事件或检测覆盖原因仍待核查。若干模型依据与画面不符，不能据此宣称整体质量改善。
+
+- [十条结果、用量和视频路径](runs/p1_reverse_node_v2_examples_20261026/reports/phase1_report.md)
+- [与 v1 逐条对照及未解决问题](runs/p1_reverse_node_v2_examples_20261026/reports/model_comparison.md)
+- [十条 agent 定性复核](runs/p1_reverse_node_v2_examples_20261026/reports/visual_review_summary.json)
+- [视频目录](runs/p1_reverse_node_v2_examples_20261026/videos/)
+- [逐帧视频验证](runs/p1_reverse_node_v2_examples_20261026/reports/video_verification.json)
+- [导出画面抽查](runs/p1_reverse_node_v2_examples_20261026/reports/all_video_visual_check.json)
+- [程序执行与源保护审查](runs/p1_reverse_node_v2_examples_20261026/reports/execution_audit.json)
+- [每次请求的图像索引](runs/p1_reverse_node_v2_examples_20261026/reports/request_images.json)
+
+## v1 历史实验记录
 
 正式冻结运行：`runs/p1_reverse_node_prompt_v3_20261023/`，代码 `c154ca8`，prompt 版本 `node_shape_prompt_v3`。已交付 **10 个完整 MP4**，全部重新解码验证通过，共 6568 帧，相对 PTS 最大误差为 0。请求、响应、trace、候选标签、视频及汇总均在该目录。
 
@@ -57,12 +76,13 @@ uv pip install --python .venv/bin/python -e '.[test]'
 ## 阅读顺序
 
 1. [boundary.md](boundary.md)：先读。阶段语义、任意一爪规则、搜索与输出边界。
-2. [DEVELOPMENT.md](DEVELOPMENT.md)：模块、开发步骤、状态机、产物与计划验证入口。
-3. [docs/DATA.md](docs/DATA.md)：真实输入位置、state 格式、时间轴与候选字段。
-4. [docs/PROMPT.md](docs/PROMPT.md)：短 prompt、单节点输入和 VLM 输出契约。
-5. [docs/EVALUATION.md](docs/EVALUATION.md)：000543 回归、第一阶段 10 条实验、离线测试和交付验收。
-6. [docs/LEGACY_REFERENCES.md](docs/LEGACY_REFERENCES.md)：旧代码定位、可复用部分和应删除的旧约束。
-7. [docs/VISUALIZATION.md](docs/VISUALIZATION.md)：仿照现有 MP4 导出，规定画面布局、阶段时间线、编码和验证方法。
+2. [DEVELOPMENT.md](DEVELOPMENT.md)：开发步骤、状态机、产物与计划验证入口。
+3. [architecture.md](architecture.md)：外置 prompt 配置、模块职责、数据流与冻结恢复。
+4. [docs/DATA.md](docs/DATA.md)：真实输入位置、state 格式、时间轴与候选字段。
+5. [docs/PROMPT.md](docs/PROMPT.md)：带 expert example 的单候选输入和 VLM 输出契约；固定文本见 [configs/prompt.txt](configs/prompt.txt)。
+6. [docs/EVALUATION.md](docs/EVALUATION.md)：000543 回归、第一阶段 10 条实验、离线测试和交付验收。
+7. [docs/LEGACY_REFERENCES.md](docs/LEGACY_REFERENCES.md)：旧代码定位、可复用部分和应删除的旧约束。
+8. [docs/VISUALIZATION.md](docs/VISUALIZATION.md)：仿照现有导出器的画面布局、阶段时间线、编码和验证方法。
 
 默认可视化为每条轨迹的完整 MP4：左侧原视频，右侧阶段与边界信息，底部彩色时间线。10 条都要导出，节点图作为辅助；识别不确定也保留待复核视频，不只挑成功样本。
 

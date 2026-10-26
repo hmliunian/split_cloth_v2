@@ -1,0 +1,384 @@
+{
+  "comparison_run": "p1_reverse_node_prompt_v3_20261023",
+  "episodes": [
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v3__episode_000543",
+      "program_status": "complete",
+      "qualitative_summary": "400/485/562精确回归通过；626的skip正确，但空桌被解释成平铺衣物，依据失真。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_existing.json",
+      "v1_boundaries": {
+        "stage1": 399,
+        "stage2": 485,
+        "stage3": 562
+      },
+      "v2_boundaries": {
+        "stage1": 400,
+        "stage2": 485,
+        "stage3": 562
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v3__episode_006453",
+      "program_status": "complete",
+      "qualitative_summary": "避开旧235整理节点，S2/S3形态改善；S1=351仍疑似已转向下一侧，未确认整条修复。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 3,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_existing.json",
+      "v1_boundaries": {
+        "stage1": 235,
+        "stage2": 472,
+        "stage3": 488
+      },
+      "v2_boundaries": {
+        "stage1": 351,
+        "stage2": 403,
+        "stage3": 472
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v4__episode_002768",
+      "program_status": "needs_review",
+      "qualitative_summary": "stage3未命中，S2/1未搜索；487模糊，后续成短包，存在假阴性及完成候选覆盖疑点。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 14,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_existing.json",
+      "v1_boundaries": {
+        "stage1": 211,
+        "stage2": 426,
+        "stage3": 487
+      },
+      "v2_boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v4__episode_004150",
+      "program_status": "needs_review",
+      "qualitative_summary": "仅保留S3=378；329的S2拒判疑似误用未来动作或另一爪状态；S1本轮未搜索。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 7,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 3,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_existing.json",
+      "v1_boundaries": {
+        "stage1": null,
+        "stage2": 329,
+        "stage3": 378
+      },
+      "v2_boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": 378
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v3__episode_001776",
+      "program_status": "complete",
+      "qualitative_summary": "边界未变，S1晚选仍存在；更宽源窗口显示577已在下一抓取区，局部上下文未覆盖此前折叠。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_v3_additional.json",
+      "v1_boundaries": {
+        "stage1": 577,
+        "stage2": 626,
+        "stage3": 682
+      },
+      "v2_boundaries": {
+        "stage1": 577,
+        "stage2": 626,
+        "stage3": 682
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v3__episode_002962",
+      "program_status": "needs_review",
+      "qualitative_summary": "第三折可见于367–515候选空档；无对应请求，state事件/检测覆盖原因未知，S2/1未搜索。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 9,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_v3_additional.json",
+      "v1_boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "v2_boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v3__episode_003546",
+      "program_status": "complete",
+      "qualitative_summary": "S1从406改为371，有完成动作与位置改善证据；skip406的形态解释不符画面，精确帧待人工确认。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 3,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_v3_additional.json",
+      "v1_boundaries": {
+        "stage1": 406,
+        "stage2": 457,
+        "stage3": 520
+      },
+      "v2_boundaries": {
+        "stage1": 371,
+        "stage2": 457,
+        "stage3": 520
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v4__episode_001061",
+      "program_status": "needs_review",
+      "qualitative_summary": "避开旧499搬运后误选，但423附近折短成包仍被拒，疑似stage3假阴性；S2/1未搜索。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 12,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_v4_additional.json",
+      "v1_boundaries": {
+        "stage1": 311,
+        "stage2": 423,
+        "stage3": 499
+      },
+      "v2_boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v4__episode_001372",
+      "program_status": "needs_review",
+      "qualitative_summary": "681附近有折短成包及候选，仍被判长条，疑似stage3假阴性；S2/1未搜索。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 24,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_v4_additional.json",
+      "v1_boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "v2_boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      }
+    },
+    {
+      "human_review_status": "unreviewed",
+      "key": "fold_cloth_v4__episode_001395",
+      "program_status": "complete",
+      "qualitative_summary": "边界未变，三形态有支持；S1=728相对714/717已有退离/转向，刚完成时刻仍有疑点。",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "source_report": "reports/visual_review_v4_additional.json",
+      "v1_boundaries": {
+        "stage1": 728,
+        "stage2": 805,
+        "stage3": 881
+      },
+      "v2_boundaries": {
+        "stage1": 728,
+        "stage2": 805,
+        "stage3": 881
+      }
+    }
+  ],
+  "human_confirmation_added": false,
+  "model_accuracy": null,
+  "offline_tests_passed": 197,
+  "p1_delivery_complete": true,
+  "program_status_counts": {
+    "complete": 5,
+    "needs_review": 5
+  },
+  "run_fingerprint": "7607b2e1402bfff4af8b1f4314238c9edb83025cbda69372d64dce2f809187d7"
+}

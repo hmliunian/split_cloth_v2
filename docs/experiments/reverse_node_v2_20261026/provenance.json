@@ -1,0 +1,27 @@
+{
+  "archive_scope": "Compact results, candidates, validated decisions and diagnostic conclusions; large media and raw state remain local in ignored runs/.",
+  "frozen_run_git_commit": "a36fb1acd48043577547e9d8c2ea51672f07ed4e",
+  "historical_review_refinement": "missing_selection.json supplements earlier qualitative model_comparison.json; 001372 early opening filtering is now confirmed.",
+  "implementation_commit": "677d98a",
+  "implementation_source_matches_frozen_run": true,
+  "prompt_sha256": "2fefd0af67e8de3a1d6ff1a7250eb9bf47043ec99329cb640cccc817c352b9fd",
+  "prompt_version": "node_completion_prompt_v1",
+  "run_fingerprint": "7607b2e1402bfff4af8b1f4314238c9edb83025cbda69372d64dce2f809187d7",
+  "source_digest": "65c4af94eaf671720130a59a396d79a8b61b4bc7261f0b0fbd5b8ed7281ba882",
+  "source_records": {
+    "runs/missing_selection_diagnosis_20261026/001372_detector_audit.json": "1d60bf6d2658a7e5c02b92ae770d275bfbecd84857830311bfdc56e25947b4bf",
+    "runs/missing_selection_diagnosis_20261026/002962_diagnosis.json": "a2240504ffb8a9545eeab0b39452f7ffe0d0e274a57cd833c0e0e95eca7a70eb",
+    "runs/missing_selection_diagnosis_20261026/control_flow.json": "c59c4151646a6e1bb7a80acad66a2a51e1a79e2a473a3a0a95e003e7aa5b0571",
+    "runs/missing_selection_diagnosis_20261026/v4_001061_001372_diagnosis.json": "da0bd2154b702e909a4ae5f02e76e5fba90e64d9d2c4ac28b27ea6aecdd4cbbd",
+    "runs/missing_selection_diagnosis_20261026/v4_002768_004150_diagnosis.json": "8bf115eff83a16245823b13202f238d4ea61bc7a5417fb525a5079144307f2dd",
+    "runs/p1_reverse_node_v2_examples_20261026/reports/delivery_check.json": "61be4af766f8006217eb5de225995900ea3b4271f3dd9df23434899fd447c887",
+    "runs/p1_reverse_node_v2_examples_20261026/reports/execution_audit.json": "98a39c6f211b9d0d43f98f1dfd54117cb72be8e7ab057c388de28be004adece7",
+    "runs/p1_reverse_node_v2_examples_20261026/reports/model_comparison.json": "7cee7531f418bd14a8752acfac80fbec198ba2c52f748a7a59d2ded203040ad3",
+    "runs/p1_reverse_node_v2_examples_20261026/reports/offline_validation.json": "6854605135a52d636705737f5c3de9d75af4b0cc3259509af1cd47b8664e1ccc",
+    "runs/p1_reverse_node_v2_examples_20261026/reports/summary.json": "2243fede64cd709352e6042c5e44d553d14786c9a3e89cd6936803912e623c2e",
+    "runs/p1_reverse_node_v2_examples_20261026/reports/video_verification.json": "231a1606c6219b0135a256ffd8453efcd391fd609417e8a9f893a915e3fdf7fa",
+    "runs/p1_reverse_node_v2_examples_20261026/run.json": "afa36288cfafd360be0cc7269d2abde10143ef12407037aa75b80864b5b6d702"
+  },
+  "source_run": "p1_reverse_node_v2_examples_20261026",
+  "spec_version": "reverse_node_v2"
+}

@@ -1,0 +1,123 @@
+{
+  "credential_absent_from_run_records": true,
+  "episodes": [
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 4,
+      "key": "fold_cloth_v3__episode_000543",
+      "logical_calls": 4,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 5,
+      "key": "fold_cloth_v3__episode_006453",
+      "logical_calls": 5,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 14,
+      "key": "fold_cloth_v4__episode_002768",
+      "logical_calls": 14,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 10,
+      "key": "fold_cloth_v4__episode_004150",
+      "logical_calls": 10,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 4,
+      "key": "fold_cloth_v3__episode_001776",
+      "logical_calls": 4,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 9,
+      "key": "fold_cloth_v3__episode_002962",
+      "logical_calls": 9,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 7,
+      "key": "fold_cloth_v3__episode_003546",
+      "logical_calls": 7,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 12,
+      "key": "fold_cloth_v4__episode_001061",
+      "logical_calls": 12,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 24,
+      "key": "fold_cloth_v4__episode_001372",
+      "logical_calls": 24,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    },
+    {
+      "candidates_equal_v1": true,
+      "http_attempts": 4,
+      "key": "fold_cloth_v4__episode_001395",
+      "logical_calls": 4,
+      "passed": true,
+      "single_current_candidate_and_example": true,
+      "source_unchanged": true,
+      "unique_semantic_judgments": true
+    }
+  ],
+  "human_confirmation": "No new human boundary review recorded",
+  "model_accuracy": null,
+  "passed": true,
+  "regression_000543": {
+    "actual": [
+      400,
+      485,
+      562
+    ],
+    "passed": true,
+    "reference": [
+      400,
+      485,
+      562
+    ]
+  },
+  "run_fingerprint": "7607b2e1402bfff4af8b1f4314238c9edb83025cbda69372d64dce2f809187d7",
+  "source_and_frozen_assets_verified": true
+}

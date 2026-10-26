@@ -74,6 +74,8 @@ def finalize_result(
     run_fingerprint: str,
     trace: list[dict],
     execution_error: str | None = None,
+    *,
+    spec_version: str = "reverse_node_v1",
 ) -> dict:
     """Build an unreviewed automatic result without claiming visual correctness."""
     frame_count = input_info["frame_count"]
@@ -94,15 +96,44 @@ def finalize_result(
         reasons.append("uncertain_decision")
     if execution_error:
         reasons.append(execution_error)
+    # The target enters stage3 even when there are no candidates. A match
+    # enters the preceding target before the next iteration, which can then
+    # exhaust without making a request. Lower targets are not independently
+    # searched when a later stage never matched.
+    entered = {3}
+    for row in trace:
+        if row.get("target_stage") in (1, 2, 3):
+            entered.add(row["target_stage"])
+        if row.get("next_target_stage") in (1, 2, 3):
+            entered.add(row["next_target_stage"])
+    search_status = {}
+    for number in (1, 2, 3):
+        stage = f"stage{number}"
+        rows = [row for row in trace if row.get("target_stage") == number]
+        if slots[stage] is not None:
+            stage_status, reason = "selected", None
+        elif number not in entered:
+            stage_status, reason = "not_searched", "later_stage_not_selected"
+        elif any(row.get("event") == "execution_error" for row in rows):
+            stage_status, reason = "execution_error", "search_interrupted"
+        else:
+            stage_status, reason = "searched_not_found", "candidates_exhausted"
+        search_status[stage] = {
+            "status": stage_status,
+            "reason": reason,
+            "logical_calls": sum(row.get("event") in ("decision", "execution_error") for row in rows),
+            "uncertain_count": sum(row.get("decision") == "uncertain" for row in rows),
+        }
     status = "execution_error" if execution_error else (
         "complete" if intervals is not None and not has_uncertainty else "needs_review"
     )
     return {
-        "spec_version": "reverse_node_v1",
+        "spec_version": spec_version,
         "key": input_info.get("key"),
         "frame_count": frame_count,
         "run_fingerprint": run_fingerprint,
         "slots": slots,
+        "search_status": search_status,
         "intervals": intervals,
         "status": status,
         "has_uncertainty": bool(has_uncertainty),

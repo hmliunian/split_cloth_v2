@@ -1,0 +1,139 @@
+{
+  "direct_searched_not_found_slots": 5,
+  "episodes": [
+    {
+      "candidate_issue_confirmed": true,
+      "classification": "candidate_filtering_confirmed",
+      "evidence": {
+        "allowed_retreat": 0.005887660325,
+        "crossing_frame": 426,
+        "minimum_excursion": 0.005887660325,
+        "peak_frame": 427,
+        "peak_raw": 0.06396228075,
+        "retreat_amount": 0.006516229361,
+        "retreat_frame": 429,
+        "retreat_raw": 0.057446051389,
+        "second_crossing_frame": 439,
+        "second_retained_excursion": 0.00215639919,
+        "stable_window": [
+          430,
+          437
+        ]
+      },
+      "key": "fold_cloth_v3__episode_002962",
+      "missing_target": "stage3",
+      "model_misrejection_confirmed": false,
+      "model_rejection_confirmed": true,
+      "summary": "末折附近原始右爪有张开并通过多阈值crossing，但426/439事件均未通过settled确认；367到515之间无最终candidate，VLM未收到本次完成窗口。",
+      "uncertainty": "未标定物理完全释放首帧及人工正确结束帧。"
+    },
+    {
+      "candidate_issue_confirmed": false,
+      "classification": "candidate_rejected_completion_timing_unconfirmed",
+      "evidence": {
+        "all_stage3_skips": 12,
+        "candidate_frame": 423,
+        "decision": "skip",
+        "opening_arms": [
+          "right"
+        ],
+        "stable_window": [
+          423,
+          425
+        ],
+        "target_stage": 3
+      },
+      "key": "fold_cloth_v4__episode_001061",
+      "missing_target": "stage3",
+      "model_misrejection_confirmed": false,
+      "model_rejection_confirmed": true,
+      "summary": "423右爪张开candidate确已送stage3并skip；模型称仍是长条，但图像已有折短过程。主要指向VLM形态/完成判定，423是否略早保留不确定。",
+      "uncertainty": "425到429衣物更稳，但没有独立candidate；不能单凭模型形态解释错就认定423必须match。"
+    },
+    {
+      "candidate_issue_confirmed": true,
+      "classification": "mixed_candidate_filtering_and_later_candidate_rejection",
+      "evidence": {
+        "all_stage3_skips": 24,
+        "allowed_retreat": 0.0057463568,
+        "decision": "skip",
+        "filtered_crossing_frame": 662,
+        "later_candidate_frame": 681,
+        "peak_raw": 0.0518207736,
+        "retreat_amount": 0.0086498298,
+        "retreat_frame": 664,
+        "retreat_raw": 0.0431709439,
+        "stable_window": [
+          666,
+          677
+        ],
+        "target_stage": 3
+      },
+      "key": "fold_cloth_v4__episode_001372",
+      "missing_target": "stage3",
+      "model_misrejection_confirmed": false,
+      "model_rejection_confirmed": true,
+      "summary": "较早662右爪opening被settled过滤，较晚681右爪candidate进入stage3后skip。两条链路并存；681可能已偏晚，不能直接认定纯VLM误拒。",
+      "uncertainty": "681是释放相连轻退还是已进入后续动作，尚无人工确认；这修正先前将681主要判为模型假阴性的较强解释。"
+    },
+    {
+      "candidate_issue_confirmed": false,
+      "classification": "candidate_rejected_with_visibility_and_timing_ambiguity",
+      "evidence": {
+        "all_stage3_skips": 14,
+        "candidate_frame": 487,
+        "decision": "skip",
+        "next_candidate_frame": 560,
+        "open_through_frame": 517,
+        "opening_arms": [
+          "right"
+        ],
+        "stable_window": [
+          487,
+          489
+        ],
+        "target_stage": 3
+      },
+      "key": "fold_cloth_v4__episode_002768",
+      "missing_target": "stage3",
+      "model_misrejection_confirmed": false,
+      "model_rejection_confirmed": true,
+      "summary": "487右爪release已入candidate且被skip；该帧处于落布、遮挡和模糊，489到500更清楚但没有新candidate。是拒判与代表帧可见性/时刻的混合问题。",
+      "uncertainty": "不能确定487已满足刚完成，亦不能把后续短包直接证明当前必须match；未见这次release被检测漏掉。"
+    },
+    {
+      "candidate_issue_confirmed": false,
+      "classification": "candidate_rejected_strong_misrejection_evidence",
+      "evidence": {
+        "all_stage2_skips": 7,
+        "candidate_frame": 329,
+        "decision": "skip",
+        "left_raw": 0.058075,
+        "opening_arms": [
+          "left",
+          "right"
+        ],
+        "right_raw": 0.068463,
+        "selected_stage3": 378,
+        "stable_window": [
+          329,
+          332
+        ],
+        "target_stage": 2
+      },
+      "key": "fold_cloth_v4__episode_004150",
+      "missing_target": "stage2",
+      "model_misrejection_confirmed": false,
+      "model_rejection_confirmed": true,
+      "summary": "329已是长条且双爪张开平台，candidate送stage2后仍skip；模型以右爪紧抓及+1秒后提起来否决当前。state与视频强烈支持误拒疑点。",
+      "uncertainty": "误拒是有较强证据的agent判断，尚非人工正确帧确认。"
+    }
+  ],
+  "human_confirmation_added": false,
+  "missing_slots": 14,
+  "new_provider_calls": 0,
+  "not_searched_slots": 9,
+  "source_or_config_modified": false,
+  "source_run": "p1_reverse_node_v2_examples_20261026",
+  "source_run_fingerprint": "7607b2e1402bfff4af8b1f4314238c9edb83025cbda69372d64dce2f809187d7"
+}

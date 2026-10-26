@@ -1,0 +1,1100 @@
+{
+  "candidate_count": 148,
+  "episodes": [
+    {
+      "key": "fold_cloth_v3__episode_000543",
+      "nodes": [
+        {
+          "frame": 22,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 76,
+          "node_id": "n0001",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 167,
+          "node_id": "n0002",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 169,
+          "node_id": "n0003",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 273,
+          "node_id": "n0004",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 274,
+          "node_id": "n0005",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 399,
+          "node_id": "n0006",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 400,
+          "node_id": "n0007",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 485,
+          "node_id": "n0008",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 562,
+          "node_id": "n0009",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 626,
+          "node_id": "n0010",
+          "opening_arms": [
+            "right"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v3__episode_006453",
+      "nodes": [
+        {
+          "frame": 7,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 42,
+          "node_id": "n0001",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 47,
+          "node_id": "n0002",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 121,
+          "node_id": "n0003",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 192,
+          "node_id": "n0004",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 213,
+          "node_id": "n0005",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 235,
+          "node_id": "n0006",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 330,
+          "node_id": "n0007",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 331,
+          "node_id": "n0008",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 351,
+          "node_id": "n0009",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 403,
+          "node_id": "n0010",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 472,
+          "node_id": "n0011",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 488,
+          "node_id": "n0012",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 541,
+          "node_id": "n0013",
+          "opening_arms": [
+            "right"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v4__episode_002768",
+      "nodes": [
+        {
+          "frame": 12,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 62,
+          "node_id": "n0001",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 63,
+          "node_id": "n0002",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 135,
+          "node_id": "n0003",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 136,
+          "node_id": "n0004",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 150,
+          "node_id": "n0005",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 209,
+          "node_id": "n0006",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 211,
+          "node_id": "n0007",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 334,
+          "node_id": "n0008",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 338,
+          "node_id": "n0009",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 425,
+          "node_id": "n0010",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 426,
+          "node_id": "n0011",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 487,
+          "node_id": "n0012",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 560,
+          "node_id": "n0013",
+          "opening_arms": [
+            "right"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v4__episode_004150",
+      "nodes": [
+        {
+          "frame": 59,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 125,
+          "node_id": "n0001",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 179,
+          "node_id": "n0002",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 181,
+          "node_id": "n0003",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 272,
+          "node_id": "n0004",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 274,
+          "node_id": "n0005",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 329,
+          "node_id": "n0006",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 378,
+          "node_id": "n0007",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 448,
+          "node_id": "n0008",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 464,
+          "node_id": "n0009",
+          "opening_arms": [
+            "left"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v3__episode_001776",
+      "nodes": [
+        {
+          "frame": 33,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 82,
+          "node_id": "n0001",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 116,
+          "node_id": "n0002",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 180,
+          "node_id": "n0003",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 261,
+          "node_id": "n0004",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 327,
+          "node_id": "n0005",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 408,
+          "node_id": "n0006",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 453,
+          "node_id": "n0007",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 534,
+          "node_id": "n0008",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 536,
+          "node_id": "n0009",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 577,
+          "node_id": "n0010",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 626,
+          "node_id": "n0011",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 682,
+          "node_id": "n0012",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 764,
+          "node_id": "n0013",
+          "opening_arms": [
+            "right"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v3__episode_002962",
+      "nodes": [
+        {
+          "frame": 28,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 76,
+          "node_id": "n0001",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 114,
+          "node_id": "n0002",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 167,
+          "node_id": "n0003",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 203,
+          "node_id": "n0004",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 285,
+          "node_id": "n0005",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 366,
+          "node_id": "n0006",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 367,
+          "node_id": "n0007",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 515,
+          "node_id": "n0008",
+          "opening_arms": [
+            "right"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v3__episode_003546",
+      "nodes": [
+        {
+          "frame": 29,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 63,
+          "node_id": "n0001",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 96,
+          "node_id": "n0002",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 125,
+          "node_id": "n0003",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 176,
+          "node_id": "n0004",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 246,
+          "node_id": "n0005",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 247,
+          "node_id": "n0006",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 283,
+          "node_id": "n0007",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 371,
+          "node_id": "n0008",
+          "opening_arms": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "frame": 406,
+          "node_id": "n0009",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 451,
+          "node_id": "n0010",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 457,
+          "node_id": "n0011",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 507,
+          "node_id": "n0012",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 520,
+          "node_id": "n0013",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 587,
+          "node_id": "n0014",
+          "opening_arms": [
+            "right"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v4__episode_001061",
+      "nodes": [
+        {
+          "frame": 45,
+          "node_id": "n0000",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 78,
+          "node_id": "n0001",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 158,
+          "node_id": "n0002",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 160,
+          "node_id": "n0003",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 274,
+          "node_id": "n0004",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 276,
+          "node_id": "n0005",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 311,
+          "node_id": "n0006",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 361,
+          "node_id": "n0007",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 363,
+          "node_id": "n0008",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 423,
+          "node_id": "n0009",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 499,
+          "node_id": "n0010",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 514,
+          "node_id": "n0011",
+          "opening_arms": [
+            "left"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v4__episode_001372",
+      "nodes": [
+        {
+          "frame": 9,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 15,
+          "node_id": "n0001",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 38,
+          "node_id": "n0002",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 64,
+          "node_id": "n0003",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 115,
+          "node_id": "n0004",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 116,
+          "node_id": "n0005",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 176,
+          "node_id": "n0006",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 177,
+          "node_id": "n0007",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 201,
+          "node_id": "n0008",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 268,
+          "node_id": "n0009",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 269,
+          "node_id": "n0010",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 366,
+          "node_id": "n0011",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 367,
+          "node_id": "n0012",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 383,
+          "node_id": "n0013",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 410,
+          "node_id": "n0014",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 498,
+          "node_id": "n0015",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 499,
+          "node_id": "n0016",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 515,
+          "node_id": "n0017",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 541,
+          "node_id": "n0018",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 598,
+          "node_id": "n0019",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 601,
+          "node_id": "n0020",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 606,
+          "node_id": "n0021",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 681,
+          "node_id": "n0022",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 738,
+          "node_id": "n0023",
+          "opening_arms": [
+            "right"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fold_cloth_v4__episode_001395",
+      "nodes": [
+        {
+          "frame": 26,
+          "node_id": "n0000",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 31,
+          "node_id": "n0001",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 71,
+          "node_id": "n0002",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 74,
+          "node_id": "n0003",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 139,
+          "node_id": "n0004",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 142,
+          "node_id": "n0005",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 185,
+          "node_id": "n0006",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 240,
+          "node_id": "n0007",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 242,
+          "node_id": "n0008",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 368,
+          "node_id": "n0009",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 369,
+          "node_id": "n0010",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 383,
+          "node_id": "n0011",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 462,
+          "node_id": "n0012",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 465,
+          "node_id": "n0013",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 521,
+          "node_id": "n0014",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 580,
+          "node_id": "n0015",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 582,
+          "node_id": "n0016",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 598,
+          "node_id": "n0017",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 619,
+          "node_id": "n0018",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 714,
+          "node_id": "n0019",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 717,
+          "node_id": "n0020",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 728,
+          "node_id": "n0021",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 800,
+          "node_id": "n0022",
+          "opening_arms": [
+            "left"
+          ]
+        },
+        {
+          "frame": 805,
+          "node_id": "n0023",
+          "opening_arms": [
+            "right"
+          ]
+        },
+        {
+          "frame": 881,
+          "node_id": "n0024",
+          "opening_arms": [
+            "right"
+          ]
+        }
+      ]
+    }
+  ]
+}

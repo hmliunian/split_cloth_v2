@@ -1,0 +1,21 @@
+{
+  "all_pts_checks_passed": true,
+  "broken_document_links": [],
+  "credential_absent_from_tracked_or_visible_worktree_files": true,
+  "credential_git_ignored": true,
+  "display_checks_passed": true,
+  "execution_audit_passed": true,
+  "full_videos": 10,
+  "http_attempts": 93,
+  "human_review_status": "unreviewed",
+  "logical_calls": 93,
+  "max_pts_error_s": 0.0,
+  "model_accuracy": null,
+  "offline_tests_passed": 197,
+  "p1_program_delivery_complete": true,
+  "passed": true,
+  "qualitative_reviews": 10,
+  "real_episodes": 10,
+  "request_image_records": 93,
+  "total_verified_frames": 6568
+}

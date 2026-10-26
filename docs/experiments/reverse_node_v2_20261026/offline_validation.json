@@ -1,0 +1,10 @@
+{
+  "command": ".venv/bin/python -m pytest -q",
+  "duration_s": 10.46,
+  "failed": 0,
+  "git_diff_check": "passed",
+  "network_used": false,
+  "passed": 197,
+  "scope": "Program behavior only; not model accuracy",
+  "source_digest": "65c4af94eaf671720130a59a396d79a8b61b4bc7261f0b0fbd5b8ed7281ba882"
+}

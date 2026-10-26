@@ -191,12 +191,14 @@ P1 交付验收：
 | v4 / 002768 | null / null / null | needs_review | 487的stage3拒判有疑点，当前模糊而后续已成短包；S2/1未搜索，不能算旧准备误选已解决。 |
 | v4 / 004150 | null / null / 378 | needs_review | S3有支持；329的S2拒判疑似误用未来动作或另一爪状态，S1本轮未搜索。 |
 | v3 / 001776 | 577 / 626 / 682 | complete | S1仍晚，局部557–597未覆盖更早完成过程；该问题未修复。 |
-| v3 / 002962 | null / null / null | needs_review | 第三折在367–515无候选窗口内可见，尚未确认是无state事件还是检测漏检；S2/1未搜索。 |
+| v3 / 002962 | null / null / null | needs_review | 后续state重放确认426/439张开crossing均被settled过滤，367–515缺候选；S2/1未搜索。 |
 | v3 / 003546 | 371 / 457 / 520 | complete | 406→371有动作位置改善证据，无精确人工真值；skip406的形态理由与画面不符。 |
 | v4 / 001061 | null / null / null | needs_review | 避开旧499搬运后误选，但423附近已有折短过程，stage3假阴性疑点未解决；S2/1未搜索。 |
-| v4 / 001372 | null / null / null | needs_review | 681附近由长条折成短包，有候选而仍拒判，存在stage3假阴性疑点；S2/1未搜索。 |
+| v4 / 001372 | null / null / null | needs_review | 后续state重放确认较早662张开被settled过滤；较晚681虽被拒但时刻可能偏晚，属于候选覆盖与拒判混合，不能直接判纯假阴性；S2/1未搜索。 |
 | v4 / 001395 | 728 / 805 / 881 | complete | 三种形态有支持，S1=728相对714/717已有退离/转向，完成时刻仍待人工确认。 |
 
 agent 复核结合实际请求图像和部分更宽的源帧窗口，属于定性评估，不充当新增人工真值。现有证据支持局部改善，也发现新的缺槽和仍未解决的晚选，不能宣称整体质量提升。没有改写模型边界、移动候选或在同配置下重复请求换答案。
 
 完整材料见该运行的 `reports/phase1_report.md`、`model_comparison.md`、`visual_review_summary.json`、`request_images.json`、`execution_audit.json`、`video_verification.json` 和 `videos/`；离线检查记录为 `reports/offline_validation.json`。原始响应、实际示例及源码副本均保留。
+
+后续漏选诊断保存在 `runs/missing_selection_diagnosis_20261026/`，未新增模型调用或修改代码、配置、候选。14个空槽中5个直接搜索耗尽、9个未进入对应阶段搜索；详细候选过滤、实际拒判和时刻不确定性见[版本化实验归档](experiments/reverse_node_v2_20261026/README.md)。原运行的首次定性报告保持只读，以新增诊断收紧此前对001372的归因。

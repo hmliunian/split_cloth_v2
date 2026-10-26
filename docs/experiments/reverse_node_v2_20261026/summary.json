@@ -1,0 +1,647 @@
+{
+  "elapsed_s": 364.9982307795435,
+  "episode_count": 10,
+  "episodes": [
+    {
+      "boundaries": {
+        "stage1": 400,
+        "stage2": 485,
+        "stage3": 562
+      },
+      "elapsed_s": 0.027607946656644344,
+      "execution_error": null,
+      "frame_count": 681,
+      "has_uncertainty": false,
+      "http_attempts": 4,
+      "input_tokens": 5085,
+      "key": "fold_cloth_v3__episode_000543",
+      "logical_calls": 4,
+      "output_tokens": 361,
+      "provider_elapsed_s": 16.225243999999996,
+      "reasons": [],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "status": "complete",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v3__episode_000543__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 681,
+        "last_pts_s": 34.0,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 351,
+        "stage2": 403,
+        "stage3": 472
+      },
+      "elapsed_s": 21.625653330236673,
+      "execution_error": null,
+      "frame_count": 573,
+      "has_uncertainty": false,
+      "http_attempts": 5,
+      "input_tokens": 6323,
+      "key": "fold_cloth_v3__episode_006453",
+      "logical_calls": 5,
+      "output_tokens": 496,
+      "provider_elapsed_s": 21.139581,
+      "reasons": [],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 3,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "status": "complete",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v3__episode_006453__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 573,
+        "last_pts_s": 28.6,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "elapsed_s": 57.81667852308601,
+      "execution_error": null,
+      "frame_count": 595,
+      "has_uncertainty": false,
+      "http_attempts": 14,
+      "input_tokens": 17332,
+      "key": "fold_cloth_v4__episode_002768",
+      "logical_calls": 14,
+      "output_tokens": 1242,
+      "provider_elapsed_s": 56.56842300000001,
+      "reasons": [
+        "missing_stage1",
+        "missing_stage2",
+        "missing_stage3"
+      ],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 14,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        }
+      },
+      "status": "needs_review",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v4__episode_002768__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 595,
+        "last_pts_s": 29.7,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": 378
+      },
+      "elapsed_s": 42.076870737597346,
+      "execution_error": null,
+      "frame_count": 483,
+      "has_uncertainty": false,
+      "http_attempts": 10,
+      "input_tokens": 12688,
+      "key": "fold_cloth_v4__episode_004150",
+      "logical_calls": 10,
+      "output_tokens": 955,
+      "provider_elapsed_s": 41.18147400000001,
+      "reasons": [
+        "missing_stage1",
+        "missing_stage2"
+      ],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 7,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 3,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "status": "needs_review",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v4__episode_004150__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 483,
+        "last_pts_s": 24.1,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 577,
+        "stage2": 626,
+        "stage3": 682
+      },
+      "elapsed_s": 15.445396180264652,
+      "execution_error": null,
+      "frame_count": 786,
+      "has_uncertainty": false,
+      "http_attempts": 4,
+      "input_tokens": 5085,
+      "key": "fold_cloth_v3__episode_001776",
+      "logical_calls": 4,
+      "output_tokens": 396,
+      "provider_elapsed_s": 15.107992,
+      "reasons": [],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "status": "complete",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v3__episode_001776__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 786,
+        "last_pts_s": 39.25,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "elapsed_s": 37.17065188661218,
+      "execution_error": null,
+      "frame_count": 544,
+      "has_uncertainty": false,
+      "http_attempts": 9,
+      "input_tokens": 11142,
+      "key": "fold_cloth_v3__episode_002962",
+      "logical_calls": 9,
+      "output_tokens": 770,
+      "provider_elapsed_s": 36.415738,
+      "reasons": [
+        "missing_stage1",
+        "missing_stage2",
+        "missing_stage3"
+      ],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 9,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        }
+      },
+      "status": "needs_review",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v3__episode_002962__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 544,
+        "last_pts_s": 27.15,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 371,
+        "stage2": 457,
+        "stage3": 520
+      },
+      "elapsed_s": 29.751293398439884,
+      "execution_error": null,
+      "frame_count": 620,
+      "has_uncertainty": false,
+      "http_attempts": 7,
+      "input_tokens": 9021,
+      "key": "fold_cloth_v3__episode_003546",
+      "logical_calls": 7,
+      "output_tokens": 728,
+      "provider_elapsed_s": 29.141584,
+      "reasons": [],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 3,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "status": "complete",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v3__episode_003546__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 620,
+        "last_pts_s": 30.95,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "elapsed_s": 48.94186378270388,
+      "execution_error": null,
+      "frame_count": 540,
+      "has_uncertainty": false,
+      "http_attempts": 12,
+      "input_tokens": 14856,
+      "key": "fold_cloth_v4__episode_001061",
+      "logical_calls": 12,
+      "output_tokens": 1035,
+      "provider_elapsed_s": 47.85131699999999,
+      "reasons": [
+        "missing_stage1",
+        "missing_stage2",
+        "missing_stage3"
+      ],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 12,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        }
+      },
+      "status": "needs_review",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v4__episode_001061__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 540,
+        "last_pts_s": 26.95,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "elapsed_s": 93.34225721098483,
+      "execution_error": null,
+      "frame_count": 781,
+      "has_uncertainty": false,
+      "http_attempts": 24,
+      "input_tokens": 29636,
+      "key": "fold_cloth_v4__episode_001372",
+      "logical_calls": 24,
+      "output_tokens": 2029,
+      "provider_elapsed_s": 91.18301600000002,
+      "reasons": [
+        "missing_stage1",
+        "missing_stage2",
+        "missing_stage3"
+      ],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 0,
+          "reason": "later_stage_not_selected",
+          "status": "not_searched",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 24,
+          "reason": "candidates_exhausted",
+          "status": "searched_not_found",
+          "uncertain_count": 0
+        }
+      },
+      "status": "needs_review",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v4__episode_001372__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 781,
+        "last_pts_s": 39.0,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 728,
+        "stage2": 805,
+        "stage3": 881
+      },
+      "elapsed_s": 18.799957782961428,
+      "execution_error": null,
+      "frame_count": 965,
+      "has_uncertainty": false,
+      "http_attempts": 4,
+      "input_tokens": 5174,
+      "key": "fold_cloth_v4__episode_001395",
+      "logical_calls": 4,
+      "output_tokens": 422,
+      "provider_elapsed_s": 18.453838,
+      "reasons": [],
+      "returned_models": [
+        "qwen3.8-max-0902"
+      ],
+      "review_status": "unreviewed",
+      "search_status": {
+        "stage1": {
+          "logical_calls": 2,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage2": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        },
+        "stage3": {
+          "logical_calls": 1,
+          "reason": null,
+          "status": "selected",
+          "uncertain_count": 0
+        }
+      },
+      "status": "complete",
+      "video_path": "/gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/split_cloth_v2/runs/p1_reverse_node_v2_examples_20261026/videos/fold_cloth_v4__episode_001395__candidates.mp4",
+      "video_verification": {
+        "audio_streams": 0,
+        "codec": "h264",
+        "first_pts_s": 0.0,
+        "frame_count": 965,
+        "last_pts_s": 48.2,
+        "max_pts_error_s": 0.0,
+        "passed": true,
+        "pixel_format": "yuv420p",
+        "pts_tolerance_s": 1.1112111111111112e-05,
+        "size": [
+          1280,
+          720
+        ]
+      },
+      "video_verified": true,
+      "visual_assessment": "pending_human_review"
+    }
+  ],
+  "execution_mode": "dashscope",
+  "http_attempts": 93,
+  "input_tokens": 116342,
+  "logical_calls": 93,
+  "model_accuracy": null,
+  "output_tokens": 8434,
+  "p1_delivery_complete": true,
+  "prompt_version": "node_completion_prompt_v1",
+  "provider_elapsed_s": 373.268207,
+  "run_fingerprint": "7607b2e1402bfff4af8b1f4314238c9edb83025cbda69372d64dce2f809187d7",
+  "spec_version": "reverse_node_v2",
+  "total_frames": 6568
+}

@@ -1,5 +1,7 @@
 # 新库边界与阶段契约
 
+2026-10-27 按用户要求重新从 `origin/main`（5306d01）建立独立分支，只迁移 stage3 prompt。实验入口 `configs/reverse_node_v2_stage3_shape_guard.yaml` 继续使用本页 `reverse_node_v2` 原流程：只遍历 state 张开候选，耗尽即停止。固定文本 `configs/prompt_stage3_shape_guard.txt` 保留折回覆盖与长方形短包说明，并明确排除已经成包后的按压、整理或搬运再释放；不把形态匹配作为动作时刻通过的充分条件。是否减少误拒且避免晚选以同十条新运行验证，不预先声称无误选。
+
 协议：`reverse_node_v2`。日期：2026-10-26。状态：v2 已接入独立包和 CLI，配置入口为 [configs/reverse_node_v2.yaml](configs/reverse_node_v2.yaml)，离线检查 197 passed。`configs/default.yaml` 和历史实验保留 v1；真实十条实验、视频交付与模型质量另见 [README.md](README.md) 及运行报告。本文是业务契约，实现与验证入口见 [DEVELOPMENT.md](DEVELOPMENT.md)。
 
 本文以用户明确的阶段形态、任意一爪张开、expert examples 和逐候选判断方式为依据，是新库业务语义的唯一规范。核心目标是选择“本次折叠刚完成，下一动作尚未开始”的张开候选。旧库中的双手释放、整段一次推理等规则不得自动带入。

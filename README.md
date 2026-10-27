@@ -1,5 +1,9 @@
 # split_cloth_v2
 
+当前分支 `experiment/main-stage3-prompt-20261027` 从重新 fetch 的 `origin/main`（5306d01）建立，只实验 stage3 prompt。入口为 [reverse_node_v2_stage3_shape_guard.yaml](configs/reverse_node_v2_stage3_shape_guard.yaml)，文本为 [prompt_stage3_shape_guard.txt](configs/prompt_stage3_shape_guard.txt)。保留折回覆盖与长方形短包说明，明确排除成包后整理或搬运再释放；使用 main 的 state 张开候选，耗尽即停止。
+
+同样十条的新运行位于 `runs/p1_main_stage3_prompt_20261027/`。prepare 时将下文配置路径替换为 `configs/reverse_node_v2_stage3_shape_guard.yaml`；模型、检测、单张示例、五帧局部上下文及程序代码均沿用 main。结果完整导出后交由用户查看，程序状态不代表已确认准确率。
+
 新库用于实现：**夹爪 state 生成张开候选 → 程序倒序逐点调用 VLM → 找到小方块、双侧长条、单侧叠入三个结束点 → 导出四阶段划分。**
 
 已实现独立 Python 包、离线准备、逐候选倒序搜索、请求持久化与恢复、完整 MP4 导出及逐帧时间验证。日期：2026-10-26。程序验证与模型视觉质量分别记录。

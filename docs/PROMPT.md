@@ -1,5 +1,9 @@
 # 带 expert example 的单候选 VLM 接口
 
+当前 main 派生实验使用 `configs/prompt_stage3_shape_guard.txt`，版本 `node_completion_stage3_shape_guard_v1`。仅修改 stage3 的形态定义并增加 stage3 专用说明：折回覆盖、长度缩短可形成长方形短包；若成包后又发生按压、抹平、整理、重抓或搬运等动作，之后的张开应 skip；只有形态而无法确认动作归属时 uncertain。它是依据此前整份 prompt 的结果做的保守拆分，尚不能将效果归因于单句文字。
+
+stage1/2 原有规则、单张目标示例、五帧局部上下文、user 模板及四字段格式均沿用 main。固定全文随每个目标发送，因此不声称 stage1/2 的完整 system 消息字节不变。推理程序、候选与耗尽行为均未改，只有这一轮的新配置选择新文本。原 `configs/prompt.txt` 和历史运行保持原样。
+
 prompt：`node_completion_prompt_v1`；协议：`reverse_node_v2`；日期：2026-10-26。已通过 [configs/reverse_node_v2.yaml](../configs/reverse_node_v2.yaml) 接入 [configs/prompt.txt](../configs/prompt.txt)、固定局部上下文与当前阶段示例。对应 [边界契约](../boundary.md)和[运行架构](../architecture.md)。`configs/default.yaml` 及包内 `node_shape_prompt_v3.txt` 保留 v1。离线接口与恢复验证已通过；真实模型结果和人工确认另见 README 及运行报告。
 
 ## 1. 固定 prompt 的配置入口

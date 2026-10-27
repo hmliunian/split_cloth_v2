@@ -4,6 +4,14 @@
 
 同样十条的新运行位于 `runs/p1_main_stage3_prompt_20261027/`。prepare 时将下文配置路径替换为 `configs/reverse_node_v2_stage3_shape_guard.yaml`；模型、检测、单张示例、五帧局部上下文及程序代码均沿用 main。结果完整导出后交由用户查看，程序状态不代表已确认准确率。
 
+本次已完成：**6 complete、4 needs_review**，stage3 找到 6/10，均没有补采样。002768/487 保持通过，006453 从旧 prompt v1 的 488 改回 472，003546 的 stage3 改为 507；但 001061/423 又被拒绝，**000543 回归失败，stage1 从参考 400 错选为 274**（实际 274/485/562）。因此本次没有达到“保留改善且没有误选”的质量目标，不建议直接采用。全部原始响应及缺槽都已保留，未人工确认。
+
+用户要求的 [10 条候选标记视频](runs/p1_main_stage3_prompt_20261027/exports/candidate_marks/videos/)已完成，时间线上包含全部 148 个张开候选，当前候选显示节点 ID、帧号、目标 stage、判断和是否选中；NOW 表示候选原帧，NEAR 表示附近的信息展示。[完整对照报告](runs/p1_main_stage3_prompt_20261027/reports/comparison.html)同时列出 main 历史结果、此前 v1 原候选结果和本次结果。标记版是独立导出，原视频与预测保留。
+
+离线 **197 passed in 9.70s**；原版与标记版各 10 个完整 MP4、6568 帧，最大相对 PTS 误差均为 0。额外核对了 148 个候选的精确帧、相邻 399/400 的独立高亮和全部 6568 帧的 NOW 判定，原产物摘要未变。真实推理为 102 个逻辑请求、104 次 HTTP（两次网络传输重试），记录输入/输出 153045/9806 tokens；合法语义回答没有重问。
+
+候选标记导出入口为 [scripts/export_candidate_marks.py](scripts/export_candidate_marks.py)，只读取已有结果，沿用本库编码器与逐帧验证。示例命令：`PYTHONPATH=src .venv/bin/python scripts/export_candidate_marks.py --run runs/<id> --export-name candidate_marks`；重导出使用新的 export-name。
+
 新库用于实现：**夹爪 state 生成张开候选 → 程序倒序逐点调用 VLM → 找到小方块、双侧长条、单侧叠入三个结束点 → 导出四阶段划分。**
 
 已实现独立 Python 包、离线准备、逐候选倒序搜索、请求持久化与恢复、完整 MP4 导出及逐帧时间验证。日期：2026-10-26。程序验证与模型视觉质量分别记录。

@@ -178,7 +178,12 @@ def export_marked(run: Path, export_name: str) -> dict:
     if any(sha256_file(Path(path)) != digest for path, digest in protected.items()):
         raise ValueError("original_run_artifacts_changed")
     shutil.copyfile(Path(__file__), output / "renderer.py")
-    cli.report(argparse.Namespace(run=str(run), export_name=export_name))
+    marked_report = cli.report(argparse.Namespace(run=str(run), export_name=export_name))
+    # main's report command writes its summary under the run; also retain the
+    # named export's own report so its verification is self-contained.
+    write_json(output / "reports/summary.json", marked_report)
+    for name in ("phase1_report.md", "request_images.json"):
+        shutil.copyfile(run / "reports" / name, output / "reports" / name)
     write_json(output / "reports/candidate_marker_verification.json", {
         "all_passed": summary["failed_count"] == 0,
         "candidate_count": sum(v.get("candidate_markers", {}).get("count", 0) for v in summary["videos"]),

@@ -1,5 +1,11 @@
 # MP4 可视化与导出
 
+2026-10-27 用户追加要求在视频中标出所有候选。独立入口 `scripts/export_candidate_marks.py --run runs/<id> --export-name candidate_marks` 使用已保存的 `candidates.json`、`trace.jsonl`、`result.json`，在 `exports/<name>/` 新建完整导出，不调用 VLM。它只扩展显示层，本轮推理源码保持 main 原样。
+
+时间线新增一行全部 state 候选，绿色为选中、红色为 skip、黄色为 uncertain、灰色为未查询/程序排除。右下信息卡显示节点 ID、原帧、时间、目标 stage、判断、选中阶段及张开事件侧；NOW 仅在候选原帧出现并给源画面外侧加边框，NEAR 在候选附近 0.6 秒内保留可读信息，NEXT/LAST 显示下一/最后候选。NEAR 不改变候选资格或阶段边界。未查询节点不伪造 VLM 回答，缺槽视频仍保持未知主时间线。
+
+导出保持 1280×720、原全帧和相对 PTS，所有文字/边框位于源画面外侧。侧车记录全部候选、判断来源摘要、渲染脚本 SHA-256；复制本次渲染脚本到命名导出目录。`reports/candidate_marker_verification.json` 保存候选总数与原产物保护结果；本轮另保存精确帧检查及实际解码抽帧。反复导出应换新名称，不能覆盖先前视频。
+
 日期：2026-10-23。用户已指定：新库可视化仿照现有带阶段划分的 MP4 导出方法。**开发第一阶段首次交付 10 条不同叠衣轨迹的完整复核 MP4**，每条对应 [phase1_manifest.jsonl](phase1_manifest.jsonl) 中一个 episode；节点图作为辅助。导出器已独立实现于 `video_export.py`，实际检查见 README。
 
 ## 1. 参考实现与视频

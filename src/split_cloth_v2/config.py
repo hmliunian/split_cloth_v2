@@ -8,6 +8,7 @@ from pathlib import Path
 import yaml
 
 from .expert_examples import inspect_expert_examples
+from .parallel import worker_count
 from .prompt import PROMPT_VERSION, system_text
 
 
@@ -21,8 +22,11 @@ def load_config(path: str | Path) -> dict:
     v2 = config["spec_version"] == "reverse_node_v2"
     if config.get("candidate_policy") != "any_open" or config.get("search_order") != [3, 2, 1]:
         raise ValueError("unsupported_candidate_or_search_policy")
-    if config.get("max_inflight_episodes") != 1:
-        raise ValueError("first_version_requires_serial_episodes")
+    worker_count(config.get("max_inflight_episodes", 1), "max_inflight_episodes")
+    video_export = config.get("video_export", {})
+    if not isinstance(video_export, dict):
+        raise ValueError("invalid_video_export_config")
+    worker_count(video_export.get("max_workers", 1), "video_export_max_workers")
     offsets = config.get("context_offsets_s")
     if not isinstance(offsets, list) or not offsets or any(type(x) not in (int, float) or not math.isfinite(x) for x in offsets):
         raise ValueError("invalid_context_offsets")

@@ -4,6 +4,8 @@
 
 业务语义以 [boundary.md](boundary.md) 为准，实施顺序见 [DEVELOPMENT.md](DEVELOPMENT.md)，请求字段见 [docs/PROMPT.md](docs/PROMPT.md)。本文负责说明配置入口、模块职责和运行数据流，不另定义阶段判据。
 
+2026-10-28 新增 `configs/reverse_node_v2_parallel16.yaml`：跨轨迹推理 `max_inflight_episodes=16` 使用线程池，render `video_export.max_workers=16` 使用 spawn 进程池；配置上限均为 16。`parallel.py` 负责并行数校验和实际任务重叠统计。单轨迹的倒序状态机保持串行，provider、请求缓存、结果与视频均按轨迹隔离；共享报告由主线程/主进程在任务完成后按原清单顺序写入。新增的执行记录保存墙钟耗时与观察到的并行峰值。
+
 ## 1. 配置入口
 
 沿用本库现有的 `configs/` 目录。v2 固定的 system prompt 独立放在 [configs/prompt.txt](configs/prompt.txt)，作为可版本化的配置输入；[v2 YAML](configs/reverse_node_v2.yaml) 显式配置：

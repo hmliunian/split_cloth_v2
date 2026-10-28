@@ -5,19 +5,23 @@ This module reads only the new repository's artifacts and never invokes a provid
 """
 from __future__ import annotations
 
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from fractions import Fraction
 from itertools import groupby
 import hashlib
 import json
 import math
+import multiprocessing
 import os
 from pathlib import Path
 import re
+import time
 
 import av
 from PIL import Image, ImageDraw, ImageFont
 
-from .io_utils import read_json, sha256_file, write_json
+from .io_utils import now, read_json, sha256_file, write_json
+from .parallel import execution_stats, worker_count
 from .results import stage_labels
 
 
@@ -314,7 +318,18 @@ def export_episode(episode_dir: Path, video_dir: Path, config: dict) -> dict:
         raise
 
 
-def export_run(run_dir: Path, config: dict, *, export_dir: Path | None = None) -> dict:
+def _export_task(episode_dir, video_dir, config, episode_exporter) -> dict:
+    started_at, started = now(), time.monotonic()
+    try:
+        record = episode_exporter(episode_dir, video_dir, config)
+    except Exception as error:
+        record = {"key": episode_dir.name, "export_status": "failed", "error": f"{type(error).__name__}: {error}"}
+    return {**record, "started_at": started_at, "finished_at": now(),
+            "elapsed_s": time.monotonic() - started, "worker_pid": os.getpid()}
+
+
+def export_run(run_dir: Path, config: dict, *, export_dir: Path | None = None,
+               max_workers: int | None = None, episode_exporter=None) -> dict:
     """Export saved inputs into the run or a new, confined export version.
 
     A retry uses ``run_dir/exports/<safe_name>`` and never overwrites an older
@@ -322,6 +337,9 @@ def export_run(run_dir: Path, config: dict, *, export_dir: Path | None = None) -
     ``run_dir``; export versions contain presentation artifacts only.
     """
     run_dir = Path(run_dir).resolve()
+    workers = worker_count(max_workers if max_workers is not None else
+                           config.get("video_export", {}).get("max_workers", 1), "video_export_max_workers")
+    episode_exporter = episode_exporter or export_episode
     output = run_dir
     if export_dir is not None:
         output = Path(export_dir).resolve()
@@ -335,19 +353,33 @@ def export_run(run_dir: Path, config: dict, *, export_dir: Path | None = None) -
     if any(path.exists() for path in indexes):
         raise FileExistsError("Refusing to overwrite an existing export index; use a new export directory")
     manifest = [json.loads(line) for line in (run_dir / "manifest.jsonl").read_text().splitlines() if line.strip()]
-    records = []
-    for entry in manifest:
-        key = entry["key"]
-        episode_dir = run_dir / "episodes" / key
-        try:
-            record = export_episode(episode_dir, output / "videos", config)
-        except Exception as error:
-            record = {"key": key, "export_status": "failed", "error": f"{type(error).__name__}: {error}"}
-        records.append(record)
+    keys = [entry["key"] for entry in manifest]
+    if (len(set(keys)) != len(keys) or any(not isinstance(key, str)
+            or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", key) for key in keys)):
+        raise ValueError("export_manifest_keys_must_be_unique_and_safe")
+    started = time.monotonic()
+    if workers == 1 or len(keys) <= 1:
+        records = [_export_task(run_dir / "episodes" / key, output / "videos", config, episode_exporter) for key in keys]
+    else:
+        completed = {}
+        # Spawn avoids inheriting decoder/encoder state or application threads.
+        with ProcessPoolExecutor(max_workers=min(workers, len(keys)), mp_context=multiprocessing.get_context("spawn")) as executor:
+            futures = {executor.submit(_export_task, run_dir / "episodes" / key, output / "videos", config, episode_exporter): key
+                       for key in keys}
+            for future in as_completed(futures):
+                key = futures[future]
+                completed[key] = future.result()
+                print(f"rendered {key}: {completed[key]['export_status']}", flush=True)
+        records = [completed[key] for key in keys]
+    execution = execution_stats([{name: row[name] for name in
+                                 ("key", "started_at", "finished_at", "elapsed_s", "worker_pid", "export_status")}
+                                for row in records], workers, time.monotonic() - started)
     successes = [row for row in records if row.get("export_status") == "success"]
     ten_complete = len(manifest) == 10 and len({row["key"] for row in successes}) == 10
     summary = {"videos": records, "count": len(records), "successful_count": len(successes),
                "failed_count": len(records) - len(successes),
+               "all_video_exports_complete": bool(manifest) and len(successes) == len(manifest),
+               "execution": execution,
                "export_dir": str(output), "ten_video_exports_complete": ten_complete,
                # Only the CLI report checks the complete P1 experiment contract.
                "phase1_complete": False}

@@ -57,7 +57,9 @@ for node in candidates_sorted_by_frame_desc:
 finalize(slots, has_uncertainty)
 ```
 
-每个 episode 内是依赖式串行调用。不同 episode 后续可有限并行，但首轮先设 `max_inflight_episodes=1`，让调用顺序容易核查。无需保留不断增长的对话历史；每次用独立短请求，目标阶段由程序填写。
+每个 episode 内是依赖式串行调用。2026-10-28 已接入不同 episode 的有界线程池，`max_inflight_episodes` 接受 1–16；首轮旧配置保留 1，新入口 `configs/reverse_node_v2_parallel16.yaml` 使用 16。每条在 worker 内核验准备摘要、独立建立 provider 并执行整个搜索；主线程在全部任务结束后汇总，保留清单顺序、失败原因和执行时间。无需保留不断增长的对话历史；每次用独立短请求，目标阶段由程序填写。
+
+视频 render 按轨迹使用 spawn 进程池，`video_export.max_workers` 接受 1–16，也可由导出命令的 `--workers` 指定。每条视频内部仍按源 PTS 正序逐帧处理并重新解码验证；普通版和全部候选标记版共用此调度。导出索引只由主进程写入。推理恢复仅重放指纹相同的已保存回答；错误轨迹不会取消其他轨迹。
 
 单轨迹逻辑请求数不超过可选候选数 M。命中 stage1 后停止。HTTP 重试另计；第一次不符合或不确定都不重复抽样。
 

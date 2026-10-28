@@ -85,13 +85,8 @@ def focus_point(points: list[dict], frame_id: int, axis: list) -> tuple[dict | N
     return points[-1], "LAST"
 
 
-def export_marked(run: Path, export_name: str) -> dict:
-    run, record = cli._load_run(run, check_source=True)
-    output = cli._export_root(run, export_name)
-    protected_paths = [p for entry in record["manifest"]
-                       for p in (run / "episodes" / entry["key"]).glob("*") if p.is_file()]
-    protected_paths += [p for p in (run / "videos").rglob("*") if p.is_file()]
-    protected = {str(p): sha256_file(p) for p in protected_paths}
+def export_marked_episode(episode_dir: Path, video_dir: Path, config: dict) -> dict:
+    """Install the marker renderer inside one isolated export worker."""
     original_template, original_render = video._template, video.render_frame
     original_export, original_version = video.export_episode, video.EXPORTER_VERSION
     fonts = {"body": video._font(17), "bold": video._font(17, True),
@@ -169,12 +164,22 @@ def export_marked(run: Path, export_name: str) -> dict:
 
     try:
         video._template, video.render_frame = marked_template, marked_frame
-        video.export_episode = marked_episode
         video.EXPORTER_VERSION = "review_video_candidate_marks_v1"
-        summary = video.export_run(run, record["config"], export_dir=output)
+        return marked_episode(episode_dir, video_dir, config)
     finally:
         video._template, video.render_frame = original_template, original_render
-        video.export_episode, video.EXPORTER_VERSION = original_export, original_version
+        video.EXPORTER_VERSION = original_version
+
+
+def export_marked(run: Path, export_name: str, *, workers: int | None = None) -> dict:
+    run, record = cli._load_run(run, check_source=True)
+    output = cli._export_root(run, export_name)
+    protected_paths = [p for entry in record["manifest"]
+                       for p in (run / "episodes" / entry["key"]).glob("*") if p.is_file()]
+    protected_paths += [p for p in (run / "videos").rglob("*") if p.is_file()]
+    protected = {str(p): sha256_file(p) for p in protected_paths}
+    summary = video.export_run(run, record["config"], export_dir=output, max_workers=workers,
+                               episode_exporter=export_marked_episode)
     if any(sha256_file(Path(path)) != digest for path, digest in protected.items()):
         raise ValueError("original_run_artifacts_changed")
     shutil.copyfile(Path(__file__), output / "renderer.py")
@@ -182,7 +187,7 @@ def export_marked(run: Path, export_name: str) -> dict:
     # main's report command writes its summary under the run; also retain the
     # named export's own report so its verification is self-contained.
     write_json(output / "reports/summary.json", marked_report)
-    for name in ("phase1_report.md", "request_images.json"):
+    for name in ("experiment_report.md", "phase1_report.md", "request_images.json"):
         shutil.copyfile(run / "reports" / name, output / "reports" / name)
     write_json(output / "reports/candidate_marker_verification.json", {
         "all_passed": summary["failed_count"] == 0,
@@ -200,5 +205,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", required=True, type=Path)
     parser.add_argument("--export-name", default="candidate_marks")
+    parser.add_argument("--workers", type=int, help="Render 1-16 episodes in parallel; default from video_export.max_workers")
     args = parser.parse_args()
-    export_marked(args.run, args.export_name)
+    export_marked(args.run, args.export_name, workers=args.workers)

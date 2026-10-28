@@ -1,6 +1,10 @@
 # split_cloth_v2
 
-当前分支 `experiment/main-stage3-prompt-20261027` 从重新 fetch 的 `origin/main`（5306d01）建立，只实验 stage3 prompt。入口为 [reverse_node_v2_stage3_shape_guard.yaml](configs/reverse_node_v2_stage3_shape_guard.yaml)，文本为 [prompt_stage3_shape_guard.txt](configs/prompt_stage3_shape_guard.txt)。保留折回覆盖与长方形短包说明，明确排除成包后整理或搬运再释放；使用 main 的 state 张开候选，耗尽即停止。
+2026-10-28 新增跨轨迹 **16 路推理和 16 进程 render**，配置入口为 [reverse_node_v2_parallel16.yaml](configs/reverse_node_v2_parallel16.yaml)。它沿用 main 的 stage3 shape guard prompt、模型、候选和示例；单条轨迹仍串行倒序判断。`max_inflight_episodes` 控制推理线程数，`video_export.max_workers` 控制 render 进程数，均接受 1–16；原配置保留单路。推理和 render 的实际并行峰值、逐条起止时间及墙钟耗时保存在运行报告中。
+
+本轮完整离线检查为 **212 passed in 17.46s**，包含有界并行、单轨迹顺序、恢复无新调用、失败隔离，以及普通版和候选标记版的真实进程导出与逐帧时间验证。
+
+2026-10-27 的分支 `experiment/main-stage3-prompt-20261027` 从 `origin/main`（5306d01）建立，只实验 stage3 prompt，现已合入 main。入口为 [reverse_node_v2_stage3_shape_guard.yaml](configs/reverse_node_v2_stage3_shape_guard.yaml)，文本为 [prompt_stage3_shape_guard.txt](configs/prompt_stage3_shape_guard.txt)。保留折回覆盖与长方形短包说明，明确排除成包后整理或搬运再释放；使用 main 的 state 张开候选，耗尽即停止。
 
 同样十条的新运行位于 `runs/p1_main_stage3_prompt_20261027/`。prepare 时将下文配置路径替换为 `configs/reverse_node_v2_stage3_shape_guard.yaml`；模型、检测、单张示例、五帧局部上下文及程序代码均沿用 main。结果完整导出后交由用户查看，程序状态不代表已确认准确率。
 
@@ -47,6 +51,19 @@ uv pip install --python .venv/bin/python -e '.[test]'
 需要完整离线模拟时，在 prepare 加 `--mock`；可加 `--mock-decisions <json>` 提供节点判断，否则返回模拟 uncertain。模拟模式明确记录，不能标记真实 P1 完成。
 
 默认输出在 `runs/<id>/videos/`。旧导出存在或导出失败时，使用 `export-video --run ... --export-name retry_01` 生成独立版本，配套 `report --run ... --export-name retry_01`；历史视频、索引和 `.part.mp4` 不覆盖。任意轨迹导出失败，命令返回非零。
+
+50 条、16 路的入口如下。抽样从已登记的 `fold_cloth_v3/v4` 各取 25 条，用独立固定随机种子无放回抽样并交错排列，保存来源摘要；不按模型结果筛选。`prepare` 仍离线串行，`annotate` 才调用真实服务。
+
+```bash
+.venv/bin/python scripts/sample_fold_cloth.py --dataset-root /gpfs/jiuquyun/datasets/shenzhen/lerobot_eef --output runs/<id>_inputs --per-dataset 25 --seed 20261028
+.venv/bin/python -m split_cloth_v2.cli prepare --manifest runs/<id>_inputs/manifest.jsonl --config configs/reverse_node_v2_parallel16.yaml --run runs/<id>
+.venv/bin/python -m split_cloth_v2.cli annotate --run runs/<id> --credential-file .secrets/dashscope_api_key.txt
+.venv/bin/python -m split_cloth_v2.cli export-video --run runs/<id>
+# 或导出全部候选标记版，单独命名保存：
+.venv/bin/python scripts/export_candidate_marks.py --run runs/<id> --export-name candidate_marks --workers 16
+```
+
+两种 render 都支持 `--workers 1..16`，省略时读取配置。各 worker 只写自己的轨迹，主进程按清单顺序汇总；某条失败会保留错误并继续其他轨迹，最终命令返回非零。`reports/annotation_execution.json` 及 `reports/executions/annotate_*.json` 保存推理执行记录；render 执行记录在对应的 `videos/exports.json` 中。通用实验报告为 `reports/experiment_report.md`，旧 `phase1_report.md` 路径保留；`delivery_complete` 表示本次清单全部视频验证通过，P1 的十条验收仍单独判断。
 
 ## v2 十条实际测试（2026-10-26）
 

@@ -1,11 +1,13 @@
-"""Prepare offline inputs, annotate serially, report and export existing results."""
+"""Prepare inputs, annotate independent episodes, report and render results."""
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import importlib.metadata
 import json
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 from .config import load_config
@@ -13,6 +15,7 @@ from .data import load_manifest, prepare_episode
 from .expert_examples import freeze_expert_examples, verify_expert_examples
 from .io_utils import fingerprint, now, read_json, sha256_file, write_json
 from .provider import DashScopeProvider, MockProvider
+from .parallel import execution_stats, worker_count
 from .search import run_search
 from .video_export import export_run
 
@@ -107,6 +110,25 @@ def _load_run(path, *, check_source=False):
     return run, record
 
 
+def _annotate_episode(entry, run, record, credential_file) -> dict:
+    started_at, started = now(), time.monotonic()
+    config = record["config"]
+    try:
+        # Revalidate this episode before constructing its provider or paying.
+        episode_dir = run / "episodes" / entry["key"]
+        prepare_episode(entry, episode_dir, config)
+        provider = (MockProvider(config.get("mock_decisions")) if config["execution_mode"] == "mock"
+                    else DashScopeProvider(credential_file=credential_file))
+        result = run_search(episode_dir, provider, config, record["run_fingerprint"])
+        task = {"key": entry["key"], "status": result["status"]}
+        if result["status"] == "execution_error":
+            task["error"] = result["reasons"]
+    except Exception as exc:
+        task = {"key": entry["key"], "status": "execution_error", "error": f"{type(exc).__name__}: {exc}"}
+    return {**task, "started_at": started_at, "finished_at": now(),
+            "elapsed_s": time.monotonic() - started}
+
+
 def annotate(args) -> dict:
     run, record = _load_run(args.run, check_source=True)
     config = record["config"]
@@ -114,19 +136,27 @@ def annotate(args) -> dict:
     entries = [entry for entry in record["manifest"] if selected is None or entry["key"] == selected]
     if not entries:
         raise ValueError("episode_not_in_frozen_manifest")
-    if config["execution_mode"] == "mock":
-        provider = MockProvider(config.get("mock_decisions"))
-    else:
-        credential_file = getattr(args, "credential_file", None)
-        provider = DashScopeProvider(credential_file=credential_file)
-    errors = []
-    for entry in entries:
-        # Revalidate frozen inputs and preparation hashes before any paid call.
-        prepare_episode(entry, run / "episodes" / entry["key"], config)
-        result = run_search(run / "episodes" / entry["key"], provider, config, record["run_fingerprint"])
-        print(f"annotated {entry['key']}: {result['status']}", flush=True)
-        if result["status"] == "execution_error":
-            errors.append(entry["key"])
+    workers = worker_count(config.get("max_inflight_episodes", 1), "max_inflight_episodes")
+    started = time.monotonic()
+    completed = {}
+    with ThreadPoolExecutor(max_workers=min(workers, len(entries))) as executor:
+        futures = [executor.submit(_annotate_episode, entry, run, record, getattr(args, "credential_file", None))
+                   for entry in entries]
+        for future in as_completed(futures):
+            task = future.result()
+            completed[task["key"]] = task
+            print(f"annotated {task['key']}: {task['status']}", flush=True)
+    tasks = [completed[entry["key"]] for entry in entries]
+    execution = execution_stats(tasks, workers, time.monotonic() - started)
+    previous = read_json(run / "reports/annotation_execution.json", {})
+    outcomes = {task["key"]: task for task in previous.get("episode_outcomes", previous.get("tasks", []))}
+    outcomes.update(completed)
+    execution["episode_outcomes"] = [outcomes[entry["key"]] for entry in record["manifest"] if entry["key"] in outcomes]
+    execution_path = run / "reports/executions" / f"annotate_{time.time_ns()}.json"
+    execution["record_path"] = str(execution_path.relative_to(run))
+    write_json(execution_path, execution)
+    write_json(run / "reports/annotation_execution.json", execution)
+    errors = [task["key"] for task in tasks if task["status"] == "execution_error"]
     summary = report(argparse.Namespace(run=str(run)))
     if errors:
         raise RuntimeError("annotation_execution_errors: " + ", ".join(errors))
@@ -136,6 +166,9 @@ def annotate(args) -> dict:
 def report(args) -> dict:
     run, record = _load_run(args.run)
     output_root = _export_root(run, getattr(args, "export_name", None))
+    annotation = read_json(run / "reports/annotation_execution.json", {})
+    annotation_errors = {task["key"]: task["error"] for task in annotation.get("episode_outcomes", annotation.get("tasks", []))
+                         if task["status"] == "execution_error"}
     exports_path = output_root / "videos/exports.json"
     exports = read_json(exports_path) if exports_path.exists() else {}
     video_records = {}
@@ -176,12 +209,13 @@ def report(args) -> dict:
         episodes.append({
             "key": entry["key"], "frame_count": entry["frame_count"],
             "boundaries": {stage: (slots.get(stage) or {}).get("end_frame") for stage in ("stage1", "stage2", "stage3")},
-            "status": (result.get("status", "not_run") if not result or result_matches_run else "execution_error"),
+            "status": ("execution_error" if entry["key"] in annotation_errors else
+                       result.get("status", "not_run") if not result or result_matches_run else "execution_error"),
             "review_status": result.get("review_status", "unreviewed"),
             "has_uncertainty": result.get("has_uncertainty", False),
             "reasons": result.get("reasons", []) + (["result_run_fingerprint_mismatch"] if result and not result_matches_run else []),
             "search_status": result.get("search_status", {}),
-            "execution_error": result.get("reasons") if result.get("status") == "execution_error" else None,
+            "execution_error": annotation_errors.get(entry["key"], result.get("reasons") if result.get("status") == "execution_error" else None),
             "logical_calls": result.get("logical_calls", 0), "http_attempts": result.get("http_attempts", 0),
             "input_tokens": result.get("input_tokens", 0), "output_tokens": result.get("output_tokens", 0),
             "elapsed_s": result.get("elapsed_s", 0), "provider_elapsed_s": result.get("provider_elapsed_s", 0),
@@ -198,6 +232,10 @@ def report(args) -> dict:
                "spec_version": record["config"]["spec_version"], "prompt_version": record["config"]["prompt_version"],
                "episode_count": len(episodes), "total_frames": sum(item["frame_count"] for item in episodes),
                "episodes": episodes, "model_accuracy": None,
+               "delivery_complete": real_mode and bool(episodes) and all(
+                   item["video_verified"] and item["status"] in ("complete", "needs_review") for item in episodes),
+               "annotation_execution": {name: annotation.get(name) for name in
+                                        ("max_workers", "peak_parallel_episodes", "wall_time_s", "record_path")},
                "p1_delivery_complete": real_mode and len(episodes) == 10
                and {item["key"] for item in episodes} == expected_keys and manifest_matches_p1
                and all(item["video_verified"] and item["status"] in ("complete", "needs_review") for item in episodes)}
@@ -205,10 +243,10 @@ def report(args) -> dict:
         summary[field] = sum(item[field] for item in episodes)
     write_json(run / "reports/summary.json", summary)
     write_json(run / "reports/request_images.json", {"run_fingerprint": record["run_fingerprint"], "requests": request_images})
-    lines = ["# P1 experiment report", "", f"Execution mode: {summary['execution_mode']}",
+    lines = ["# Fold-cloth experiment report", "", f"Execution mode: {summary['execution_mode']}",
              f"Protocol: {summary['spec_version']}; prompt: {summary['prompt_version']}",
              f"Episodes: {len(episodes)}; frames: {summary['total_frames']}",
-             f"Delivery complete: {summary['p1_delivery_complete']}",
+             f"Delivery complete: {summary['delivery_complete']}; P1 manifest delivery: {summary['p1_delivery_complete']}",
              "", "Model results remain unreviewed unless a separate human review exists. No accuracy is inferred from program completion.",
              "", "| Episode | Boundaries S1/S2/S3 | Program status | Review | Calls / HTTP | Tokens in/out | Video |", "| --- | --- | --- | --- | --- | --- | --- |"]
     for item in episodes:
@@ -218,7 +256,8 @@ def report(args) -> dict:
     for item in episodes:
         search = ", ".join(f"{stage}={state['status']}" for stage, state in item["search_status"].items())
         lines.append(f"- {item['key']}: visual review pending; reasons={item['reasons']}; execution_error={item['execution_error']}; search: {search}")
-    (run / "reports/phase1_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    for name in ("experiment_report.md", "phase1_report.md"):
+        (run / "reports" / name).write_text("\n".join(lines) + "\n", encoding="utf-8")
     return summary
 
 
@@ -247,6 +286,8 @@ def main(argv=None) -> int:
         command.add_argument("--run", required=True)
         if name in ("report", "export-video"):
             command.add_argument("--export-name", help="Write/read a separate named export version while preserving prior exports")
+        if name == "export-video":
+            command.add_argument("--workers", type=int, help="Render 1-16 episodes in parallel; default from video_export.max_workers")
         if name == "annotate":
             command.add_argument("--credential-file", help="Explicit credential file, such as ignored .secrets/dashscope_api_key.txt; never logged")
             command.add_argument("--episode", help="Process one frozen episode key, for the initial regression check")
@@ -261,7 +302,8 @@ def main(argv=None) -> int:
         else:
             run, record = _load_run(args.run)
             export_root = _export_root(run, args.export_name)
-            result = export_run(run, record["config"], export_dir=export_root if args.export_name else None)
+            result = export_run(run, record["config"], export_dir=export_root if args.export_name else None,
+                                max_workers=args.workers)
             report(args)
             if result["failed_count"]:
                 raise RuntimeError(f"video_export_failures: {result['failed_count']}")

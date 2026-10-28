@@ -1,0 +1,36 @@
+spec_version: reverse_node_v2
+prompt_file: prompt_stage3_shape_guard.txt
+prompt_version: node_completion_stage3_shape_guard_v1
+candidate_policy: any_open
+search_order: [3, 2, 1]
+context_offsets_s: [-1.0, -0.5, 0.0, 0.5, 1.0]
+context_policy: fixed_local_v1
+expert_examples:
+  stage1: images/s1.png
+  stage2: images/s2.png
+  stage3: images/s3.png
+max_inflight_episodes: 16
+detector:
+  node_policy: any_open
+  opening_directions: {left: higher, right: higher}
+  candidate_levels: [[0.25, 0.10], [0.50, 0.25], [0.75, 0.45], [0.90, 0.65], [0.98, 0.90]]
+  grouping_window_s: 0.25
+  settled_samples: 3
+  settled_duration_s: 0.10
+  settled_tolerance_fraction: 0.02
+  settled_reversal_fraction: 0.10
+  settled_min_excursion_fraction: 0.10
+  settled_search_window_s: 2.0
+provider:
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  model_id: qwen3.8-max-0902
+  api_key_env: DASHSCOPE_API_KEY
+  temperature: 0
+  max_output_tokens: 512
+  timeout_s: 180
+  max_attempts: 3
+  max_images: 6
+video_export:
+  max_workers: 16
+  crf: 20
+  preset: veryfast

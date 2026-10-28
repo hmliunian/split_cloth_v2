@@ -1,0 +1,85 @@
+{
+  "created_at": "2026-10-28T08:11:29.267156+00:00",
+  "manifest_sha256": "8d42a8caf9ceead52c79c1d009597bf466466b11366a5fce21d6e1d60e16b9f2",
+  "method": "Independent SHA256(seed:dataset) random samples without replacement; interleaved sources; no outcome filtering",
+  "per_dataset": 25,
+  "populations": [
+    {
+      "dataset_id": "fold_cloth_v3",
+      "metadata_sha256": {
+        "episodes.jsonl": "db822d45ee4bc591305aa2b18ae4dc2fb6f88fd2f7586fa69ee1c9e9f161db5e",
+        "info.json": "e15add34b1e550e108d76abad16f39cfa21761a1bcd064d904fb28e6c7ae7eea",
+        "tasks.jsonl": "d5e97a96f223d25d194314df4daeec6d1daee4f5894a63807f0146c110e37665"
+      },
+      "sample_episode_indices": [
+        1291,
+        2528,
+        3844,
+        1189,
+        3573,
+        5951,
+        6069,
+        1134,
+        3120,
+        2628,
+        153,
+        2293,
+        1940,
+        3429,
+        6210,
+        1429,
+        963,
+        1780,
+        267,
+        1007,
+        5944,
+        294,
+        4032,
+        3519,
+        3382
+      ],
+      "seed_sha256": "0cd34ee6d0d5fb0c780651b68cf6eed6d4161cb6580a574e6978895bb7c826c4",
+      "total_episodes": 7090
+    },
+    {
+      "dataset_id": "fold_cloth_v4",
+      "metadata_sha256": {
+        "episodes.jsonl": "bb7e4962a193e28444e185955fb2897aa570fb1a6c9a057dd490290371a56614",
+        "info.json": "70d2444222f007ca6df69d6bd3c411365ed509f83e107206843f8e55215c92c3",
+        "tasks.jsonl": "d5e97a96f223d25d194314df4daeec6d1daee4f5894a63807f0146c110e37665"
+      },
+      "sample_episode_indices": [
+        2970,
+        1058,
+        628,
+        4014,
+        273,
+        3434,
+        3849,
+        3263,
+        996,
+        3910,
+        834,
+        1074,
+        3030,
+        1280,
+        298,
+        365,
+        3040,
+        1168,
+        4159,
+        3199,
+        432,
+        3644,
+        2180,
+        327,
+        3142
+      ],
+      "seed_sha256": "c242ab213cd965892aa6455b19c7bfd8e9a991497a99a1d10f35c6852096d15f",
+      "total_episodes": 4289
+    }
+  ],
+  "sample_count": 50,
+  "script_sha256": "c3f620b43d6f4e5f4034d9d49fd5c4cad2ab1926946a85cfe9b6156acd4ab7af",
+  "seed": 20261028
+}

@@ -1,0 +1,7 @@
+{
+  "copied": "Only frozen configuration, examples and verified preparation artifacts; no calls, responses or model decisions copied",
+  "created_at": "2026-10-28T08:19:28.914101+00:00",
+  "failed_transport_attempts": 150,
+  "previous_run": "runs/parallel16_sample50_20261028",
+  "reason": "All sandbox HTTP attempts failed with transport errors; no model responses were saved. Preserve the failed run and retry the same frozen sample outside the sandbox."
+}

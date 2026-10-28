@@ -1,0 +1,591 @@
+{
+  "annotation_artifacts_unchanged_by_render": true,
+  "candidate_count": 664,
+  "code_commit": "5a86b66d48e19a578b4d015dbb01a1d75c901b2b",
+  "decision_counts": {
+    "match": 104,
+    "skip": 380,
+    "uncertain": 1
+  },
+  "episodes": [
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 432,
+        "stage3": 500
+      },
+      "key": "fold_cloth_v3__episode_001291",
+      "logical_calls": 13,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v4__episode_002970",
+      "logical_calls": 14,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 387,
+        "stage3": 436
+      },
+      "key": "fold_cloth_v3__episode_002528",
+      "logical_calls": 15,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 680,
+        "stage3": 745
+      },
+      "key": "fold_cloth_v4__episode_001058",
+      "logical_calls": 15,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 296,
+        "stage2": 334,
+        "stage3": 386
+      },
+      "key": "fold_cloth_v3__episode_003844",
+      "logical_calls": 5,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 414,
+        "stage2": 527,
+        "stage3": 593
+      },
+      "key": "fold_cloth_v4__episode_000628",
+      "logical_calls": 7,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 425,
+        "stage3": 556
+      },
+      "key": "fold_cloth_v3__episode_001189",
+      "logical_calls": 10,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v4__episode_004014",
+      "logical_calls": 14,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 242,
+        "stage2": 331,
+        "stage3": 377
+      },
+      "key": "fold_cloth_v3__episode_003573",
+      "logical_calls": 6,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 420,
+        "stage3": 510
+      },
+      "key": "fold_cloth_v4__episode_000273",
+      "logical_calls": 8,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 473,
+        "stage2": 542,
+        "stage3": 644
+      },
+      "key": "fold_cloth_v3__episode_005951",
+      "logical_calls": 7,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 719,
+        "stage2": 1015,
+        "stage3": 1092
+      },
+      "key": "fold_cloth_v4__episode_003434",
+      "logical_calls": 9,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 410,
+        "stage2": 456,
+        "stage3": 518
+      },
+      "key": "fold_cloth_v3__episode_006069",
+      "logical_calls": 4,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v4__episode_003849",
+      "logical_calls": 12,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 412,
+        "stage2": 413,
+        "stage3": 522
+      },
+      "key": "fold_cloth_v3__episode_001134",
+      "logical_calls": 7,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 338,
+        "stage2": 652,
+        "stage3": 717
+      },
+      "key": "fold_cloth_v4__episode_003263",
+      "logical_calls": 7,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 320,
+        "stage2": 367,
+        "stage3": 434
+      },
+      "key": "fold_cloth_v3__episode_003120",
+      "logical_calls": 6,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 343,
+        "stage2": 415,
+        "stage3": 459
+      },
+      "key": "fold_cloth_v4__episode_000996",
+      "logical_calls": 7,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v3__episode_002628",
+      "logical_calls": 13,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v4__episode_003910",
+      "logical_calls": 24,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 392,
+        "stage3": 474
+      },
+      "key": "fold_cloth_v3__episode_000153",
+      "logical_calls": 10,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 423,
+        "stage2": 535,
+        "stage3": 591
+      },
+      "key": "fold_cloth_v4__episode_000834",
+      "logical_calls": 6,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 368,
+        "stage2": 456,
+        "stage3": 524
+      },
+      "key": "fold_cloth_v3__episode_002293",
+      "logical_calls": 5,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 453,
+        "stage2": 458,
+        "stage3": 519
+      },
+      "key": "fold_cloth_v4__episode_001074",
+      "logical_calls": 5,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v3__episode_001940",
+      "logical_calls": 12,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 266,
+        "stage2": 510,
+        "stage3": 601
+      },
+      "key": "fold_cloth_v4__episode_003030",
+      "logical_calls": 9,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 321,
+        "stage2": 369,
+        "stage3": 418
+      },
+      "key": "fold_cloth_v3__episode_003429",
+      "logical_calls": 6,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v4__episode_001280",
+      "logical_calls": 14,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 316,
+        "stage2": 384,
+        "stage3": 550
+      },
+      "key": "fold_cloth_v3__episode_006210",
+      "logical_calls": 7,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 277,
+        "stage2": 337,
+        "stage3": 417
+      },
+      "key": "fold_cloth_v4__episode_000298",
+      "logical_calls": 6,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 478,
+        "stage3": 598
+      },
+      "key": "fold_cloth_v3__episode_001429",
+      "logical_calls": 14,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v4__episode_000365",
+      "logical_calls": 12,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v3__episode_000963",
+      "logical_calls": 13,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 480,
+        "stage3": 557
+      },
+      "key": "fold_cloth_v4__episode_003040",
+      "logical_calls": 16,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 544,
+        "stage2": 553,
+        "stage3": 617
+      },
+      "key": "fold_cloth_v3__episode_001780",
+      "logical_calls": 5,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 320,
+        "stage2": 387,
+        "stage3": 438
+      },
+      "key": "fold_cloth_v4__episode_001168",
+      "logical_calls": 6,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 255,
+        "stage2": 468,
+        "stage3": 549
+      },
+      "key": "fold_cloth_v3__episode_000267",
+      "logical_calls": 5,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": 612
+      },
+      "key": "fold_cloth_v4__episode_004159",
+      "logical_calls": 15,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 286,
+        "stage2": 564,
+        "stage3": 654
+      },
+      "key": "fold_cloth_v3__episode_001007",
+      "logical_calls": 9,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 699,
+        "stage2": 780,
+        "stage3": 843
+      },
+      "key": "fold_cloth_v4__episode_003199",
+      "logical_calls": 8,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 327,
+        "stage2": 337,
+        "stage3": 405
+      },
+      "key": "fold_cloth_v3__episode_005944",
+      "logical_calls": 3,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 326,
+        "stage3": 402
+      },
+      "key": "fold_cloth_v4__episode_000432",
+      "logical_calls": 9,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 410,
+        "stage2": 498,
+        "stage3": 577
+      },
+      "key": "fold_cloth_v3__episode_000294",
+      "logical_calls": 4,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 550,
+        "stage3": 619
+      },
+      "key": "fold_cloth_v4__episode_003644",
+      "logical_calls": 15,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 299,
+        "stage2": 377,
+        "stage3": 428
+      },
+      "key": "fold_cloth_v3__episode_004032",
+      "logical_calls": 7,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": 679,
+        "stage3": 735
+      },
+      "key": "fold_cloth_v4__episode_002180",
+      "logical_calls": 19,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": 272,
+        "stage2": 352,
+        "stage3": 410
+      },
+      "key": "fold_cloth_v3__episode_003519",
+      "logical_calls": 5,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": 338,
+        "stage2": 385,
+        "stage3": 441
+      },
+      "key": "fold_cloth_v4__episode_000327",
+      "logical_calls": 6,
+      "review_status": "unreviewed",
+      "status": "complete"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v3__episode_003382",
+      "logical_calls": 18,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    },
+    {
+      "boundaries": {
+        "stage1": null,
+        "stage2": null,
+        "stage3": null
+      },
+      "key": "fold_cloth_v4__episode_003142",
+      "logical_calls": 13,
+      "review_status": "unreviewed",
+      "status": "needs_review"
+    }
+  ],
+  "http_attempts": 485,
+  "human_review": "unreviewed",
+  "inference_wall_time_s": 192.111346158199,
+  "input_tokens": 738819,
+  "logical_calls": 485,
+  "max_pts_error_s": 0.0,
+  "model_accuracy": null,
+  "original_inputs_unchanged": true,
+  "output_tokens": 46805,
+  "passed": true,
+  "peak_http_attempts": 16,
+  "peak_inference_episodes": 16,
+  "peak_render_episodes": 16,
+  "program_status_counts": {
+    "complete": 27,
+    "needs_review": 23
+  },
+  "prompt_images_and_per_episode_order_verified": true,
+  "render_wall_time_s": 210.76087015029043,
+  "render_worker_processes": 16,
+  "retry_errors": {},
+  "run_fingerprint": "24731750ba2e5b75263c2a21010f6862b682678cbf62843accb3b74b4d30aad8",
+  "selected_stage_counts": {
+    "stage1": 27,
+    "stage2": 38,
+    "stage3": 39
+  },
+  "total_verified_frames": 33893,
+  "video_count": 50
+}

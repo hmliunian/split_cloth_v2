@@ -4,6 +4,10 @@
 
 本轮完整离线检查为 **212 passed in 17.46s**，包含有界并行、单轨迹顺序、恢复无新调用、失败隔离，以及普通版和候选标记版的真实进程导出与逐帧时间验证。
 
+50 条实际实验已完成：[远端实验归档](docs/experiments/parallel16_sample50_20261028/README.md)。`fold_cloth_v3/v4` 各固定随机抽样 25 条，共 **27 complete、23 needs_review、0 execution_error**；485 次判断 / 485 次 HTTP，无重试，输入/输出 738819/46805 tokens。推理墙钟耗时 **192.111 秒**、render **210.761 秒**，实测轨迹推理、HTTP 同时在途及 render 并行峰值均为 **16**。全部 **50 个完整候选标记 MP4、33893 帧**重新解码通过，最大相对 PTS 误差为 0；原输入及 render 前后的标注文件摘要未变。没有串行基准测速；全部结果仍未人工复核，不从 `complete` 数推断准确率。
+
+正式运行在 `runs/parallel16_sample50_20261028_online/`：[视频目录](runs/parallel16_sample50_20261028_online/exports/candidate_marks/videos/)、[完整报告](runs/parallel16_sample50_20261028_online/reports/experiment_report.md)、[执行审计](runs/parallel16_sample50_20261028_online/reports/execution_audit.json)。最初沙箱内的网络失败记录保留在 `runs/parallel16_sample50_20261028/`；新运行获得网络执行许可后沿用相同冻结输入，未复制旧调用或判断。
+
 2026-10-27 的分支 `experiment/main-stage3-prompt-20261027` 从 `origin/main`（5306d01）建立，只实验 stage3 prompt，现已合入 main。入口为 [reverse_node_v2_stage3_shape_guard.yaml](configs/reverse_node_v2_stage3_shape_guard.yaml)，文本为 [prompt_stage3_shape_guard.txt](configs/prompt_stage3_shape_guard.txt)。保留折回覆盖与长方形短包说明，明确排除成包后整理或搬运再释放；使用 main 的 state 张开候选，耗尽即停止。
 
 同样十条的新运行位于 `runs/p1_main_stage3_prompt_20261027/`。prepare 时将下文配置路径替换为 `configs/reverse_node_v2_stage3_shape_guard.yaml`；模型、检测、单张示例、五帧局部上下文及程序代码均沿用 main。结果完整导出后交由用户查看，程序状态不代表已确认准确率。

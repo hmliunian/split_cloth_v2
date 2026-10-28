@@ -1,0 +1,7 @@
+{
+  "command": ".venv/bin/python -m pytest -q",
+  "duration_s": 17.46,
+  "failed": 0,
+  "network_used": false,
+  "passed": 212
+}

@@ -1,0 +1,766 @@
+{
+  "inference": {
+    "max_workers": 16,
+    "peak_parallel_episodes": 16,
+    "tasks": [
+      {
+        "elapsed_s": 60.876715800724924,
+        "finished_at": "2026-10-28T08:20:31.441192+00:00",
+        "key": "fold_cloth_v3__episode_001291",
+        "started_at": "2026-10-28T08:19:30.564475+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 64.32800781633705,
+        "finished_at": "2026-10-28T08:20:34.894237+00:00",
+        "key": "fold_cloth_v4__episode_002970",
+        "started_at": "2026-10-28T08:19:30.566237+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 75.66354688070714,
+        "finished_at": "2026-10-28T08:20:46.230303+00:00",
+        "key": "fold_cloth_v3__episode_002528",
+        "started_at": "2026-10-28T08:19:30.566769+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 69.92301405686885,
+        "finished_at": "2026-10-28T08:20:40.490851+00:00",
+        "key": "fold_cloth_v4__episode_001058",
+        "started_at": "2026-10-28T08:19:30.567843+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 29.186025525443256,
+        "finished_at": "2026-10-28T08:19:59.754375+00:00",
+        "key": "fold_cloth_v3__episode_003844",
+        "started_at": "2026-10-28T08:19:30.568352+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 35.4915293129161,
+        "finished_at": "2026-10-28T08:20:06.065098+00:00",
+        "key": "fold_cloth_v4__episode_000628",
+        "started_at": "2026-10-28T08:19:30.573573+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 43.98546675872058,
+        "finished_at": "2026-10-28T08:20:14.561196+00:00",
+        "key": "fold_cloth_v3__episode_001189",
+        "started_at": "2026-10-28T08:19:30.575735+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 62.35021817497909,
+        "finished_at": "2026-10-28T08:20:32.926434+00:00",
+        "key": "fold_cloth_v4__episode_004014",
+        "started_at": "2026-10-28T08:19:30.576213+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 33.473540431819856,
+        "finished_at": "2026-10-28T08:20:04.052922+00:00",
+        "key": "fold_cloth_v3__episode_003573",
+        "started_at": "2026-10-28T08:19:30.579385+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 36.798648515716195,
+        "finished_at": "2026-10-28T08:20:07.378505+00:00",
+        "key": "fold_cloth_v4__episode_000273",
+        "started_at": "2026-10-28T08:19:30.579849+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 37.950431178323925,
+        "finished_at": "2026-10-28T08:20:08.538731+00:00",
+        "key": "fold_cloth_v3__episode_005951",
+        "started_at": "2026-10-28T08:19:30.588298+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 48.236504239961505,
+        "finished_at": "2026-10-28T08:20:18.828762+00:00",
+        "key": "fold_cloth_v4__episode_003434",
+        "started_at": "2026-10-28T08:19:30.592265+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 23.72076542954892,
+        "finished_at": "2026-10-28T08:19:54.317809+00:00",
+        "key": "fold_cloth_v3__episode_006069",
+        "started_at": "2026-10-28T08:19:30.597052+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 54.55608635209501,
+        "finished_at": "2026-10-28T08:20:25.154995+00:00",
+        "key": "fold_cloth_v4__episode_003849",
+        "started_at": "2026-10-28T08:19:30.598913+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 35.84100378584117,
+        "finished_at": "2026-10-28T08:20:06.445877+00:00",
+        "key": "fold_cloth_v3__episode_001134",
+        "started_at": "2026-10-28T08:19:30.604882+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 38.23192874528468,
+        "finished_at": "2026-10-28T08:20:08.843811+00:00",
+        "key": "fold_cloth_v4__episode_003263",
+        "started_at": "2026-10-28T08:19:30.611889+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 27.248499559238553,
+        "finished_at": "2026-10-28T08:20:21.566379+00:00",
+        "key": "fold_cloth_v3__episode_003120",
+        "started_at": "2026-10-28T08:19:54.317890+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 29.37614465225488,
+        "finished_at": "2026-10-28T08:20:29.130583+00:00",
+        "key": "fold_cloth_v4__episode_000996",
+        "started_at": "2026-10-28T08:19:59.754451+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 76.15195907838643,
+        "finished_at": "2026-10-28T08:21:20.204927+00:00",
+        "key": "fold_cloth_v3__episode_002628",
+        "started_at": "2026-10-28T08:20:04.052982+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 107.8701276537031,
+        "finished_at": "2026-10-28T08:21:53.935269+00:00",
+        "key": "fold_cloth_v4__episode_003910",
+        "started_at": "2026-10-28T08:20:06.065158+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 47.283515041694045,
+        "finished_at": "2026-10-28T08:20:53.729445+00:00",
+        "key": "fold_cloth_v3__episode_000153",
+        "started_at": "2026-10-28T08:20:06.445941+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 29.97820780146867,
+        "finished_at": "2026-10-28T08:20:37.356761+00:00",
+        "key": "fold_cloth_v4__episode_000834",
+        "started_at": "2026-10-28T08:20:07.378566+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 22.8022763133049,
+        "finished_at": "2026-10-28T08:20:31.341053+00:00",
+        "key": "fold_cloth_v3__episode_002293",
+        "started_at": "2026-10-28T08:20:08.538790+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 22.407621749676764,
+        "finished_at": "2026-10-28T08:20:31.251478+00:00",
+        "key": "fold_cloth_v4__episode_001074",
+        "started_at": "2026-10-28T08:20:08.843870+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 52.84356145001948,
+        "finished_at": "2026-10-28T08:21:07.404810+00:00",
+        "key": "fold_cloth_v3__episode_001940",
+        "started_at": "2026-10-28T08:20:14.561265+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 55.821609237231314,
+        "finished_at": "2026-10-28T08:21:14.650413+00:00",
+        "key": "fold_cloth_v4__episode_003030",
+        "started_at": "2026-10-28T08:20:18.828827+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 26.887958041392267,
+        "finished_at": "2026-10-28T08:20:48.454383+00:00",
+        "key": "fold_cloth_v3__episode_003429",
+        "started_at": "2026-10-28T08:20:21.566437+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 63.43682278506458,
+        "finished_at": "2026-10-28T08:21:28.591857+00:00",
+        "key": "fold_cloth_v4__episode_001280",
+        "started_at": "2026-10-28T08:20:25.155049+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 31.02511132042855,
+        "finished_at": "2026-10-28T08:21:00.155762+00:00",
+        "key": "fold_cloth_v3__episode_006210",
+        "started_at": "2026-10-28T08:20:29.130639+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 30.730995835736394,
+        "finished_at": "2026-10-28T08:21:01.982518+00:00",
+        "key": "fold_cloth_v4__episode_000298",
+        "started_at": "2026-10-28T08:20:31.251537+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 71.83412000071257,
+        "finished_at": "2026-10-28T08:21:43.176719+00:00",
+        "key": "fold_cloth_v3__episode_001429",
+        "started_at": "2026-10-28T08:20:31.341110+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 55.059332832694054,
+        "finished_at": "2026-10-28T08:21:26.500576+00:00",
+        "key": "fold_cloth_v4__episode_000365",
+        "started_at": "2026-10-28T08:20:31.441255+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 61.4959145411849,
+        "finished_at": "2026-10-28T08:21:34.422393+00:00",
+        "key": "fold_cloth_v3__episode_000963",
+        "started_at": "2026-10-28T08:20:32.926491+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 89.09168011788279,
+        "finished_at": "2026-10-28T08:22:03.986338+00:00",
+        "key": "fold_cloth_v4__episode_003040",
+        "started_at": "2026-10-28T08:20:34.894669+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 20.98513342719525,
+        "finished_at": "2026-10-28T08:20:58.341942+00:00",
+        "key": "fold_cloth_v3__episode_001780",
+        "started_at": "2026-10-28T08:20:37.356824+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 29.062055432237685,
+        "finished_at": "2026-10-28T08:21:09.552955+00:00",
+        "key": "fold_cloth_v4__episode_001168",
+        "started_at": "2026-10-28T08:20:40.490912+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 26.591493322513998,
+        "finished_at": "2026-10-28T08:21:12.821850+00:00",
+        "key": "fold_cloth_v3__episode_000267",
+        "started_at": "2026-10-28T08:20:46.230370+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 72.62640543282032,
+        "finished_at": "2026-10-28T08:22:01.080845+00:00",
+        "key": "fold_cloth_v4__episode_004159",
+        "started_at": "2026-10-28T08:20:48.454455+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 42.47689799591899,
+        "finished_at": "2026-10-28T08:21:36.206388+00:00",
+        "key": "fold_cloth_v3__episode_001007",
+        "started_at": "2026-10-28T08:20:53.729500+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 43.25784847699106,
+        "finished_at": "2026-10-28T08:21:41.599839+00:00",
+        "key": "fold_cloth_v4__episode_003199",
+        "started_at": "2026-10-28T08:20:58.342004+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 14.499065494164824,
+        "finished_at": "2026-10-28T08:21:14.654887+00:00",
+        "key": "fold_cloth_v3__episode_005944",
+        "started_at": "2026-10-28T08:21:00.155833+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 43.35010867472738,
+        "finished_at": "2026-10-28T08:21:45.332677+00:00",
+        "key": "fold_cloth_v4__episode_000432",
+        "started_at": "2026-10-28T08:21:01.982582+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 18.395292012952268,
+        "finished_at": "2026-10-28T08:21:25.800161+00:00",
+        "key": "fold_cloth_v3__episode_000294",
+        "started_at": "2026-10-28T08:21:07.404881+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 67.92958491947502,
+        "finished_at": "2026-10-28T08:22:17.482772+00:00",
+        "key": "fold_cloth_v4__episode_003644",
+        "started_at": "2026-10-28T08:21:09.553201+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 32.76220955699682,
+        "finished_at": "2026-10-28T08:21:45.584864+00:00",
+        "key": "fold_cloth_v3__episode_004032",
+        "started_at": "2026-10-28T08:21:12.822661+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 88.02339766919613,
+        "finished_at": "2026-10-28T08:22:42.673877+00:00",
+        "key": "fold_cloth_v4__episode_002180",
+        "started_at": "2026-10-28T08:21:14.650493+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 27.108946887776256,
+        "finished_at": "2026-10-28T08:21:41.763877+00:00",
+        "key": "fold_cloth_v3__episode_003519",
+        "started_at": "2026-10-28T08:21:14.654943+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 28.19703472405672,
+        "finished_at": "2026-10-28T08:21:48.402011+00:00",
+        "key": "fold_cloth_v4__episode_000327",
+        "started_at": "2026-10-28T08:21:20.204989+00:00",
+        "status": "complete"
+      },
+      {
+        "elapsed_s": 76.17702061031014,
+        "finished_at": "2026-10-28T08:22:41.977237+00:00",
+        "key": "fold_cloth_v3__episode_003382",
+        "started_at": "2026-10-28T08:21:25.800218+00:00",
+        "status": "needs_review"
+      },
+      {
+        "elapsed_s": 58.30753337778151,
+        "finished_at": "2026-10-28T08:22:24.808151+00:00",
+        "key": "fold_cloth_v4__episode_003142",
+        "started_at": "2026-10-28T08:21:26.500631+00:00",
+        "status": "needs_review"
+      }
+    ],
+    "wall_time_s": 192.111346158199
+  },
+  "render": {
+    "max_workers": 16,
+    "peak_parallel_episodes": 16,
+    "tasks": [
+      {
+        "elapsed_s": 34.590032738633454,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:29.791031+00:00",
+        "key": "fold_cloth_v3__episode_001291",
+        "started_at": "2026-10-28T08:23:55.201020+00:00",
+        "worker_pid": 11
+      },
+      {
+        "elapsed_s": 40.828497926704586,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:36.072027+00:00",
+        "key": "fold_cloth_v4__episode_002970",
+        "started_at": "2026-10-28T08:23:55.243544+00:00",
+        "worker_pid": 8
+      },
+      {
+        "elapsed_s": 26.403457621112466,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:21.654367+00:00",
+        "key": "fold_cloth_v3__episode_002528",
+        "started_at": "2026-10-28T08:23:55.250922+00:00",
+        "worker_pid": 19
+      },
+      {
+        "elapsed_s": 47.63595982082188,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:42.898548+00:00",
+        "key": "fold_cloth_v4__episode_001058",
+        "started_at": "2026-10-28T08:23:55.262603+00:00",
+        "worker_pid": 5
+      },
+      {
+        "elapsed_s": 25.324755686335266,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:20.589121+00:00",
+        "key": "fold_cloth_v3__episode_003844",
+        "started_at": "2026-10-28T08:23:55.264377+00:00",
+        "worker_pid": 20
+      },
+      {
+        "elapsed_s": 40.04222801793367,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:35.308612+00:00",
+        "key": "fold_cloth_v4__episode_000628",
+        "started_at": "2026-10-28T08:23:55.266401+00:00",
+        "worker_pid": 16
+      },
+      {
+        "elapsed_s": 37.90753076598048,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:33.174005+00:00",
+        "key": "fold_cloth_v3__episode_001189",
+        "started_at": "2026-10-28T08:23:55.266492+00:00",
+        "worker_pid": 13
+      },
+      {
+        "elapsed_s": 35.38039466179907,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:30.648508+00:00",
+        "key": "fold_cloth_v4__episode_004014",
+        "started_at": "2026-10-28T08:23:55.268123+00:00",
+        "worker_pid": 10
+      },
+      {
+        "elapsed_s": 24.51395123731345,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:19.790487+00:00",
+        "key": "fold_cloth_v3__episode_003573",
+        "started_at": "2026-10-28T08:23:55.276596+00:00",
+        "worker_pid": 17
+      },
+      {
+        "elapsed_s": 37.157989765517414,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:32.441942+00:00",
+        "key": "fold_cloth_v4__episode_000273",
+        "started_at": "2026-10-28T08:23:55.283966+00:00",
+        "worker_pid": 15
+      },
+      {
+        "elapsed_s": 41.1950496872887,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:36.480781+00:00",
+        "key": "fold_cloth_v3__episode_005951",
+        "started_at": "2026-10-28T08:23:55.285749+00:00",
+        "worker_pid": 18
+      },
+      {
+        "elapsed_s": 101.63809332065284,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:36.923856+00:00",
+        "key": "fold_cloth_v4__episode_003434",
+        "started_at": "2026-10-28T08:23:55.285780+00:00",
+        "worker_pid": 21
+      },
+      {
+        "elapsed_s": 36.494561553932726,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:31.787102+00:00",
+        "key": "fold_cloth_v3__episode_006069",
+        "started_at": "2026-10-28T08:23:55.292554+00:00",
+        "worker_pid": 14
+      },
+      {
+        "elapsed_s": 39.75687016360462,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:35.049483+00:00",
+        "key": "fold_cloth_v4__episode_003849",
+        "started_at": "2026-10-28T08:23:55.292628+00:00",
+        "worker_pid": 12
+      },
+      {
+        "elapsed_s": 37.34523093700409,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:32.641565+00:00",
+        "key": "fold_cloth_v3__episode_001134",
+        "started_at": "2026-10-28T08:23:55.296350+00:00",
+        "worker_pid": 22
+      },
+      {
+        "elapsed_s": 46.72946940921247,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:42.034894+00:00",
+        "key": "fold_cloth_v4__episode_003263",
+        "started_at": "2026-10-28T08:23:55.305438+00:00",
+        "worker_pid": 9
+      },
+      {
+        "elapsed_s": 25.786574898287654,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:45.577841+00:00",
+        "key": "fold_cloth_v3__episode_003120",
+        "started_at": "2026-10-28T08:24:19.791297+00:00",
+        "worker_pid": 17
+      },
+      {
+        "elapsed_s": 28.603640605695546,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:49.193693+00:00",
+        "key": "fold_cloth_v4__episode_000996",
+        "started_at": "2026-10-28T08:24:20.590081+00:00",
+        "worker_pid": 20
+      },
+      {
+        "elapsed_s": 24.221444625407457,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:45.876539+00:00",
+        "key": "fold_cloth_v3__episode_002628",
+        "started_at": "2026-10-28T08:24:21.655122+00:00",
+        "worker_pid": 19
+      },
+      {
+        "elapsed_s": 152.7933187764138,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:02.588590+00:00",
+        "key": "fold_cloth_v4__episode_003910",
+        "started_at": "2026-10-28T08:24:29.795284+00:00",
+        "worker_pid": 11
+      },
+      {
+        "elapsed_s": 22.88130413275212,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:53.532651+00:00",
+        "key": "fold_cloth_v3__episode_000153",
+        "started_at": "2026-10-28T08:24:30.651076+00:00",
+        "worker_pid": 10
+      },
+      {
+        "elapsed_s": 62.15783981606364,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:33.945246+00:00",
+        "key": "fold_cloth_v4__episode_000834",
+        "started_at": "2026-10-28T08:24:31.787425+00:00",
+        "worker_pid": 14
+      },
+      {
+        "elapsed_s": 22.921596920117736,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:55.363821+00:00",
+        "key": "fold_cloth_v3__episode_002293",
+        "started_at": "2026-10-28T08:24:32.442360+00:00",
+        "worker_pid": 15
+      },
+      {
+        "elapsed_s": 61.17058505769819,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:33.812454+00:00",
+        "key": "fold_cloth_v4__episode_001074",
+        "started_at": "2026-10-28T08:24:32.641895+00:00",
+        "worker_pid": 22
+      },
+      {
+        "elapsed_s": 22.91667709965259,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:56.091542+00:00",
+        "key": "fold_cloth_v3__episode_001940",
+        "started_at": "2026-10-28T08:24:33.174886+00:00",
+        "worker_pid": 13
+      },
+      {
+        "elapsed_s": 68.05464147869498,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:43.104285+00:00",
+        "key": "fold_cloth_v4__episode_003030",
+        "started_at": "2026-10-28T08:24:35.049888+00:00",
+        "worker_pid": 12
+      },
+      {
+        "elapsed_s": 20.040020178072155,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:24:55.348919+00:00",
+        "key": "fold_cloth_v3__episode_003429",
+        "started_at": "2026-10-28T08:24:35.308925+00:00",
+        "worker_pid": 16
+      },
+      {
+        "elapsed_s": 62.36779363453388,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:38.440651+00:00",
+        "key": "fold_cloth_v4__episode_001280",
+        "started_at": "2026-10-28T08:24:36.072873+00:00",
+        "worker_pid": 8
+      },
+      {
+        "elapsed_s": 62.49539592396468,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:38.972726+00:00",
+        "key": "fold_cloth_v3__episode_006210",
+        "started_at": "2026-10-28T08:24:36.481298+00:00",
+        "worker_pid": 18
+      },
+      {
+        "elapsed_s": 58.06009431090206,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:40.097191+00:00",
+        "key": "fold_cloth_v4__episode_000298",
+        "started_at": "2026-10-28T08:24:42.037127+00:00",
+        "worker_pid": 9
+      },
+      {
+        "elapsed_s": 69.33145256526768,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:52.230891+00:00",
+        "key": "fold_cloth_v3__episode_001429",
+        "started_at": "2026-10-28T08:24:42.899471+00:00",
+        "worker_pid": 5
+      },
+      {
+        "elapsed_s": 68.91690428834409,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:25:54.495687+00:00",
+        "key": "fold_cloth_v4__episode_000365",
+        "started_at": "2026-10-28T08:24:45.578815+00:00",
+        "worker_pid": 17
+      },
+      {
+        "elapsed_s": 104.12516652978957,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:26:30.002362+00:00",
+        "key": "fold_cloth_v3__episode_000963",
+        "started_at": "2026-10-28T08:24:45.877211+00:00",
+        "worker_pid": 19
+      },
+      {
+        "elapsed_s": 99.4686827538535,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:26:28.662650+00:00",
+        "key": "fold_cloth_v4__episode_003040",
+        "started_at": "2026-10-28T08:24:49.193992+00:00",
+        "worker_pid": 20
+      },
+      {
+        "elapsed_s": 133.43534654192626,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:06.972561+00:00",
+        "key": "fold_cloth_v3__episode_001780",
+        "started_at": "2026-10-28T08:24:53.537214+00:00",
+        "worker_pid": 10
+      },
+      {
+        "elapsed_s": 124.38499790523201,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:26:59.734045+00:00",
+        "key": "fold_cloth_v4__episode_001168",
+        "started_at": "2026-10-28T08:24:55.349206+00:00",
+        "worker_pid": 16
+      },
+      {
+        "elapsed_s": 130.44804462324828,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:05.814815+00:00",
+        "key": "fold_cloth_v3__episode_000267",
+        "started_at": "2026-10-28T08:24:55.366882+00:00",
+        "worker_pid": 15
+      },
+      {
+        "elapsed_s": 134.31229237653315,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:10.404111+00:00",
+        "key": "fold_cloth_v4__episode_004159",
+        "started_at": "2026-10-28T08:24:56.091836+00:00",
+        "worker_pid": 13
+      },
+      {
+        "elapsed_s": 98.38369157351553,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:12.197330+00:00",
+        "key": "fold_cloth_v3__episode_001007",
+        "started_at": "2026-10-28T08:25:33.813648+00:00",
+        "worker_pid": 22
+      },
+      {
+        "elapsed_s": 103.33859474863857,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:17.284139+00:00",
+        "key": "fold_cloth_v4__episode_003199",
+        "started_at": "2026-10-28T08:25:33.945560+00:00",
+        "worker_pid": 14
+      },
+      {
+        "elapsed_s": 87.03896436560899,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:03.973432+00:00",
+        "key": "fold_cloth_v3__episode_005944",
+        "started_at": "2026-10-28T08:25:36.934474+00:00",
+        "worker_pid": 21
+      },
+      {
+        "elapsed_s": 87.43271934241056,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:05.873629+00:00",
+        "key": "fold_cloth_v4__episode_000432",
+        "started_at": "2026-10-28T08:25:38.440927+00:00",
+        "worker_pid": 8
+      },
+      {
+        "elapsed_s": 93.8899939591065,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:12.867451+00:00",
+        "key": "fold_cloth_v3__episode_000294",
+        "started_at": "2026-10-28T08:25:38.977465+00:00",
+        "worker_pid": 18
+      },
+      {
+        "elapsed_s": 95.76766982115805,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:15.866473+00:00",
+        "key": "fold_cloth_v4__episode_003644",
+        "started_at": "2026-10-28T08:25:40.098812+00:00",
+        "worker_pid": 9
+      },
+      {
+        "elapsed_s": 88.1968270810321,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:11.304110+00:00",
+        "key": "fold_cloth_v3__episode_004032",
+        "started_at": "2026-10-28T08:25:43.107284+00:00",
+        "worker_pid": 12
+      },
+      {
+        "elapsed_s": 89.1825504116714,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:21.416686+00:00",
+        "key": "fold_cloth_v4__episode_002180",
+        "started_at": "2026-10-28T08:25:52.234145+00:00",
+        "worker_pid": 5
+      },
+      {
+        "elapsed_s": 80.31104265525937,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:14.808029+00:00",
+        "key": "fold_cloth_v3__episode_003519",
+        "started_at": "2026-10-28T08:25:54.496998+00:00",
+        "worker_pid": 17
+      },
+      {
+        "elapsed_s": 48.78998881019652,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:17.461330+00:00",
+        "key": "fold_cloth_v4__episode_000327",
+        "started_at": "2026-10-28T08:26:28.671344+00:00",
+        "worker_pid": 20
+      },
+      {
+        "elapsed_s": 55.101900287903845,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:25.104820+00:00",
+        "key": "fold_cloth_v3__episode_003382",
+        "started_at": "2026-10-28T08:26:30.002933+00:00",
+        "worker_pid": 19
+      },
+      {
+        "elapsed_s": 20.803827931173146,
+        "export_status": "success",
+        "finished_at": "2026-10-28T08:27:20.542211+00:00",
+        "key": "fold_cloth_v4__episode_003142",
+        "started_at": "2026-10-28T08:26:59.738395+00:00",
+        "worker_pid": 16
+      }
+    ],
+    "wall_time_s": 210.76087015029043
+  }
+}

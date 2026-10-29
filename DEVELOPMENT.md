@@ -1,5 +1,11 @@
 # 开发实现与验证
 
+## 纯 joint 逆序实验（2026-10-29）
+
+新增独立入口 `experiments/joint_reverse_suffix/run.py`，支持从冻结 joint 数据运行 S5→S2 模板匹配和完整视频导出。JSON 模板随代码提供；DTW 从本地源码编译；运行不导入旧库、历史运行源码或 pickle。算法原理、复现命令与验证范围见 [docs/JOINT_REVERSE_SUFFIX.md](docs/JOINT_REVERSE_SUFFIX.md)。测试入口为 `.venv/bin/python -m pytest -q tests/test_joint_reverse.py`；新 30 条不参与模型调参或 Codex 内容复核。
+
+## 既有 VLM 流程
+
 目标：实现 [boundary.md](boundary.md) 的 `reverse_node_v2`，使用单个张开候选、原有前后局部上下文和当前阶段的 expert example，选择“本次折叠刚完成、下一动作尚未开始”的节点。日期：2026-10-26。状态：v2 已接入独立包与 CLI，[外置 prompt](configs/prompt.txt) 和示例通过 [configs/reverse_node_v2.yaml](configs/reverse_node_v2.yaml) 加载，完整离线检查 197 passed。
 
 `configs/default.yaml`、旧包内 prompt 和历史十条实验保留 `reverse_node_v1`、`node_shape_prompt_v3`。本轮 v2 在新运行 `runs/p1_reverse_node_v2_examples_20261026/` 使用同一十条清单完成离线 prepare，并按用户本轮授权从 000543 开始真实调用。实际推理、视频与视觉复核记录以 [README.md](README.md) 和运行报告为准；实现、离线检查、模型质量与人工确认分别报告。

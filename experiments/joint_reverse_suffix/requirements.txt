@@ -1,0 +1,2 @@
+# Install the repository itself first; this is the additional numeric dependency.
+scipy==1.18.1

@@ -1,6 +1,12 @@
 # split_cloth_v2
 
-当前分支 `experiment/main-stage3-prompt-20261027` 从重新 fetch 的 `origin/main`（5306d01）建立，只实验 stage3 prompt。入口为 [reverse_node_v2_stage3_shape_guard.yaml](configs/reverse_node_v2_stage3_shape_guard.yaml)，文本为 [prompt_stage3_shape_guard.txt](configs/prompt_stage3_shape_guard.txt)。保留折回覆盖与长方形短包说明，明确排除成包后整理或搬运再释放；使用 main 的 state 张开候选，耗尽即停止。
+当前分支 `experiment/joint-reverse-suffix-20261029` 提供纯 joint state 的 **S5→S4→S3→S2 逆序传统分段**，S1 为不计分的自由整理前缀。源码、冻结模板和完整视频导出入口位于 [experiments/joint_reverse_suffix](experiments/joint_reverse_suffix/)。[算法原理与复现说明](docs/JOINT_REVERSE_SUFFIX.md) 解释候选、DTW、逆序动态规划、拒绝规则和模型限制。
+
+已用独立代码重放此前 30 条 v3，四个边界、路径、分数及逐帧标签与已交付结果一致。没有新增 Codex 内容复核或准确率评分。新入口为 `python experiments/joint_reverse_suffix/run.py --input-run /path/to/prepared_joint_run --run runs/new_reverse --render`；依赖和输入格式见原理文档。已有 VLM CLI 保留原行为。
+
+## 先前 stage3 prompt 实验
+
+此前 `experiment/main-stage3-prompt-20261027` 从 `origin/main`（5306d01）建立，只实验 stage3 prompt。入口为 [reverse_node_v2_stage3_shape_guard.yaml](configs/reverse_node_v2_stage3_shape_guard.yaml)，文本为 [prompt_stage3_shape_guard.txt](configs/prompt_stage3_shape_guard.txt)。保留折回覆盖与长方形短包说明，明确排除成包后整理或搬运再释放；使用 main 的 state 张开候选，耗尽即停止。
 
 同样十条的新运行位于 `runs/p1_main_stage3_prompt_20261027/`。prepare 时将下文配置路径替换为 `configs/reverse_node_v2_stage3_shape_guard.yaml`；模型、检测、单张示例、五帧局部上下文及程序代码均沿用 main。结果完整导出后交由用户查看，程序状态不代表已确认准确率。
 

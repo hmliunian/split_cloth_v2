@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-29",
+  "algorithm": "reverse_ordered_suffix_dtw_v1",
+  "tests": {
+    "command": "python -m pytest -q",
+    "passed": 206,
+    "failed": 0,
+    "elapsed_s": 12.12,
+    "new_method_tests": 9
+  },
+  "prediction_replay": {
+    "episodes": 30,
+    "all_four_boundary_frames_identical": true,
+    "scores_and_reverse_paths_identical": true,
+    "frame_label_arrays_byte_identical": true,
+    "new_codex_review": false,
+    "accuracy": null
+  },
+  "portable_render_smoke": {
+    "episode": "fold_cloth_v3__episode_006460",
+    "frames": 551,
+    "videos": 1,
+    "max_pts_error_s": 0.0,
+    "complete_decode_verified": true
+  },
+  "original_experiment": {
+    "run": "joint_reverse_v3_30_20261029_v1",
+    "episodes": 30,
+    "frames": 19709,
+    "candidates": 403,
+    "videos": 30,
+    "max_pts_error_s": 0.0
+  },
+  "source_sha256": {
+    "experiments/joint_reverse_suffix/detector_config.json": "8ee3c5eac69d321f0e8e9203388b77f201c5b329795357f592a44b26551ace59",
+    "experiments/joint_reverse_suffix/dtw.cpp": "a5dbe7d1ec30fb178fbe9bb3d2a3c801b3ef556ef8f5e19b8f7fccc072fe2bbd",
+    "experiments/joint_reverse_suffix/dtw.py": "dfcce7e8410e9709a7d81c31a9abdc1a86d64a42f2067e9d78ff71c2044707ce",
+    "experiments/joint_reverse_suffix/model.py": "71910a8e84ce30a2bbf278a04205f0d656eef8adaa688be2168c3ae97727f49e",
+    "experiments/joint_reverse_suffix/render.py": "e4fc111e8146f035e3647ad2d157f02a2ff72b05b0e3101c4e219a1b4284127f",
+    "experiments/joint_reverse_suffix/requirements.txt": "31f76b9099a024356fb9991d1be87338ed1b9a0c1225c5cd370a933d1e6f5c16",
+    "experiments/joint_reverse_suffix/reverse_model.py": "214793d0922a2061c6aacff781561c4981b662b00698c099c149fe68df5b8d21",
+    "experiments/joint_reverse_suffix/run.py": "e48065ba832981b8211650011b9ec3394257d10f102d692ab12c853e153a0a3f",
+    "experiments/joint_reverse_suffix/run_io.py": "898121736f7fb9260b9603c82dad338b63a3a1bd527f9de817d3da43a1455570",
+    "experiments/joint_reverse_suffix/templates_v3_ten.json": "effafa1ae9223665e354e830d3727954cf0024331f2eaf0337a28d6a7664cd10"
+  },
+  "new_codex_review": false,
+  "external_vlm_calls": 0,
+  "accuracy": null,
+  "human_confirmed": false
+}

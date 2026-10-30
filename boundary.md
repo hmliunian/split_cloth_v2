@@ -1,5 +1,11 @@
 # 新库边界与阶段契约
 
+## 独立实验：reverse_ordered_suffix_dtw_v1（2026-10-29）
+
+用户授权的纯 joint state 方法独立于下述 VLM 协议：只输入 v3 的 14 维实测 joint、原始时间轴和冻结张开候选，从 S5→S4→S3→S2 作逆序模板匹配，S1 为不计分的自由整理前缀。四个动作边界必须来自候选；边界帧属于前段，末帧不作候选。缺失边界不补位，完整视频仍可导出；不做视觉判断或自动确认。具体算法、输出数组与已知限制见 [JOINT_REVERSE_SUFFIX.md](docs/JOINT_REVERSE_SUFFIX.md)。此实验入口为 `experiments/joint_reverse_suffix/run.py`，不改变现有 VLM CLI。
+
+## 原 reverse_node_v1 / reverse_node_v2 协议
+
 2026-10-27 按用户要求重新从 `origin/main`（5306d01）建立独立分支，只迁移 stage3 prompt。实验入口 `configs/reverse_node_v2_stage3_shape_guard.yaml` 继续使用本页 `reverse_node_v2` 原流程：只遍历 state 张开候选，耗尽即停止。固定文本 `configs/prompt_stage3_shape_guard.txt` 保留折回覆盖与长方形短包说明，并明确排除已经成包后的按压、整理或搬运再释放；不把形态匹配作为动作时刻通过的充分条件。是否减少误拒且避免晚选以同十条新运行验证，不预先声称无误选。
 
 协议：`reverse_node_v2`。日期：2026-10-26。状态：v2 已接入独立包和 CLI，配置入口为 [configs/reverse_node_v2.yaml](configs/reverse_node_v2.yaml)，离线检查 197 passed。`configs/default.yaml` 和历史实验保留 v1；真实十条实验、视频交付与模型质量另见 [README.md](README.md) 及运行报告。本文是业务契约，实现与验证入口见 [DEVELOPMENT.md](DEVELOPMENT.md)。

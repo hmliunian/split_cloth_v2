@@ -6,6 +6,7 @@
 
 - 用户最新要求优先；业务规则以 `boundary.md` 为准，`docs/PROMPT.md` 是对应的模型接口。
 - 核心流程是传统 state 候选、程序倒序逐节点调用 VLM、stage3→stage2→stage1。
+- 独立纯 joint 实验见 `docs/JOINT_REVERSE_SUFFIX.md`：`experiments/joint_reverse_suffix/run.py` 使用 S5→S2 模板匹配和自由整理前缀，不调用 VLM；与上一条的原 CLI 分开。
 - Dataset 只做叠衣服，其他任务不作为输入或负例；不增加通用任务分类和挂衣识别流程。
 - 开发第一阶段（P1）交付 10 条不同叠衣轨迹的完整 MP4，使用 [第一阶段清单](docs/phase1_manifest.jsonl)；默认可视化按 [docs/VISUALIZATION.md](docs/VISUALIZATION.md) 仿照旧版画面、阶段面板和时间线。
 - 任意一爪张开即可；不要引入“所有参与手必须释放”、让 VLM 自由选帧或整段一次推理。

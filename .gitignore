@@ -16,6 +16,9 @@ dist/
 *.mp4
 *.parquet
 *.npy
+*.npz
+*.mcap
+*.so
 .agents/
 .aws/
 .codex/

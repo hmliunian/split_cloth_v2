@@ -2,9 +2,13 @@
 
 协议：`reverse_ordered_suffix_dtw_v1`。日期：2026-10-29。
 
+2026-10-30 更新：本方法已确定为仓库主算法。6 轴与 7 轴统一适配的边界见 [boundary.md](../boundary.md)，正式模块为 `src/split_cloth_v2/joint/`，配置为 `configs/joint/`，模块职责见 [architecture.md](../architecture.md)。VLM 专属实现已移除，共用 CLI 已接入。本文后续保留冻结 6 轴算法说明与历史事实；本次软件验证和 7 轴实验状态见 DEVELOPMENT。
+
+下文描述已实现的 6 轴冻结版本。其 14 维、20 FPS、v3 来源及“没有新增 Codex 内容复核”等限制和验证记录只对应该历史版本；新边界允许 Codex 查看并标注 10 条 7 轴示范以建立模板，推断仍不读取图像。
+
 本方法用传统动作模板匹配，从视频末尾依次识别 S5、S4、S3、S2，将剩余前缀作为自由整理阶段 S1。推断只读取实测关节角、夹爪开度、原始时间戳和冻结张开候选，不读取图像，不调用 VLM，也不做 Codex 内容复核。
 
-实现位于 [experiments/joint_reverse_suffix](../experiments/joint_reverse_suffix/)，与已有 VLM CLI 分开。分支提供冻结模板的推断、完整视频导出和测试；训练数据、原始视频与运行产物保留在本地 `runs/`。
+正式入口及命令见 [README](../README.md)。[experiments/joint_reverse_suffix](../experiments/joint_reverse_suffix/) 保留为只读历史来源，正式包不导入该目录。训练数据、原始视频与运行产物保留在本地 `runs/`。
 
 ## 1. 为什么采用逆序方法
 
@@ -32,7 +36,7 @@
 
 夹爪列分别是 6、13。必须使用反馈状态，不能用 `action` 控制命令替代；14 维 EEF 位姿也不能当成 14 维关节角。运行入口检查维度、有限数值、时间轴、任务来源、候选顺序及身份，但数组的物理含义由输入准备阶段保证。
 
-候选来自本库 [detector.py](../src/split_cloth_v2/detector.py) 的实测夹爪张开检测，配置见 [detector_config.json](../experiments/joint_reverse_suffix/detector_config.json)。任意一爪张开即可，不要求双爪同时松开；闭合动作本身不作为本版候选。检测器通过阈值、回滞和稳定平台确认事件，再回填代表帧。候选是反馈事件估计，不是衣物动作完成的语义认证。
+候选来自本库 [detector.py](../src/split_cloth_v2/detector.py) 的实测夹爪张开检测，配置见 [6 轴配置](../configs/joint/fold_cloth_v3_6axis.yaml)。任意一爪张开即可，不要求双爪同时松开；闭合动作本身不作为本版候选。检测器通过阈值、回滞和稳定平台确认事件，再回填代表帧。候选是反馈事件估计，不是衣物动作完成的语义认证。
 
 设真实候选为 `c1 < ... < cM`，视频帧为 `0 ... N−1`。覆盖端点 `−1` 与 `N−1` 不属于候选；末帧事件不能作为阶段边界。完整结果要求：
 
@@ -93,7 +97,7 @@ $$
 \qquad D_s=\frac{1}{|\pi^*|}\sum_{(u,v)\in\pi^*}\|x_u-T_{s,v}\|^2.
 $$
 
-这不是精确的“平均距离最小路径”优化。实现见 [dtw.cpp](../experiments/joint_reverse_suffix/dtw.cpp)。区间和模板保持正序，逆序只指候选搜索方向，视频不会倒放，张开也不会变成闭合。
+这不是精确的“平均距离最小路径”优化。实现见 [dtw.cpp](../src/split_cloth_v2/joint/dtw.cpp)。区间和模板保持正序，逆序只指候选搜索方向，视频不会倒放，张开也不会变成闭合。
 
 本版目标是四个动作的平均 DTW 代价之和：
 
@@ -136,62 +140,21 @@ $$
 \theta_s=2P_{95}(D_s^{train})+0.05.
 $$
 
-超过阈值的区间在正式搜索中不可用。阈值属于探索性拒绝规则，不是正确率或概率校准。本次主初始化的 S2/S3/S4/S5 阈值约为 `1.696758 / 1.236296 / 1.867481 / 1.847813`；精确参数和两套初始化均在 [templates_v3_ten.json](../experiments/joint_reverse_suffix/templates_v3_ten.json)。文件只包含推断需要的数值参数与来源记录，运行不加载 pickle。
+超过阈值的区间在正式搜索中不可用。阈值属于探索性拒绝规则，不是正确率或概率校准。本次主初始化的 S2/S3/S4/S5 阈值约为 `1.696758 / 1.236296 / 1.867481 / 1.847813`；精确参数和两套初始化均在 [冻结模板](../configs/joint/templates/fold_cloth_v3_6axis.json)。文件只包含推断需要的数值参数与来源记录，运行不加载 pickle。
 
 如果某一层没有任何可行扩展，就保留上一层的最长可行后缀。例如只能匹配 S5、S4 时，仅保留 b4、b3，b2、b1 留空。S5 都无法匹配时四个边界均为空。另存不设拒绝阈值的原始假设，供用户查看，不能把它当成正式确认结果。
 
 主预测采用初始化 0；b1 还要求初始化 1 得到完全相同的候选身份，否则 b1 留空。b2–b4 沿用主初始化的可行后缀。五段边界不全时 `action_stage_5.npy` 全为 `−1`；b2–b4 不全时 `display_stage_4.npy` 全为 `−1`，JSON 仍保留可用的单个边界。
 
-## 7. 输入格式与复现
+## 7. 当前入口与输入格式
 
-需要 Python 3.11+、本库依赖、SciPy，以及 Linux 上可用的 `g++`。DTW 内核从随仓库提交的源码在本地缓存中编译，不下载二进制，也不联网。
+依赖随正式包声明，首次 DTW 调用在临时缓存编译随包分发的 C++ 源码。命令和参考格式见 [README](../README.md)，输入及来源核验见 [DATA](DATA.md)。
 
-```bash
-uv pip install --python .venv/bin/python -e '.[test]'
-uv pip install --python .venv/bin/python -r experiments/joint_reverse_suffix/requirements.txt
+准备运行包含 `manifest.json`、`data/*.npz`、检测来源与配置摘要。NPZ 包含原帧对应的 `joint` 和 `timestamps`；7 轴另保存逐帧反馈源行、源时钟与误差。输入与模板只读，所有命令写入新的独立运行或导出目录。
 
-.venv/bin/python experiments/joint_reverse_suffix/run.py \
-  --input-run /path/to/prepared_joint_run \
-  --run runs/joint_reverse_new \
-  --render --workers 2
-```
+`infer` 保存原始假设与阈值验收后的正式结果，未知槽位保持空值；`export-video` 与 `report` 读取已保存结果，不再次推断。两份配置使用相同算法与输出格式。
 
-输入目录包含 `manifest.json` 和清单引用的 `data/*.npz`。NPZ 中必须有 `joint`（N×14）和 `timestamps`（N，原视频相对秒数）。输入目录只读，输出必须是新的独立目录；不允许覆盖历史运行或写进输入目录内部。清单示意：
-
-```json
-[
-  {
-    "key": "fold_cloth_v3__episode_000123",
-    "dataset_id": "fold_cloth_v3",
-    "task_family": "fold_cloth",
-    "episode_id": "episode_000123",
-    "frame_count": 600,
-    "dataset_npz": "data/fold_cloth_v3__episode_000123.npz",
-    "source_fps": 20.0,
-    "source_video_path": "/path/to/episode_000123.mp4",
-    "source_video_sha256": "填写源视频实际 SHA-256",
-    "candidates": [
-      {"node_id": "n_001", "source_frame_id": 100,
-       "timestamp_s": 5.0, "opening_arms": ["left"]}
-    ]
-  }
-]
-```
-
-示意清单的单个候选不足以形成完整五段，仅用于说明字段。真正的清单应包含检测器产生的全部可用候选；不要按预期答案筛选。只推断时可以省略视频字段及 `--render`；视频仅供导出，不进入模型。
-
-已有推断结果可以单独导出视频：
-
-```bash
-.venv/bin/python experiments/joint_reverse_suffix/render.py \
-  --run runs/joint_reverse_new --workers 2
-
-.venv/bin/python -m pytest -q tests/test_joint_reverse.py
-```
-
-输出包括输入与源码摘要、模板副本、`predictions.json`、逐轨迹边界和标签数组；开启渲染时另有 `videos/`、`index.html` 和逐帧时间轴验证。V1–V4 展示将 S1+S2 合并为 V1；辅助轨道显示 S1–S5 原始假设。所有结果保留未确认状态。
-
-## 8. 已执行验证及实际限制
+## 8. 历史验证及实际限制
 
 - 原实验处理同一批 30 条 v3：19,709 帧、403 个候选；30 个完整 MP4 均重新解码检查，最大相对 PTS 误差为 0。
 - 分支中的独立代码重放 30 条后，四个边界、逆序路径、分数和逐帧标签与已交付实验完全一致。这是代码迁移回归，不是准确率评估。
@@ -199,4 +162,4 @@ uv pip install --python .venv/bin/python -r experiments/joint_reverse_suffix/req
 - 测试覆盖最优两条路径与穷举一致、贪心死路、前段缺失保留后缀、首尾覆盖端点、边界帧归属、空候选、非法输入、完整 DTW 端点和输出保护。
 - 本轮没有新增 Codex 内容复核或准确率评分。此前“误差 ≤1 秒算通过”是有参考标签时的评估规则；本批没有新参考，不能按该标准报告通过率。
 
-当前模型固定了机器人关节布局、帧率、数据来源和动作顺序。其他布局或帧率需要重新建立特征与模板。重复折叠、缺失动作、额外整理和搬运可能违反四动作后缀假设；拒绝阈值不能保证识别所有此类情况。S2 起点监督较弱，S1 自由前缀也不能被解释为已确认的翻面次数或衣物平整程度。
+该历史模型固定了 6 轴关节布局、20 FPS 和数据来源。正式实现通过显式配置支持两种布局，模板分别建立并验证兼容性。重复折叠、缺失动作、额外整理和搬运可能违反四动作后缀假设；拒绝阈值不能保证识别所有此类情况。S2 起点监督较弱，S1 自由前缀也不能被解释为已确认的翻面次数或衣物平整程度。

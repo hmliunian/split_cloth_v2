@@ -1,0 +1,97 @@
+dataset_id: fold_cloth_v3_pushcar_batch_20260923
+dataset_root: /gpfs/jiuquyun/home/xuran/xuran_projects/split_cloth/dataset/fold_cloth_v3_pushcar_batch_20260923
+reader: mcap
+layout:
+  state_dimensions: 16
+  joints_per_arm: 7
+  joint_indices:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  gripper_indices: &id001
+    left: 7
+    right: 15
+  joint_names:
+    left:
+    - joint_0
+    - joint_1
+    - joint_2
+    - joint_3
+    - joint_4
+    - joint_5
+    - joint_6
+    right:
+    - joint_0
+    - joint_1
+    - joint_2
+    - joint_3
+    - joint_4
+    - joint_5
+    - joint_6
+  joint_unit: radian
+  gripper_unit: native
+  feedback: measured_joint
+source:
+  feedback_field: joint
+  camera: /observation/camera/head/color/left/encoded
+  joint_order_provenance: foxglove.JointStates joint names
+  gripper_names:
+  - G2P
+  feedback_topics:
+    left_arm: /observation/robot/left/arm/joints
+    left_gripper: /observation/robot/left/gripper/joints
+    right_arm: /observation/robot/right/arm/joints
+    right_gripper: /observation/robot/right/gripper/joints
+alignment:
+  method: nearest_measured_sample
+  ties: earlier
+  hard_limit_ms: 50.0
+  report_above_ms: 20.0
+  frozen_fps: null
+detector:
+  candidate_levels:
+  - - 0.25
+    - 0.1
+  - - 0.5
+    - 0.25
+  - - 0.75
+    - 0.45
+  - - 0.9
+    - 0.65
+  - - 0.98
+    - 0.9
+  grouping_window_s: 0.25
+  node_policy: any_open
+  opening_directions:
+    left: higher
+    right: higher
+  settled_duration_s: 0.1
+  settled_min_excursion_fraction: 0.1
+  settled_reversal_fraction: 0.1
+  settled_samples: 3
+  settled_search_window_s: 2.0
+  settled_tolerance_fraction: 0.02
+  state_dimensions: 16
+  state_indices: *id001
+features:
+  smoothing_s: 0.25
+  sample_hz: 5.0
+  window_s:
+  - 0.5
+  - 1.0
+  progress_points: 32
+template:
+  path: null
+  acceptance_policy: explicit_boundaries
+  min_duration_s: 0.6

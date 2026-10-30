@@ -1,9 +1,13 @@
 from pathlib import Path
-import sys
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "experiments/joint_reverse_suffix"))
 import itertools
 import numpy as np
-from reverse_model import reverse_decode, stage_labels
+from split_cloth_v2.joint.search import reverse_decode
+from split_cloth_v2.joint.results import stage_labels
+from split_cloth_v2.joint.config import load_config
+
+
+def _config():
+    return load_config(Path(__file__).resolve().parents[1] / 'configs/joint/fold_cloth_v3_6axis.yaml')
 
 def test_reverse_best_two_match_exhaustive_search():
     rng = np.random.default_rng(1729)
@@ -60,36 +64,40 @@ def _episode_fixture():
     q = np.arange(80 * 14, dtype=float).reshape(80, 14) / 1000
     times = np.arange(80) / 20
     meta = {'key': 'fold_cloth_v3__episode_test', 'dataset_id': 'fold_cloth_v3',
-            'task_family': 'fold_cloth', 'frame_count': 80, 'candidates': []}
+            'task_family': 'fold_cloth', 'frame_count': 80, 'candidates': [],
+            'state_representation': 'measured_joint', 'layout': _config()['layout']}
     return meta, {'joint': q, 'timestamps': times}
 
 def test_frozen_templates_and_empty_candidate_episode():
-    from run import CODE, load_templates, validate_episode
-    from model import Episode
-    from reverse_model import predict_reverse
-    bundle, models = load_templates(CODE / 'templates_v3_ten.json')
+    from split_cloth_v2.joint.templates import load_templates
+    from split_cloth_v2.joint.data import validate_episode
+    from split_cloth_v2.joint.features import Episode
+    from split_cloth_v2.joint.search import predict_reverse
+    config = _config()
+    bundle, models = load_templates(config['template']['path'], config)
     meta, arrays = _episode_fixture()
-    validate_episode(meta, arrays)
-    result = predict_reverse(Episode(meta, arrays), models[0], models[0]['calibration'])
+    validate_episode(meta, arrays, config)
+    result = predict_reverse(Episode(meta, arrays, config), models[0], models[0]['calibration'])
     assert result['status'] == 'no_accepted_suffix'
     assert result['action_frames'] == [None] * 4 and result['s1_repeat_count'] is None
 
 def test_rejects_other_tasks_and_shifted_or_nonfinite_state():
     import pytest
-    from run import validate_episode
+    from split_cloth_v2.joint.data import validate_episode
+    config = _config()
     meta, arrays = _episode_fixture()
-    with pytest.raises(ValueError, match='Only fold_cloth_v3'):
-        validate_episode({**meta, 'task_family': 'fold_and_hang'}, arrays)
-    with pytest.raises(ValueError, match='20 FPS'):
-        validate_episode(meta, {**arrays, 'timestamps': arrays['timestamps'] + .05})
+    with pytest.raises(ValueError, match='Only configured fold_cloth'):
+        validate_episode({**meta, 'task_family': 'fold_and_hang'}, arrays, config)
+    with pytest.raises(ValueError, match='normalized'):
+        validate_episode(meta, {**arrays, 'timestamps': arrays['timestamps'] + .05}, config)
     bad = arrays['joint'].copy()
     bad[4, 3] = np.nan
     with pytest.raises(ValueError, match='Nonfinite'):
-        validate_episode(meta, {**arrays, 'joint': bad})
+        validate_episode(meta, {**arrays, 'joint': bad}, config)
 
 def test_native_dtw_requires_full_finite_sequences():
     import pytest
-    from dtw import dtw
+    from split_cloth_v2.joint.dtw import dtw
     a = np.zeros((32, 2))
     assert dtw(a, a) == 0
     b = a.copy()
@@ -103,7 +111,8 @@ def test_native_dtw_requires_full_finite_sequences():
 
 def test_existing_output_and_input_directory_are_never_overwritten(tmp_path):
     import pytest
-    from run import CODE, infer_run
+    from split_cloth_v2.joint.pipeline import infer_run
+    config = _config()
     source = tmp_path / 'source'
     source.mkdir()
     output = tmp_path / 'output'
@@ -111,7 +120,7 @@ def test_existing_output_and_input_directory_are_never_overwritten(tmp_path):
     sentinel = output / 'keep.txt'
     sentinel.write_text('existing output')
     with pytest.raises(ValueError, match='new directory'):
-        infer_run(source, output, CODE / 'templates_v3_ten.json')
+        infer_run(config, source, output)
     with pytest.raises(ValueError, match='new directory'):
-        infer_run(source, source / 'child', CODE / 'templates_v3_ten.json')
+        infer_run(config, source, source / 'child')
     assert sentinel.read_text() == 'existing output'

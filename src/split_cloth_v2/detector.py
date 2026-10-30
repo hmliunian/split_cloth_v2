@@ -14,6 +14,16 @@ DEFAULT_CANDIDATE_LEVELS = ((.5, .25), (.75, .45), (.9, .65))
 DEFAULT_NODE_LEVELS = ((.25, .1),) + DEFAULT_CANDIDATE_LEVELS + ((.98, .9),)
 
 
+def _state_layout(dimensions, indices):
+    """Require an explicit verified arm/gripper layout; never infer from shape."""
+    expected = {14: {"left": 6, "right": 13}, 16: {"left": 7, "right": 15}}
+    if isinstance(dimensions, bool) or dimensions not in expected:
+        raise ValueError("Only explicitly configured 14D or 16D measured state is supported")
+    if indices != expected[dimensions]:
+        raise ValueError(f"Invalid gripper indices for {dimensions}D state: expected {expected[dimensions]}")
+    return dict(indices)
+
+
 def _quantile(values, fraction):
     ordered = sorted(values)
     position = (len(ordered) - 1) * fraction
@@ -90,6 +100,8 @@ def detect_gripper_events(
     min_dynamic_range: float = 1e-6,
     min_dynamic_fraction: float = .01,
     opening_directions: Mapping[str, str] | None = None,
+    state_dimensions: int = 14,
+    state_indices: Mapping[str, int] = ARM_STATE_INDICES,
 ):
     """Find every supported opening candidate in a single episode.
 
@@ -106,6 +118,7 @@ def detect_gripper_events(
     The default higher-is-open direction is an explicit configurable assumption
     requiring visual validation, not a fact inferred from endpoint values.
     """
+    state_indices = _state_layout(state_dimensions, state_indices)
     if isinstance(stable_samples, bool) or int(stable_samples) != stable_samples or stable_samples < 1:
         raise ValueError("stable_samples must be a positive integer")
     stable_samples = int(stable_samples)
@@ -140,8 +153,8 @@ def detect_gripper_events(
     invalid_rows = []
     for row_index, row in enumerate(states):
         try:
-            if row is None or len(row) != 14:
-                raise ValueError("state must have 14 components")
+            if row is None or len(row) != state_dimensions:
+                raise ValueError(f"state must have {state_dimensions} components")
             values = [_finite_float(v, "state") for v in row]
         except (TypeError, ValueError, OverflowError):
             valid_states.append(None)
@@ -151,13 +164,13 @@ def detect_gripper_events(
     if invalid_rows:
         diagnostics.append({"code": "missing_or_nonfinite_state", "count": len(invalid_rows),
                             "first_rows": invalid_rows[:20],
-                            "message": "Invalid 14D feedback rows break event continuity; no action fallback."})
+                            "message": f"Invalid {state_dimensions}D feedback rows break event continuity; no action fallback."})
     gap_rows = [row for row in range(1, len(indices)) if indices[row] != indices[row - 1] + 1]
     if gap_rows:
         diagnostics.append({"code": "nonconsecutive_source_frames", "count": len(gap_rows),
                             "first_rows": gap_rows[:20],
                             "message": "Frame gaps break opening and confirmation continuity."})
-    calibration = {**alignment, "state_dimensions": 14,
+    calibration = {**alignment, "state_dimensions": state_dimensions,
                    "signal_source": "measured_state_only", "raw_units": "unspecified",
                    "quantiles": [quantile_low, quantile_high],
                    "stable_samples": stable_samples, "stable_duration_s": stable_duration_s,
@@ -168,7 +181,7 @@ def detect_gripper_events(
                    "invalid_state_rows": len(invalid_rows), "arms": {},
                    "interpretation": "feedback_opening_candidates_require_visual_release_and_stage_confirmation"}
     events = []
-    for arm, state_index in ARM_STATE_INDICES.items():
+    for arm, state_index in state_indices.items():
         values = [row[state_index] if row is not None else None for row in valid_states]
         finite_values = [v for v in values if v is not None]
         arm_calibration = {"state_index": state_index, "opening_direction": directions[arm],
@@ -432,8 +445,8 @@ def detect_candidates(states, timestamps, frame_indices, *, source_timestamps, c
     if options.pop("node_policy", "any_open") != "any_open":
         raise ValueError("Only node_policy=any_open is supported")
     indices_config = options.pop("state_indices", ARM_STATE_INDICES)
-    if indices_config != ARM_STATE_INDICES:
-        raise ValueError("Only verified 14D EEF indices left=6, right=13 are supported")
+    state_dimensions = options.pop("state_dimensions", 14)
+    indices_config = _state_layout(state_dimensions, indices_config)
     if source_timestamps is None:
         raise ValueError("Decoded source_timestamps are required")
     times, indices, alignment = _validate_axis(
@@ -445,11 +458,11 @@ def detect_candidates(states, timestamps, frame_indices, *, source_timestamps, c
     measured = []
     for row, state in enumerate(states):
         try:
-            if state is None or len(state) != 14:
-                raise ValueError("expected 14 components")
+            if state is None or len(state) != state_dimensions:
+                raise ValueError(f"expected {state_dimensions} components")
             measured.append([_finite_float(value, "state") for value in state])
         except (TypeError, ValueError, OverflowError) as exc:
-            raise ValueError(f"Expected finite 14D measured state at row {row}") from exc
+            raise ValueError(f"Expected finite {state_dimensions}D measured state at row {row}") from exc
     samples = _positive_count(options.pop("settled_samples", 3), "settled_samples")
     duration = _finite_float(options.pop("settled_duration_s", .10), "settled_duration_s")
     tolerance_fraction = _finite_float(options.pop("settled_tolerance_fraction", .02), "settled_tolerance_fraction")
@@ -465,10 +478,12 @@ def detect_candidates(states, timestamps, frame_indices, *, source_timestamps, c
     directions.update(options.pop("opening_directions", {}))
     opening = detect_gripper_event_candidates(
         measured, times, indices, source_timestamps=source_timestamps,
+        state_dimensions=state_dimensions, state_indices=indices_config,
         opening_directions=directions, levels=levels, **options)
     reverse = {arm: "lower" if direction == "higher" else "higher" for arm, direction in directions.items()}
     closing = detect_gripper_event_candidates(
         measured, times, indices, source_timestamps=source_timestamps,
+        state_dimensions=state_dimensions, state_indices=indices_config,
         opening_directions=reverse, levels=levels, **options)
     calibration = deepcopy(opening["calibration"])
     calibration.update({"method": "multithreshold_crossings_then_local_settled_plateaus",
@@ -485,7 +500,7 @@ def detect_candidates(states, timestamps, frame_indices, *, source_timestamps, c
                  for item in result["events"]]
     diagnostics = deepcopy(opening["diagnostics"])
     openings = []
-    for arm, state_index in ARM_STATE_INDICES.items():
+    for arm, state_index in indices_config.items():
         values = [state[state_index] for state in measured]
         dynamic_range = calibration["arms"][arm].get("dynamic_range_raw", 0)
         tolerance = dynamic_range * tolerance_fraction

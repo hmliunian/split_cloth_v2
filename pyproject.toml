@@ -5,14 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "split-cloth-v2"
 version = "0.1.0"
-description = "State-driven reverse-node fold-cloth annotation"
+description = "Measured-joint reverse-suffix fold-cloth segmentation"
 requires-python = ">=3.11"
 dependencies = [
   "numpy==2.5.4",
-  "pyarrow==26.0.0",
+  "scipy==1.18.1",
   "av==19.0.2",
   "Pillow==13.0.0",
-  "httpx[socks]==0.28.1",
   "PyYAML==6.0.3",
 ]
 
@@ -26,7 +25,7 @@ split-cloth-v2 = "split_cloth_v2.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-split_cloth_v2 = ["assets/*.txt"]
+split_cloth_v2 = ["joint/*.cpp"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
